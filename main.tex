@@ -55,9 +55,9 @@
 % -------------------------------------------------------------------------
 %
 \documentclass[
-	ngerman,			% ngerman / english	, 
+	english,			% ngerman / english	, 
 	draft 	= false,	% [final/draft]			Document status
-	twoside	= true,	    % [false/true]		single-sided document
+	twoside	= false,	    % [false/true]		single-sided document
 	fleqn				% {equation} left justify
 	]{scrbook}           % Koma-Script
 
@@ -167,13 +167,13 @@
 % --------------------------------------------------------------------------
 %		Formelzeichenverzeichnis / List of symbols 
 % -------------------------------------------------------------------------- 
-\input{Contents/Symbols}			%  Formelzeichenverzeichnis / List of symbols
+\input{05_extras/Symbols}			%  Formelzeichenverzeichnis / List of symbols
 \cleardoublepage
 
 % --------------------------------------------------------------------------
 %		Abkuerzungsverzeichnis / List of abbreviations
 % -------------------------------------------------------------------------- 
-\input{Contents/Abbreviations}	% Abkuerzungsverzeichnis / List of abbreviations
+\input{05_extras/Abbreviations}	% Abkuerzungsverzeichnis / List of abbreviations
 \cleardoublepage
 
 % --------------------------------------------------------------------------
@@ -183,19 +183,19 @@
 \mainmatter		% Beginn des Hauptteils / Begin of the main body
 \ihead[]{\headmark}
 
-\include{Contents/01-Introduction}
+% \include{Contents/01-Introduction}
 \cleardoublepage
 
-\include{Contents/02-Chapter02}
+% \include{Contents/02-Chapter02}
 \cleardoublepage
 
-\include{Contents/Sample-Chapter}
-\include{Contents/Beispiel-Kapitel}
+% \include{Contents/Sample-Chapter}
+% \include{Contents/Beispiel-Kapitel}
 
-\include{Contents/98-Summary}
+% \include{Contents/98-Summary}
 \cleardoublepage
 %
-\include{Contents/99-Outlook}
+% \include{Contents/99-Outlook}
 \cleardoublepage
 
 \pagenumbering{Roman}
@@ -230,9 +230,9 @@
 \appendix
 
 % Inhalt des Anhangs (Beispiel) / List of contents of attachment (Example) 
-\input{Contents/A-Illustrations}
+\input{05_extras/A-Illustrations}
 \cleardoublepage
-\input{Contents/B-Table}
+\input{05_extras/B-Table}
 \cleardoublepage
 
 \backmatter
