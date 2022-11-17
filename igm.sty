@@ -189,61 +189,6 @@ urlcolor			= cyan				% Internetverweise / Reference to internet links
 \newcommand{\multilang}[2]{\iflanguage{german}{#1}{}\iflanguage{ngerman}{#1}{}\iflanguage{english}{#2}{}}
 
 %------------------------------------------------------------------------------
-% \TitlePageIGM
-%------------------------------------------------------------------------------
-
-\newcommand{\TitlePageIGM}{%
-	\thispagestyle{empty}%
-	\vspace*{-3cm}
-	\begin{figure}[h]
-		\raggedleft
-		\multilang{
-			\includegraphics[width = 0.75\textwidth]{01_style/rwth_igmr_de_rgb.png}}{
-			\includegraphics[width = 0.75\textwidth]{01_style/rwth_igmr_en_rgb.png}}
-	\end{figure}
-	
-	\begin{center}
-		\footnotesize{\multilang{Diese Arbeit wurde vorgelegt am \@institut}{This thesis was submitted to the \@department}}
-		\vspace{2cm}
-		
-		\textbf{\Large{\@title}}
-		
-		\vspace{0.5cm}		
-		
-		\vspace{2cm}		
-		\Large{\@type}
-		
-		\normalsize
-		\textit{\multilang{von}{by}}:
-		
-		\@authordegreefront\ \@author\ \@authordegreeback
-		
-		\multilang{Matr.-Nr.}{Student number}: \@studentno
-		
-		\vspace{1cm}		
-		\textit{\multilang{betreut von}{supervised by}:}
-		
-		\@supervisor
-		
-		\vspace{1cm}		
-		\textit{\multilang{Pr\"ufer}{Examiner}}:
-		
-		\@professor
-		
-		\@secexaminer
-		
-		\vspace{1cm}
-		Aachen, \@submissiondate
-	\end{center}
-	
-	\cleardoublepage
-	
-	% leere Seite hinter dem Deckblatt / blank page after the title page
-	\newpage\null\thispagestyle{empty}\newpage
-	\cleardoublepage
-}
-
-%------------------------------------------------------------------------------
 % \TitlePageIGMR
 %------------------------------------------------------------------------------
 
@@ -298,44 +243,6 @@ urlcolor			= cyan				% Internetverweise / Reference to internet links
 	\cleardoublepage
 }
 
-%------------------------------------------------------------------------------
-% \IssueIGM
-%------------------------------------------------------------------------------
-\newcommand{\IssueIGM}{%
-	\ihead[]{\multilang{Themenstellung}{Issue}}
-	\chead[]{}
-	\ohead[]{\pagemark}
-	\ifoot[]{}
-	\cfoot[]{}
-	\ofoot[]{}		
-	\begin{center}
-		\textbf{\large{\@type}}\\
-		%\vspace{0.5cm}
-		\normalsize
-		\multilang{von}{by} \@authordegreefront\ \@author\ \@authordegreeback\\
-		%\vspace{0.5cm}
-		\multilang{Matr.-Nr.}{Student number}: \@studentno\\
-		%\vspace{0.5cm}
-		\textbf{\@title}
-		%\vspace{0.5cm}
-	\end{center}
-	\hrule
-	\vspace{0.5cm}
-	
-	\@issuetext
-	
-	\multilang{Betreuer}{Supervisor}:	\@supervisor\\
-	%	\vspace{1cm}	
-	%	
-	%	\begin{flushright}
-	%		\rule{9cm}{0.5pt}\\
-	%		\@professor\hspace*{0.2cm}
-	%	\end{flushright}
-	
-	\vfill
-	\cleardoublepage
-}
-
 
 %------------------------------------------------------------------------------
 % \IssueIGMR
@@ -366,98 +273,6 @@ urlcolor			= cyan				% Internetverweise / Reference to internet links
 	\cleardoublepage
 }
 
-%------------------------------------------------------------------------------
-% \DeclarationIGM
-%------------------------------------------------------------------------------
-\newcommand{\DeclarationIGM}{%
-	\ihead[]{Eidesstattliche Versicherung}
-	\chead[]{}
-	\ohead[]{\pagemark}
-	
-	%\vspace{0.5cm}
-	\begin{center}
-		\textbf{Eidesstattliche Versicherung}
-	\end{center}
-	\@author\hfill Matrikel-Nummer: \@studentno
-	
-	Ich versichere hiermit an Eides Statt, dass ich die vorliegende \@type\ mit dem Titel
-	\begin{center}
-		\textbf{\@title}
-	\end{center}
-	selbstständig und ohne unzulässige fremde Hilfe erbracht habe. 
-	Ich habe keine anderen als die angegebenen Quellen und Hilfsmittel benutzt. 
-	Für den Fall, dass die Arbeit zusätzlich auf einem Datenträger eingereicht wird, 
-	erkläre ich, dass die schriftliche und die elektronische Form vollständig übereinstimmen. 
-	Die Arbeit hat in gleicher oder ähnlicher Form noch keiner Prüfungsbehörde vorgelegen.
-	
-	Aachen, \@submissiondate \hfill\rule{5cm}{0.5pt}\newline \vspace{-1.5cm}
-	\begin{flushright}
-		\@author
-	\end{flushright}	
-	
-	\textbf{Belehrung:}\\
-	\begin{small}		
-		\textbf{§ 156 StGB: Falsche Versicherung an Eides Statt}\\
-		Wer vor einer zur Abnahme einer Versicherung an Eides Statt zuständigen 
-		Behörde eine solche Versicherung falsch abgibt oder unter Berufung auf 
-		eine solche Versicherung falsch aussagt, wird mit Freiheitsstrafe bis zu 
-		drei Jahren oder mit Geldstrafe bestraft. 
-		
-		\textbf{§ 161 StGB: Fahrlässiger Falscheid; fahrlässige falsche Versicherung an Eides Statt}\\
-		(1) Wenn eine der in den §§ 154 bis 156 bezeichneten Handlungen aus Fahrlässigkeit 
-		begangen worden ist, so tritt Freiheitsstrafe bis zu einem Jahr oder Geldstrafe ein.\\
-		(2) Straflosigkeit tritt ein, wenn der Täter die falsche Angabe rechtzeitig berichtigt. 
-		Die Vorschriften des § 158 Abs. 2 und 3 gelten entsprechend.		
-	\end{small}
-	
-	Die vorstehende Belehrung habe ich zur Kenntnis genommen:
-	
-	Aachen, \@submissiondate \hfill\rule{5cm}{0.5pt}\newline \vspace{-1.5cm}
-	\begin{flushright}
-		\@author
-	\end{flushright}
-	
-	\multilang{}{
-		\newpage
-		The present translation is for your convenience only.\\
-		Only the German version is legally binding.
-		\begin{center}
-			\textbf{Statutory Declaration in Lieu of an Oath}
-		\end{center}
-		\@author\hfill Student number: \@studentno
-		
-		I hereby declare in lieu of an oath that I have completed the present \@type\ titled
-		\begin{center}
-			\textbf{\@title}
-		\end{center}
-		independently and without illegitimate assistance from third parties. I have used no other than 
-		the specified sources and aids. In case that the thesis is additionally submitted in an 
-		electronic format, I declare that the written and electronic versions are fully identical. The 
-		thesis has not been submitted to any examination body in this, or similar, form. 
-		
-		Aachen, \@submissiondate \hfill	\@author
-		
-		\vspace{1cm}
-		\textbf{Official Notification:}\\
-		\begin{small}
-			\textbf{Para. 156 StGB (German Criminal Code): False Statutory Declarations}\\
-			Whosoever before a public authority competent to administer statutory declarations 
-			falsely makes such a declaration or falsely testifies while referring to such a 
-			declaration shall be liable to imprisonment not exceeding three years or a fine. 
-			
-			\textbf{Para. 161 StGB (German Criminal Code): False Statutory Declarations Due to Negligence }\\
-			(1)If a person commits one of the offences listed in sections 154 to 156 negligently 
-			the penalty shall be imprisonment not exceeding one year or a fine. \\
-			(2) The offender shall be exempt from liability if he or she corrects their false 
-			testimony in time. The provisions of section 158 (2) and (3) shall apply accordingly. 
-		\end{small}
-		I have read and understood the above official notification:
-		
-		Aachen, \@submissiondate \hfill	\@author
-	}
-	
-	\cleardoublepage
-}
 
 %------------------------------------------------------------------------------
 % \DeclarationIGMR
@@ -541,56 +356,6 @@ urlcolor			= cyan				% Internetverweise / Reference to internet links
 	\cleardoublepage
 }
 
-%------------------------------------------------------------------------------
-% \TitlePageMATSEPraxisbericht
-%------------------------------------------------------------------------------
-\newcommand{\TitlePageMATSEPraxisbericht}{%
-	\thispagestyle{empty}%
-	\vspace*{-3cm}
-	\begin{figure}[h]
-		\raggedleft
-		\multilang{
-			\includegraphics[width = 0.75\textwidth]{01_style/rwth_igmr_de_rgb.png}}{
-			\includegraphics[width = 0.75\textwidth]{01_style/rwth_igmr_en_rgb.png}}
-	\end{figure}
-	
-	\begin{center}
-		\vspace{\fill}
-		
-		\begin{spacing}{1.5}
-			\textsc{\huge{\@title}}
-		\end{spacing}
-		
-		\vspace{1cm}
-		
-		\textbf{\@type}
-		
-		\vspace{\fill}	
-		
-		\normalsize
-		\textit{von:}
-			
-		\@authordegreefront\ \@author\ \@authordegreeback
-		
-		Matr.-Nr.: \@studentno
-		
-		\vspace{\fill}
-		Aachen, den \@submissiondate
-			
-		\vspace{1.5cm}
-			
-		\begin{tabular}[t]{@{}l} 
-			\rule{0.4\textwidth}{0.5pt}\\
-			\@author\hspace*{0.2cm}
-		\end{tabular}
-		\hfill % move it to the right
-		\begin{tabular}[t]{l@{}}
-			\rule{0.4\textwidth}{0.5pt}\\
-			\@supervisor\hspace*{0.2cm}
-		\end{tabular}
-	\end{center}	
-	\cleardoublepage
-}
 
 %------------------------------------------------------------------------------
 % \TitlePageIGMRSeminararbeit
