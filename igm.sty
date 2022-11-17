@@ -1,0 +1,644 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{igm}[2017/05/15]
+
+%==============================================================================
+%====== ÄNDERUNGSVERZEICHNIS / List of changes ================================
+%==============================================================================
+% V 1.0 | 2017-05-08 | F.Schoeler     | Creation of igm.sty
+% V 1.1 | 2017-05-15 | F.Schoeler     | setspace option of package scrhack deactivated
+% V 1.2 | 2017-10-26 | F.Schoeler     | migration to IGMR, modification of \IssueIGM
+% V 1.3 | 2017-11-16 | F.Freikowski   | migration to IGMR Part 2: Duplicate Commands to IGMR
+% V 1.31| 2022-06-24 | A. Shahidi     | Line 69: scrlayer-scrpage -> scrpage2
+%==============================================================================
+%====== Required Packages and Options =========================================
+%==============================================================================
+
+% --------------------------------------------------------------------------
+%	KOMA Script Optionen / KOMA Script options
+% --------------------------------------------------------------------------
+\KOMAoptions{
+	fontsize		= 12pt,
+	parskip			= half,
+	listof			= totoc,
+	bibliography	= totoc,	% 			Literature in table of content
+	%toc 			= chapterentrywithdots,	
+	headinclude}
+
+% --------------------------------------------------------------------------
+%	Kompatibilität / Compatibility
+% --------------------------------------------------------------------------
+\RequirePackage[setspace=false]{scrhack} 	% Zusammenspiel von einigen Paketen mit KOMA-Script / Interaction of several packages with the KOMA-Script
+
+% --------------------------------------------------------------------------
+%	Sprache, Schrift und Text / Language, font and text
+% --------------------------------------------------------------------------
+\RequirePackage[utf8]{inputenc}    				% Input-Encodung / Input-encoding
+\RequirePackage{babel}          				% Rechtschreibunterstuetzung / Spell aid
+\RequirePackage[autostyle]{csquotes} 			% Deutsche Anfuehrungszeichen / German quotation marks
+\RequirePackage[T1]{fontenc}         			% T1-kodierte Schriften, korrekte Trennmuster fuer Worte mit Umlauten / T1-encoded fonts, correct seperation of words with umlauts
+\RequirePackage{lmodern}						% Schoenere Schrift / Nicer font
+\RequirePackage{textcomp}						% Sonderzeichen im Text (z.B. €) / Special characters in the text (e.g. €)
+\RequirePackage{textgreek}						% Griechische Symbole im Text / Greek symbols in the text
+
+% --------------------------------------------------------------------------
+%	Layout der Seiten / Layout of the pages
+% --------------------------------------------------------------------------
+% Schriftart und Schriftgroesse der Ueberschriften anpassen / Adjust the font and font size of the headings
+\setkomafont{chapter}{\rmfamily\bfseries}
+\setkomafont{section}{\rmfamily\bfseries}
+\setkomafont{subsection}{\rmfamily\bfseries}
+\setkomafont{subsubsection}{\rmfamily\bfseries}
+\renewcommand*{\sectfont}{\rmfamily\bfseries}
+
+% Abstand vor und nach den Ueberschriften anpassen / Adjust the gap before and after the headings
+\renewcommand*{\chapterheadstartvskip}{\vspace*{\baselineskip}}
+\renewcommand*{\chapterheadendvskip}{\vspace{\baselineskip}}
+
+% Inhaltsverzeichnis: Section und Subsection gleich eingerückt / TOC: same indent for section and subseection
+\renewcommand*\l@subsection{\bprot@dottedtocline{2}{1.5em}{2.9em}}
+
+\tolerance		= 200 	% Weissraum / White space	
+\clubpenalty 	= 1000 	% Waisenkind/ orphan child
+\widowpenalty 	= 1000 	% Witwe / Widow
+
+% --------------------------------------------------------------------------
+%	Zeilenabstand, Kopf- und Fusszeilen / Line spacing, header and footer
+% --------------------------------------------------------------------------
+\RequirePackage{setspace}					% Zeilenabstand / Line spacing
+\onehalfspacing								% eineinhalbfacher Zeilenabstand / One and a half times the regular line spacing
+\RequirePackage[automark, headsepline]{scrlayer-scrpage}% Kopf- und Fusszeilen / Header and footer
+\pagestyle{scrheadings}
+\RequirePackage[format 			= hang,
+textformat 		= simple, % no modifications, period = full stop at the end
+justification 	= justified,
+font 			= {normalsize}, % stretch =1.25},
+labelfont 		= {bf},
+parskip			= 24pt,
+aboveskip 		= 6pt %,
+]{caption}       	% mehrzeilige Captions ausrichten / adjust multiline captions
+
+% --------------------------------------------------------------------------
+%	Tabellen / Tables
+% --------------------------------------------------------------------------
+\RequirePackage{booktabs}		 				% Schoene horizontale Linien / horizontal lines
+\RequirePackage{multirow}		 				% Spalten und Zeilen weiter unterteilen / Divide lines and columns further
+\RequirePackage{rccol}			 				% Ausrichtung von Spalten am Dezimalzeichen / Align columns according to the decimal point
+
+% --------------------------------------------------------------------------
+%	Grafiken / Graphics
+% --------------------------------------------------------------------------
+\RequirePackage{graphicx, psfrag} 				% Zum Einbinden von Grafiken / Incorporation of graphics
+\RequirePackage{subcaption}          			% Unterabbildungen / Sub-illustrations
+
+% --------------------------------------------------------------------------
+%	Mathematik-Modus / Mathematics-mode
+% --------------------------------------------------------------------------
+\RequirePackage[intlimits]{amsmath}  		% Fuer erweiterte mathematische Konstrukte / for complex mathematic constructions
+\RequirePackage{mathtools}					% Fuer Mathematikformeln: Indizes oben links / Mathematical formula: Indeces top left
+\RequirePackage{mathrsfs,amssymb}			% Fuer Mathematikformeln: Symbole / Mathematical formula: Symbols
+\RequirePackage{amsfonts}					% Fuer Mathematikformeln: Schriften / Mathematical formula: Fonts
+\RequirePackage{bm}							% Fettschrift fuer Matrizen und Vektoren / Bold lettering for matrices and vectors
+\RequirePackage{arydshln}					% Linien fuer Matrizen und Vektoren / lines for matrices and vectors
+
+% --------------------------------------------------------------------------
+%	Literaturverzeichnis / Bibliopraphy
+% --------------------------------------------------------------------------
+\RequirePackage[backend			= biber,
+citestyle 		= igm,
+bibstyle 		= igm,
+giveninits		= true,
+uniquename 		= init,
+isbn 			= true,
+maxnames 		= 99,
+minalphanames 	= 3,
+url				= true,
+doi				= true,
+block			= space
+]{biblatex}
+
+% --------------------------------------------------------------------------
+%	Abkuerzungs- und Formelverzeichnis / List of abbreviations and and formulas
+% --------------------------------------------------------------------------
+\RequirePackage[ %printonlyused				% Only displays used entries
+]{acronym}					% For the list of abbreviations
+
+% --------------------------------------------------------------------------
+%	SI-Einheiten / SI-Units
+% --------------------------------------------------------------------------
+\RequirePackage{siunitx}
+\sisetup{per-mode = fraction}
+
+% --------------------------------------------------------------------------
+%	PDF Erstellung / PDF creation 
+% --------------------------------------------------------------------------
+\pdfoutput=1
+\RequirePackage{pdflscape}       				% Seiten im Querformat im PDF richtig anzeigen / Display pages properly in landscape mode
+\RequirePackage[pdftex,	
+pdfusetitle,		
+pdfborder			={0 0 0},			% Unterdruecken der PDF Rahmen/ Avoid borders in PDF
+colorlinks			= false,			% Setzen der Textfarbe / Set text color
+linkcolor			= red, 				% einfache interne Verknuepfungen / simple internal links
+anchorcolor			= black,			% Ankertext / Anchor text
+citecolor			= blue, 			% Verweise auf Literaturverzeichniseintraege im Text / Reference to entries in the bibliography used in the text
+filecolor			= magenta, 			% Verknuepfungen, die lokale Dateien oeffnen / Links that open local files
+menucolor			= red, 				% Acrobat-Menuepunkte / Acrobat-menu
+urlcolor			= cyan				% Internetverweise / Reference to internet links 
+]{hyperref}
+
+% --------------------------------------------------------------------------
+%	Margins
+% --------------------------------------------------------------------------
+\RequirePackage[left=3cm,right=2cm,top=1.15cm,bottom=1.25cm,headheight=8.5mm,headsep=1.0cm,footskip=1.25cm,includeheadfoot]{geometry}	% margins
+
+%==============================================================================
+%====== IGM Macros und Functions ==============================================
+%==============================================================================
+
+\def\@institut{Institut f{\"u}r Getriebetechnik, Maschinendynamik und Robotik}
+\def\@fakultaet{Fakult{\"a}t f{\"u}r Maschinenwesen}
+\def\@hochschule{Rheinisch-Westf{\"a}lische Technische Hochschule Aachen}
+\def\@department{Institute of Mechanism Theory, Machine Dynamics and Robotics}
+\def\@faculty{Faculty of Mechanical Engineering}
+\def\@university{RWTH Aachen University}
+\def\@professor{Univ.-Prof. Dr.-Ing. Dr. h. c.  Burkhard Corves}
+\def\professor#1{\gdef\@professor{#1}}
+\def\@secexaminer{Prof. Dr.-Ing. Mathias H{\"u}sing}
+\def\secexaminer#1{\gdef\@secexaminer{#1}}
+
+\def\@authordegreefront{}
+\def\authordegreefront#1{\gdef\@authordegreefront{#1}}	
+\def\@authordegreeback{}
+\def\authordegreeback#1{\gdef\@authordegreeback{#1}}
+\def\@studentno{}
+\def\studentno#1{\gdef\@studentno{#1}}
+\def\@type{}
+\def\type#1{\gdef\@type{#1}}
+\def\@submissiondate{}
+\def\submissiondate#1{\gdef\@submissiondate{#1}}
+\def\@supervisor{}
+\def\supervisor#1{\gdef\@supervisor{#1}}
+\def\@issuetext{}
+\def\issuetext#1{\gdef\@issuetext{#1}}
+
+\hypersetup{pdftitle=\@title, pdfauthor=\@author, pdfcreator={\@author}, pdfsubject={\@type}}
+
+%------------------------------------------------------------------------------
+% \multilang
+%------------------------------------------------------------------------------
+
+\newcommand{\multilang}[2]{\iflanguage{german}{#1}{}\iflanguage{ngerman}{#1}{}\iflanguage{english}{#2}{}}
+
+%------------------------------------------------------------------------------
+% \TitlePageIGM
+%------------------------------------------------------------------------------
+
+\newcommand{\TitlePageIGM}{%
+	\thispagestyle{empty}%
+	\vspace*{-3cm}
+	\begin{figure}[h]
+		\raggedleft
+		\multilang{
+			\includegraphics[width = 0.75\textwidth]{Contents/Resources/rwth_igmr_de_rgb.png}}{
+			\includegraphics[width = 0.75\textwidth]{Contents/Resources/rwth_igmr_en_rgb.png}}
+	\end{figure}
+	
+	\begin{center}
+		\footnotesize{\multilang{Diese Arbeit wurde vorgelegt am \@institut}{This thesis was submitted to the \@department}}
+		\vspace{2cm}
+		
+		\textbf{\Large{\@title}}
+		
+		\vspace{0.5cm}		
+		%\Large{\@subtitle}
+		
+		\vspace{2cm}		
+		\Large{\@type}
+		
+		\normalsize
+		\textit{\multilang{von}{by}}:
+		
+		\@authordegreefront\ \@author\ \@authordegreeback
+		
+		\multilang{Matr.-Nr.}{Student number}: \@studentno
+		
+		\vspace{1cm}		
+		\textit{\multilang{betreut von}{supervised by}:}
+		
+		\@supervisor
+		
+		\vspace{1cm}		
+		\textit{\multilang{Pr\"ufer}{Examiner}}:
+		
+		\@professor
+		
+		\@secexaminer
+		
+		\vspace{1cm}
+		Aachen, \@submissiondate
+	\end{center}
+	
+	\cleardoublepage
+	
+	% leere Seite hinter dem Deckblatt / blank page after the title page
+	\newpage\null\thispagestyle{empty}\newpage
+	\cleardoublepage
+}
+
+%------------------------------------------------------------------------------
+% \TitlePageIGMR
+%------------------------------------------------------------------------------
+
+\newcommand{\TitlePageIGMR}{%
+	\thispagestyle{empty}%
+	\vspace*{-3cm}
+	\begin{figure}[h]
+		\raggedleft
+		\multilang{
+			\includegraphics[width = 0.75\textwidth]{Contents/Resources/rwth_igmr_de_rgb.png}}{
+			\includegraphics[width = 0.75\textwidth]{Contents/Resources/rwth_igmr_en_rgb.png}}
+	\end{figure}
+	
+	\begin{center}
+		\footnotesize{\multilang{Diese Arbeit wurde vorgelegt am \@institut}{This thesis was submitted to the \@department}}
+		\vspace{2cm}
+		
+		\textbf{\Large{\@title}}
+		
+		\vspace{0.5cm}		
+		%\Large{\@subtitle}
+		
+		\vspace{2cm}		
+		\Large{\@type}
+		
+		\normalsize
+		\textit{\multilang{von}{by}}:
+		
+		\@authordegreefront\ \@author\ \@authordegreeback
+		
+		\multilang{Matr.-Nr.}{Student number}: \@studentno
+		
+		\vspace{1cm}		
+		\textit{\multilang{betreut von}{supervised by}:}
+		
+		\@supervisor
+		
+		\vspace{1cm}		
+		\textit{\multilang{Pr\"ufer}{Examiner}}:
+		
+		\@professor
+		
+		\@secexaminer
+		
+		\vspace{1cm}
+		Aachen, \@submissiondate
+	\end{center}
+	
+	\cleardoublepage
+	
+	% leere Seite hinter dem Deckblatt / blank page after the title page
+	\newpage\null\thispagestyle{empty}\newpage
+	\cleardoublepage
+}
+
+%------------------------------------------------------------------------------
+% \IssueIGM
+%------------------------------------------------------------------------------
+\newcommand{\IssueIGM}{%
+	\ihead[]{\multilang{Themenstellung}{Issue}}
+	\chead[]{}
+	\ohead[]{\pagemark}
+	\ifoot[]{}
+	\cfoot[]{}
+	\ofoot[]{}		
+	\begin{center}
+		\textbf{\large{\@type}}\\
+		%\vspace{0.5cm}
+		\normalsize
+		\multilang{von}{by} \@authordegreefront\ \@author\ \@authordegreeback\\
+		%\vspace{0.5cm}
+		\multilang{Matr.-Nr.}{Student number}: \@studentno\\
+		%\vspace{0.5cm}
+		\textbf{\@title}
+		%\vspace{0.5cm}
+	\end{center}
+	\hrule
+	\vspace{0.5cm}
+	
+	\@issuetext
+	
+	\multilang{Betreuer}{Supervisor}:	\@supervisor\\
+	%	\vspace{1cm}	
+	%	
+	%	\begin{flushright}
+	%		\rule{9cm}{0.5pt}\\
+	%		\@professor\hspace*{0.2cm}
+	%	\end{flushright}
+	
+	\vfill
+	\cleardoublepage
+}
+
+
+%------------------------------------------------------------------------------
+% \IssueIGMR
+%------------------------------------------------------------------------------
+\newcommand{\IssueIGMR}{%
+	\ihead[]{\multilang{Themenstellung}{Issue}}
+	\chead[]{}
+	\ohead[]{\pagemark}
+	\ifoot[]{}
+	\cfoot[]{}
+	\ofoot[]{}		
+	\begin{center}
+		\textbf{\large{\@type}}\\
+		%\vspace{0.5cm}
+		\normalsize
+		\multilang{von}{by} \@authordegreefront\ \@author\ \@authordegreeback\\
+		%\vspace{0.5cm}
+		\multilang{Matr.-Nr.}{Student number}: \@studentno\\
+		%\vspace{0.5cm}
+		\textbf{\@title}
+		%\vspace{0.5cm}
+	\end{center}
+	\hrule
+	\vspace{0.5cm}
+	
+	\@issuetext
+	
+	\multilang{Betreuer}{Supervisor}:	\@supervisor\\
+	%	\vspace{1cm}	
+	%	
+	%	\begin{flushright}
+	%		\rule{9cm}{0.5pt}\\
+	%		\@professor\hspace*{0.2cm}
+	%	\end{flushright}
+	
+	\vfill
+	\cleardoublepage
+}
+
+%------------------------------------------------------------------------------
+% \DeclarationIGM
+%------------------------------------------------------------------------------
+\newcommand{\DeclarationIGM}{%
+	\ihead[]{Eidesstattliche Versicherung}
+	\chead[]{}
+	\ohead[]{\pagemark}
+	
+	%\vspace{0.5cm}
+	\begin{center}
+		\textbf{Eidesstattliche Versicherung}
+	\end{center}
+	\@author\hfill Matrikel-Nummer: \@studentno
+	
+	Ich versichere hiermit an Eides Statt, dass ich die vorliegende \@type\ mit dem Titel
+	\begin{center}
+		\textbf{\@title}
+	\end{center}
+	selbstständig und ohne unzulässige fremde Hilfe erbracht habe. Ich habe keine anderen als die angegebenen Quellen und Hilfsmittel benutzt. Für den Fall, dass die Arbeit zusätzlich auf einem Datenträger eingereicht wird, erkläre ich, dass die schriftliche und die elektronische Form vollständig übereinstimmen. Die Arbeit hat in gleicher oder ähnlicher Form noch keiner Prüfungsbehörde vorgelegen.
+	
+	Aachen, \@submissiondate \hfill\rule{5cm}{0.5pt}\newline \vspace{-1.5cm}
+	\begin{flushright}
+		\@author
+	\end{flushright}	
+	
+	\textbf{Belehrung:}\\
+	\begin{small}		
+		\textbf{§ 156 StGB: Falsche Versicherung an Eides Statt}\\
+		Wer vor einer zur Abnahme einer Versicherung an Eides Statt zuständigen Behörde eine solche Versicherung falsch abgibt oder unter Berufung auf eine solche Versicherung falsch aussagt, wird mit Freiheitsstrafe bis zu drei Jahren oder mit Geldstrafe bestraft. 
+		
+		\textbf{§ 161 StGB: Fahrlässiger Falscheid; fahrlässige falsche Versicherung an Eides Statt}\\
+		(1) Wenn eine der in den §§ 154 bis 156 bezeichneten Handlungen aus Fahrlässigkeit begangen worden ist, so tritt Freiheitsstrafe bis zu einem Jahr oder Geldstrafe ein.\\
+		(2) Straflosigkeit tritt ein, wenn der Täter die falsche Angabe rechtzeitig berichtigt. Die Vorschriften des § 158 Abs. 2 und 3 gelten entsprechend.		
+	\end{small}
+	
+	Die vorstehende Belehrung habe ich zur Kenntnis genommen:
+	
+	%\vspace{0.5cm}
+	
+	Aachen, \@submissiondate \hfill\rule{5cm}{0.5pt}\newline \vspace{-1.5cm}
+	\begin{flushright}
+		\@author
+	\end{flushright}
+	
+	\multilang{}{
+		\newpage
+		The present translation is for your convenience only.\\
+		Only the German version is legally binding.
+		\begin{center}
+			\textbf{Statutory Declaration in Lieu of an Oath}
+		\end{center}
+		\@author\hfill Student number: \@studentno
+		
+		I hereby declare in lieu of an oath that I have completed the present \@type\ entitled
+		\begin{center}
+			\textbf{\@title}
+		\end{center}
+		independently and without illegitimate assistance from third parties. I have used no other than 
+		the specified sources and aids. In case that the thesis is additionally submitted in an 
+		electronic format, I declare that the written and electronic versions are fully identical. The 
+		thesis has not been submitted to any examination body in this, or similar, form. 
+		
+		Aachen, \@submissiondate \hfill	\@author
+		
+		\vspace{1cm}
+		\textbf{Official Notification:}\\
+		\begin{small}
+			\textbf{Para. 156 StGB (German Criminal Code): False Statutory Declarations}\\
+			Whosoever before a public authority competent to administer statutory declarations falsely makes such a declaration or falsely testifies while referring to such a declaration shall be liable to imprisonment not exceeding three years or a fine. 
+			
+			\textbf{Para. 161 StGB (German Criminal Code): False Statutory Declarations Due to Negligence }\\
+			(1)If a person commits one of the offences listed in sections 154 to 156 negligently the penalty shall be imprisonment not exceeding one year or a fine. \\
+			(2) The offender shall be exempt from liability if he or she corrects their false testimony in time. The provisions of section 158 (2) and (3) shall apply accordingly. 
+		\end{small}
+		I have read and understood the above official notification: :
+		
+		Aachen, \@submissiondate \hfill	\@author
+	}
+	
+	\cleardoublepage
+}
+
+%------------------------------------------------------------------------------
+% \DeclarationIGMR
+%------------------------------------------------------------------------------
+\newcommand{\DeclarationIGMR}{%
+	\ihead[]{Eidesstattliche Versicherung}
+	\chead[]{}
+	\ohead[]{\pagemark}
+	
+	%\vspace{0.5cm}
+	\begin{center}
+		\textbf{Eidesstattliche Versicherung}
+	\end{center}
+	\@author\hfill Matrikel-Nummer: \@studentno
+	
+	Ich versichere hiermit an Eides Statt, dass ich die vorliegende \@type\ mit dem Titel
+	\begin{center}
+		\textbf{\@title}
+	\end{center}
+	selbstständig und ohne unzulässige fremde Hilfe erbracht habe. Ich habe keine anderen als die angegebenen Quellen und Hilfsmittel benutzt. Für den Fall, dass die Arbeit zusätzlich auf einem Datenträger eingereicht wird, erkläre ich, dass die schriftliche und die elektronische Form vollständig übereinstimmen. Die Arbeit hat in gleicher oder ähnlicher Form noch keiner Prüfungsbehörde vorgelegen.
+	
+	Aachen, \@submissiondate \hfill\rule{5cm}{0.5pt}\newline \vspace{-1.5cm}
+	\begin{flushright}
+		\@author
+	\end{flushright}	
+	
+	\textbf{Belehrung:}\\
+	\begin{small}		
+		\textbf{§ 156 StGB: Falsche Versicherung an Eides Statt}\\
+		Wer vor einer zur Abnahme einer Versicherung an Eides Statt zuständigen Behörde eine solche Versicherung falsch abgibt oder unter Berufung auf eine solche Versicherung falsch aussagt, wird mit Freiheitsstrafe bis zu drei Jahren oder mit Geldstrafe bestraft. 
+		
+		\textbf{§ 161 StGB: Fahrlässiger Falscheid; fahrlässige falsche Versicherung an Eides Statt}\\
+		(1) Wenn eine der in den §§ 154 bis 156 bezeichneten Handlungen aus Fahrlässigkeit begangen worden ist, so tritt Freiheitsstrafe bis zu einem Jahr oder Geldstrafe ein.\\
+		(2) Straflosigkeit tritt ein, wenn der Täter die falsche Angabe rechtzeitig berichtigt. Die Vorschriften des § 158 Abs. 2 und 3 gelten entsprechend.		
+	\end{small}
+	
+	Die vorstehende Belehrung habe ich zur Kenntnis genommen:
+	
+	%\vspace{0.5cm}
+	
+	Aachen, \@submissiondate \hfill\rule{5cm}{0.5pt}\newline \vspace{-1.5cm}
+	\begin{flushright}
+		\@author
+	\end{flushright}
+	
+	\multilang{}{
+		\newpage
+		The present translation is for your convenience only.\\
+		Only the German version is legally binding.
+		\begin{center}
+			\textbf{Statutory Declaration in Lieu of an Oath}
+		\end{center}
+		\@author\hfill Student number: \@studentno
+		
+		I hereby declare in lieu of an oath that I have completed the present \@type\ entitled
+		\begin{center}
+			\textbf{\@title}
+		\end{center}
+		independently and without illegitimate assistance from third parties. I have used no other than 
+		the specified sources and aids. In case that the thesis is additionally submitted in an 
+		electronic format, I declare that the written and electronic versions are fully identical. The 
+		thesis has not been submitted to any examination body in this, or similar, form. 
+		
+		Aachen, \@submissiondate \hfill	\@author
+		
+		\vspace{1cm}
+		\textbf{Official Notification:}\\
+		\begin{small}
+			\textbf{Para. 156 StGB (German Criminal Code): False Statutory Declarations}\\
+			Whosoever before a public authority competent to administer statutory declarations falsely makes such a declaration or falsely testifies while referring to such a declaration shall be liable to imprisonment not exceeding three years or a fine. 
+			
+			\textbf{Para. 161 StGB (German Criminal Code): False Statutory Declarations Due to Negligence }\\
+			(1)If a person commits one of the offences listed in sections 154 to 156 negligently the penalty shall be imprisonment not exceeding one year or a fine. \\
+			(2) The offender shall be exempt from liability if he or she corrects their false testimony in time. The provisions of section 158 (2) and (3) shall apply accordingly. 
+		\end{small}
+		I have read and understood the above official notification: :
+		
+		Aachen, \@submissiondate \hfill	\@author
+	}
+	
+	\cleardoublepage
+}
+
+%------------------------------------------------------------------------------
+% \TitlePageMATSEPraxisbericht
+%------------------------------------------------------------------------------
+\newcommand{\TitlePageMATSEPraxisbericht}{%
+	\thispagestyle{empty}%
+	\vspace*{-3cm}
+	\begin{figure}[h]
+		\raggedleft
+		\multilang{
+			\includegraphics[width = 0.75\textwidth]{Contents/Resources/rwth_igmr_de_rgb.png}}{
+			\includegraphics[width = 0.75\textwidth]{Contents/Resources/rwth_igmr_en_rgb.png}}
+	\end{figure}
+	
+	\begin{center}
+		\vspace{\fill}
+		
+		\begin{spacing}{1.5}
+			\textsc{\huge{\@title}}
+		\end{spacing}
+		
+		\vspace{1cm}
+		
+		\textbf{\@type}
+		
+		\vspace{\fill}	
+		
+		\normalsize
+		\textit{von:}
+			
+		\@authordegreefront\ \@author\ \@authordegreeback
+		
+		Matr.-Nr.: \@studentno
+		
+		\vspace{\fill}
+		Aachen, den \@submissiondate
+			
+		\vspace{1.5cm}
+			
+		\begin{tabular}[t]{@{}l} 
+			\rule{0.4\textwidth}{0.5pt}\\
+			\@author\hspace*{0.2cm}
+		\end{tabular}
+		\hfill % move it to the right
+		\begin{tabular}[t]{l@{}}
+			\rule{0.4\textwidth}{0.5pt}\\
+			\@supervisor\hspace*{0.2cm}
+		\end{tabular}
+	\end{center}	
+	\cleardoublepage
+}
+
+%------------------------------------------------------------------------------
+% \TitlePageIGMRSeminararbeit
+%------------------------------------------------------------------------------
+\newcommand{\TitlePageIGMRSeminararbeit}{%
+	\thispagestyle{empty}%
+	\vspace*{-3cm}
+	\begin{figure}[h]
+		\raggedleft
+		\multilang{
+			\includegraphics[width = 0.75\textwidth]{Contents/Resources/rwth_igmr_de_rgb.png}}{
+			\includegraphics[width = 0.75\textwidth]{Contents/Resources/rwth_igmr_en_rgb.png}}
+	\end{figure}
+	
+	\begin{center}
+		\vspace{2cm}
+		
+		\textbf{\Large{\@title}}
+		
+		\vspace{0.5cm}
+		
+		\vspace{2cm}
+		\Large{\@type}
+		
+		\normalsize
+		\textit{\multilang{von}{by}}:
+		
+		\@authordegreefront\ \@author\ \@authordegreeback
+		
+		\multilang{Matr.-Nr.}{Student number}: \@studentno
+		
+		\vspace{1cm}
+		\textit{\multilang{betreut von}{supervised by}:}
+		
+		\@professor
+		
+		\@supervisor
+		
+		\vspace{\fill}
+		
+		Aachen, \@submissiondate
+	\end{center}
+	
+	\cleardoublepage
+	
+	% leere Seite hinter dem Deckblatt / blank page after the title page
+	\newpage\null\thispagestyle{empty}\newpage
+	\cleardoublepage
+}
+
+\endinput

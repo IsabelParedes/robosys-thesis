@@ -1,0 +1,67 @@
+% --------------------------------------------------------------------------
+% 		Einheiten / Units
+% --------------------------------------------------------------------------
+\DeclareSIUnit[]\kmh{\kilo\meter\per\hour}
+\DeclareSIUnit[]\ms{\meter\per\second}
+\DeclareSIUnit[]\mss{\meter\per\square\second}
+\DeclareSIUnit[]\qm{\square\meter}
+
+% --------------------------------------------------------------------------
+% 	Eigene Befehle / Own commands
+% --------------------------------------------------------------------------
+
+% Differenzialoperator / Differential operator 
+\newcommand*{\diff}{\mathop{}\!\mathrm{d}}
+
+% --------------------------------------------------------------------------
+% 		vorgegebene Trennung von Woertern / predefined seperation of words 
+% --------------------------------------------------------------------------
+\hyphenation{
+ex-amp-le
+}
+
+% --------------------------------------------------------------------------
+% 		Pakete / Packages 
+% --------------------------------------------------------------------------
+
+% Die folgenden Pakete wurden bereits in igm.sty / the following packages were already included in igm.sty
+
+% {scrhack}	 				% Zusammenspiel von einigen Paketen mit KOMA-Script / Interaction of several packages with the KOMA-Script
+% [utf8]{inputenc}    		% Input-Encodung / Input-encoding
+% {babel}          			% Rechtschreibunterstuetzung / Spell aid
+% {csquotes} 				% Deutsche Anfuehrungszeichen / German quotation marks
+% [T1]{fontenc}         	% T1-kodierte Schriften, korrekte Trennmuster fuer Worte mit Umlauten / T1-encoded fonts, correct seperation of words with umlauts
+% {lmodern}					% Schoenere Schrift / Nicer font
+% {textcomp}				% Sonderzeichen im Text (z.B. €) / Special characters in the text (e.g. €)
+% {textgreek}				% Griechische Symbole im Text / Greek symbols in the text
+% {setspace}        		% Zeilenabstand / Line spacing
+% {scrpage2}				% Kopf- und Fusszeilen / Header and footer
+% {caption}       			% mehrzeilige Captions ausrichten / adjust multiline captions
+% {booktabs}		 		% Schoene horizontale Linien / horizontal lines
+% {multirow}		 		% Spalten und Zeilen weiter unterteilen / Divide lines and columns further
+% {rccol}			 		% Ausrichtung von Spalten am Dezimalzeichen / Align columns according to the decimal point
+% {graphicx, psfrag} 		% Zum Einbinden von Grafiken / Incorporation of graphics
+% {subcaption}          	% Unterabbildungen / Sub-illustrations
+% {amsmath}  				% Fuer erweiterte mathematische Konstrukte / for complex mathematic constructions
+% {mathtools}				% Fuer Mathematikformeln: Indizes oben links / Mathematical formula: Indeces top left
+% {mathrsfs,amssymb}		% Fuer Mathematikformeln: Symbole / Mathematical formula: Symbols
+% {amsfonts}				% Fuer Mathematikformeln: Schriften / Mathematical formula: Fonts
+% {bm}						% Fettschrift fuer Matrizen und Vektoren / Bold lettering for matrices and vectors
+% {arydshln}				% Linien fuer Matrizen und Vektoren / lines for matrices and vectors
+% {biblatex}				% Quellenangaben / Citations
+% {acronym}					% For the list of abbreviations
+% {siunitx}					% Für schöne Einheiten 
+% {pdflscape}       		% Seiten im Querformat im PDF richtig anzeigen / Display pages properly in landscape mode
+% {hyperref}				% PDF mit Hyperlinks
+% {geometry}				% margins
+
+% weitere Pakete können eingebunden werden / additional packages can be included
+
+%\usepackage{pgfplots}						% Zum Erstellen von Vektorgrafiken / Creation of vector graphics
+%\pgfplotsset{compat=1.13}						
+%\usetikzlibrary{external,positioning,calc,decorations.markings,arrows,shapes,patterns}
+%\tikzexternalize
+%\newcommand{\includetikz}[1]{
+%	\tikzsetnextfilename{Abbildungen/AbbildungenKompiliert/#1}%
+%	\input{Abbildungen/AbbildungenTIKZ/#1.tikz}}%
+
