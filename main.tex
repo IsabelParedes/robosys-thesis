@@ -1,5 +1,5 @@
 % -------------------------------------------------------------------------
-% LaTeX Vorlage fuer wissenschaftliche Arbeiten am IGMR 
+% LaTeX Vorlage für wissenschaftliche Arbeiten am IGMR 
 % LaTeX template for thesis at the IGMR
 % -------------------------------------------------------------------------
 %
@@ -66,7 +66,7 @@
 % --------------------------------------------------------------------------
 \usepackage{igm}
 \usepackage{xcolor}
-\include{RWTH_Farben}
+\input{01_style/RWTH_Farben}
 
 %
 %---------------------------------------------------------------------------
@@ -80,7 +80,7 @@
 %		as a list of the words that cannot be seperated.
 %		(hyphenation)
 % --------------------------------------------------------------------------
-\input{Contents/Additions}
+\input{00_src/Additions}
 
 %---------------------------------------------------------------------------
 % 		Standard Aufbau / Structure 
@@ -98,7 +98,7 @@
 %		- Zusammenfassung / Summary
 %		- Ausblick / Outlook
 %		- Literaturverzeichnis / List of literature
-%		- Abbildungsverzeichnis / Register of illustrations
+%		- Abbildungsverzeichnis / List of illustrations
 %		- Tabellenverzeichnis / List of tables
 %		- Anhang / Appendix
 %		
@@ -120,12 +120,15 @@
 \supervisor{Dipl.-Ing. Martin Mustermann}
 
 % Text der Aufgabenstellung / text of the issue
-\issuetext{The issue will be inserted here after being drafted and provided by the supervisor beforehand.\\	The issue should contain a detailed list of all work packages. It should not exceed one page and the version handed to the students has to be signed by the professor.}
+\issuetext{The issue will be inserted here after being drafted and provided 
+by the supervisor beforehand.\\	The issue should contain a detailed list of 
+all work packages. It should not exceed one page and the version handed to 
+the students has to be signed by the professor.}
 
 % --------------------------------------------------------------------------
 % 		Literaturdatei / Bibliography file
 % --------------------------------------------------------------------------
-\addbibresource{Contents/References.bib} 
+\addbibresource{04_refer/References.bib} 
 
 \begin{document}
 \frontmatter	% Beginn des Vorspanns / Begin of the prefix
