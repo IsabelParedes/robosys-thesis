@@ -276,4 +276,7 @@ TSWLatexianTemp*
 *.lpz
 
 # Old files
-archive/*
+*archive/*
+
+# Settings
+.vscode
