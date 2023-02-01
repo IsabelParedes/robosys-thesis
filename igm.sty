@@ -1,4 +1,4 @@
-\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+% \NeedsTeXFormat{LaTeX2e}[1994/06/01]
 \ProvidesPackage{igm}[2017/05/15]
 
 %==============================================================================
@@ -17,11 +17,11 @@
 %	KOMA Script Optionen / KOMA Script options
 % --------------------------------------------------------------------------
 \KOMAoptions{
-	fontsize		= 12pt,
+	fontsize		= 11pt,     % Originally 12pt
 	parskip			= half,
 	listof			= totoc,
 	bibliography	= totoc,	% 			Literature in table of content
-	%toc 			= chapterentrywithdots,	
+	% toc 			= chapterentrywithdots,	
 	headinclude}
 
 % --------------------------------------------------------------------------
@@ -55,7 +55,12 @@
 \renewcommand*{\chapterheadendvskip}{\vspace{\baselineskip}}
 
 % Inhaltsverzeichnis: Section und Subsection gleich eingerückt / TOC: same indent for section and subseection
-\renewcommand*\l@subsection{\bprot@dottedtocline{2}{1.5em}{2.9em}}
+% \renewcommand*\l@subsection{\bprot@dottedtocline{2}{1.5em}{2.9em}}
+\RedeclareSectionCommand[
+    tocindent=1.5em
+]{subsection}
+% \RequirePackage{tocloft}
+% \cftsetindents{subsection}{1.5em}{2.9em}
 
 \tolerance		= 200 	% Weissraum / White space	
 \clubpenalty 	= 1000 	% Waisenkind/ orphan child
@@ -66,9 +71,13 @@
 % --------------------------------------------------------------------------
 \RequirePackage{setspace}					% Zeilenabstand / Line spacing
 \onehalfspacing								% eineinhalbfacher Zeilenabstand / One and a half times the regular line spacing
-\RequirePackage[automark, headsepline]{scrlayer-scrpage}% Kopf- und Fusszeilen / Header and footer
+\RequirePackage[
+	automark, 
+	headsepline
+]{scrlayer-scrpage}% Kopf- und Fusszeilen / Header and footer
 \pagestyle{scrheadings}
-\RequirePackage[format 			= hang,
+\RequirePackage[
+format 			= hang,
 textformat 		= simple, % no modifications, period = full stop at the end
 justification 	= justified,
 font 			= {normalsize}, % stretch =1.25},
@@ -104,16 +113,16 @@ aboveskip 		= 6pt %,
 %	Literaturverzeichnis / Bibliopraphy
 % --------------------------------------------------------------------------
 \RequirePackage[backend			= biber,
-citestyle 		= igm,
-bibstyle 		= igm,
-giveninits		= true,
-uniquename 		= init,
-isbn 			= true,
-maxnames 		= 99,
-minalphanames 	= 3,
-url				= true,
-doi				= true,
-block			= space
+	citestyle 		= igm,
+	bibstyle 		= igm,
+	giveninits		= true,
+	uniquename 		= init,
+	isbn 			= true,
+	maxnames 		= 99,
+	minalphanames 	= 3,
+	url				= true,
+	doi				= true,
+	block			= space
 ]{biblatex}
 
 % --------------------------------------------------------------------------
@@ -133,22 +142,23 @@ block			= space
 % --------------------------------------------------------------------------
 \pdfoutput=1
 \RequirePackage{pdflscape}       				% Seiten im Querformat im PDF richtig anzeigen / Display pages properly in landscape mode
-\RequirePackage[pdftex,	
-pdfusetitle,		
-pdfborder			={0 0 0},			% Unterdruecken der PDF Rahmen/ Avoid borders in PDF
-colorlinks			= false,			% Setzen der Textfarbe / Set text color
-linkcolor			= red, 				% einfache interne Verknuepfungen / simple internal links
-anchorcolor			= black,			% Ankertext / Anchor text
-citecolor			= blue, 			% Verweise auf Literaturverzeichniseintraege im Text / Reference to entries in the bibliography used in the text
-filecolor			= magenta, 			% Verknuepfungen, die lokale Dateien oeffnen / Links that open local files
-menucolor			= red, 				% Acrobat-Menuepunkte / Acrobat-menu
-urlcolor			= cyan				% Internetverweise / Reference to internet links 
+\RequirePackage[
+	pdftex,	
+	pdfusetitle,		
+	pdfborder			={0 0 0},			% Unterdruecken der PDF Rahmen/ Avoid borders in PDF
+	colorlinks			= false,			% Setzen der Textfarbe / Set text color
+	linkcolor			= red, 				% einfache interne Verknuepfungen / simple internal links
+	anchorcolor			= black,			% Ankertext / Anchor text
+	citecolor			= blue, 			% Verweise auf Literaturverzeichniseintraege im Text / Reference to entries in the bibliography used in the text
+	filecolor			= magenta, 			% Verknuepfungen, die lokale Dateien oeffnen / Links that open local files
+	menucolor			= red, 				% Acrobat-Menuepunkte / Acrobat-menu
+	urlcolor			= cyan				% Internetverweise / Reference to internet links 
 ]{hyperref}
 
 % --------------------------------------------------------------------------
 %	Margins
 % --------------------------------------------------------------------------
-\RequirePackage[left=3cm,right=2cm,top=1.15cm,bottom=1.25cm,headheight=8.5mm,headsep=1.0cm,footskip=1.25cm,includeheadfoot]{geometry}	% margins
+\RequirePackage[left=3cm,right=2cm,top=1.15cm,bottom=1.25cm,headheight=8.5mm,headsep=1.0cm,footskip=1.26cm,includeheadfoot]{geometry}	% margins
 
 %==============================================================================
 %====== IGM Macros und Functions ==============================================
