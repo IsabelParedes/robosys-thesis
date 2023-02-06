@@ -8,15 +8,78 @@ Ideal scenario:
 - connect to a robot via bluetooth
 - share simulations and algorithms
 
-\section{Technical Levels}\label{sec:levels}
+\section{Implementation Layers}
 
-    \subsection{User Levels of Interaction}\label{sub:user_levels}
+    \subsection{User Levels}
 
-    \subsection{Technical Levels of Implementation}\label{sub:tech_levels}
+        \begin{table}[htbp]
+            \centering	
+            \caption{TODO:}
+                \begin{tabular}{ll}
+                    \toprule
+                    \textbf{User} & \textbf{Description} \\
+                    \midrule
+                    Beginners   & Complete beginners who have never used ROS or programmed \\
+                                & in any language. \\[0.5em]
+                    Students    & University students with minimal programming experience. \\[0.5em]
+                    ROS Users   & Students and researchers who actively use ROS for projects. \\[0.5em]
+                    Roboticists & Robotics software developers including contributors to the \\
+                                & ROS ecosystem. \\
+                \bottomrule
+            \end{tabular}\label{tab:userlevels}
+        \end{table}
 
-\section{Scope}\label{sec:scope}
+    \subsection{User Levels of Interaction}
 
-    - Middleware replacement (why sockets don't work)
+        \begin{table}[htbp]
+            \centering	
+            \caption{TODO:}
+                \begin{tabular}{ll}
+                    \toprule
+                    \textbf{UI Level} & \textbf{Description} \\
+                    \midrule
+                    Non-interactive & Nodes run automatically as soon as the site is launched. \\ [0.5em]
 
-    - JavaScript ``ROS master''
+                    Minimal         & User can start/stop 1$-$2 nodes by pressing a button. \\[0.5em]
+
+                    Basic           & User can select which nodes to run and can analyze the \\
+                                    & environment by requesting or viewing information. \\[0.5em]
+
+                    Intermediate    & The graphical interface allows the user to accomplish \\
+                                    & primary tasks, such as displaying a robot. \\[0.5em]
+
+                    Advanced        & A complete GUI where the user has full control of the \\
+                                    & environment, can start/stop nodes, modify params, \\
+                                    & interact with robots, etc. \\[0.5em]
+                                    
+                    Complete        & All ROS2 features are available and packages can be \\
+                                    & built on the browser \\
+                \bottomrule
+            \end{tabular}\label{tab:uilevels}
+        \end{table}
+
+    \subsection{Technical Levels}
+
+        \begin{table}[htbp]
+            \centering	
+            \caption{TODO:}
+                \begin{tabular}{cl}
+                    \toprule
+                    \textbf{Level} & \textbf{Description} \\
+                    \midrule
+                    L0 & A publisher and subscriber example on the console. \\ [0.3em]
+                    L1 & Multiple nodes and topics with limited interaction. \\[0.3em]
+                    L2 & Graphical display with user interaction. \\[0.3em]
+                    L3 & Simulation of a robot (urdf). \\[0.3em]
+                    L4 & Manipulation of physical robot. \\[0.3em]
+                    L5 & Simulation of a robotics scenario. \\
+                \bottomrule
+            \end{tabular}\label{tab:techlevels}
+        \end{table}
+
+\section{Scope}
+
+    Middleware replacement (why sockets don't work)
+
+    JavaScript ``ROS master''
 

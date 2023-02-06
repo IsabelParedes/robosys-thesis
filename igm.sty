@@ -44,8 +44,9 @@
 %	Layout der Seiten / Layout of the pages
 % --------------------------------------------------------------------------
 % Schriftart und Schriftgroesse der Ueberschriften anpassen / Adjust the font and font size of the headings
-\setkomafont{chapter}{\rmfamily\bfseries}
-\setkomafont{section}{\rmfamily\bfseries}
+% REMOVE large font size if noticed
+\setkomafont{chapter}{\rmfamily\bfseries\Large}
+\setkomafont{section}{\rmfamily\bfseries\large}
 \setkomafont{subsection}{\rmfamily\bfseries}
 \setkomafont{subsubsection}{\rmfamily\bfseries}
 \renewcommand*{\sectfont}{\rmfamily\bfseries}
@@ -112,7 +113,8 @@ aboveskip 		= 6pt %,
 % --------------------------------------------------------------------------
 %	Literaturverzeichnis / Bibliopraphy
 % --------------------------------------------------------------------------
-\RequirePackage[backend			= biber,
+\RequirePackage[
+	backend			= biber,
 	citestyle 		= igm,
 	bibstyle 		= igm,
 	giveninits		= true,
@@ -158,7 +160,16 @@ aboveskip 		= 6pt %,
 % --------------------------------------------------------------------------
 %	Margins
 % --------------------------------------------------------------------------
-\RequirePackage[left=3cm,right=2cm,top=1.15cm,bottom=1.25cm,headheight=8.5mm,headsep=1.0cm,footskip=1.26cm,includeheadfoot]{geometry}	% margins
+\RequirePackage[
+	left             = 3cm,
+	right            = 2cm,
+	top              = 1.15cm,
+	bottom           = 1.25cm,
+	headheight       = 8.5mm,
+	headsep          = 1.0cm,
+	footskip         = 1.26cm,
+	includeheadfoot
+]{geometry}	% margins
 
 %==============================================================================
 %====== IGM Macros und Functions ==============================================
