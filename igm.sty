@@ -57,9 +57,7 @@
 
 % Inhaltsverzeichnis: Section und Subsection gleich eingerückt / TOC: same indent for section and subseection
 % \renewcommand*\l@subsection{\bprot@dottedtocline{2}{1.5em}{2.9em}}
-\RedeclareSectionCommand[
-    tocindent=1.5em
-]{subsection}
+\RedeclareSectionCommand[tocindent=1.5em]{subsection}
 % \RequirePackage{tocloft}
 % \cftsetindents{subsection}{1.5em}{2.9em}
 
@@ -78,13 +76,14 @@
 ]{scrlayer-scrpage}% Kopf- und Fusszeilen / Header and footer
 \pagestyle{scrheadings}
 \RequirePackage[
-format 			= hang,
-textformat 		= simple, % no modifications, period = full stop at the end
-justification 	= justified,
-font 			= {normalsize}, % stretch =1.25},
-labelfont 		= {bf},
-parskip			= 24pt,
-aboveskip 		= 6pt %,
+	format 			= hang,
+	textformat 		= simple, % no modifications, period = full stop at the end
+	justification 	= justified,
+	font 			= {normalsize}, % stretch =1.25},
+	labelfont 		= {bf},
+	parskip			= 24pt,
+	aboveskip 		= 6pt, %,
+	labelseparator  = space % REMOVE substitute for period and colon
 ]{caption}       	% mehrzeilige Captions ausrichten / adjust multiline captions
 
 % --------------------------------------------------------------------------
@@ -99,6 +98,7 @@ aboveskip 		= 6pt %,
 % --------------------------------------------------------------------------
 \RequirePackage{graphicx, psfrag} 				% Zum Einbinden von Grafiken / Incorporation of graphics
 \RequirePackage{subcaption}          			% Unterabbildungen / Sub-illustrations
+\graphicspath{ {./03_images/} }
 
 % --------------------------------------------------------------------------
 %	Mathematik-Modus / Mathematics-mode

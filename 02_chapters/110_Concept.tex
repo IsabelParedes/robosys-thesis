@@ -3,6 +3,9 @@
 
 \section{Concept}\label{sec:concept}
 
+Goals:
+- open source
+
 Ideal scenario: 
 - click on a link and run ROS
 - connect to a robot via bluetooth
@@ -51,8 +54,8 @@ Ideal scenario:
                     Advanced        & A complete GUI where the user has full control of the \\
                                     & environment, can start/stop nodes, modify params, \\
                                     & interact with robots, etc. \\[0.5em]
-                                    
-                    Complete        & All ROS2 features are available and packages can be \\
+
+                    Complete        & All ROS 2 features are available and packages can be \\
                                     & built on the browser \\
                 \bottomrule
             \end{tabular}\label{tab:uilevels}
@@ -67,12 +70,15 @@ Ideal scenario:
                     \toprule
                     \textbf{Level} & \textbf{Description} \\
                     \midrule
-                    L0 & A publisher and subscriber example on the console. \\ [0.3em]
-                    L1 & Multiple nodes and topics with limited interaction. \\[0.3em]
-                    L2 & Graphical display with user interaction. \\[0.3em]
-                    L3 & Simulation of a robot (urdf). \\[0.3em]
-                    L4 & Manipulation of physical robot. \\[0.3em]
-                    L5 & Simulation of a robotics scenario. \\
+                    L0 & A publisher is displayed. \\ [0.3em]
+                    L1 & A publisher and subscriber can communicate with each other and \\
+                       & offer minimal interaction to start and stop each node. \\[0.3em]
+                    L2 & Multiple nodes and distinct topics with limited interaction. \\[0.3em]
+                    L3 & Graphical display and interaction with a ROS client library. \\[0.3em]
+                    L4 & Manipulation of a phisycal robot wirelessly. \\[0.3em]
+                    L5 & Visualization of a robot with Zethus. \\[0.3em]
+                    L6 & Simulation of a robotics scenario with Gazebo. \\[0.3em]
+                    L7 & Development workspace for creating and debugging ROS packages. \\
                 \bottomrule
             \end{tabular}\label{tab:techlevels}
         \end{table}
