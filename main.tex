@@ -36,12 +36,6 @@
 % -------------------------------------------------------------------------
 % 		HINWEISE / PLEASE NOTE: 
 %
-%		Zur Aktualisierung des Inhaltsverzeichnis muss 2x kompiliert werden. 
-%		Latex schreibt die Informationen beim ersten Kompilieren in eine Datei auf der
-%		Festplatte und laed diese beim zweiten Kompilieren erst ein.
-%		Fuer das Aktualisieren des Literaturverzeichnis muss pdflatex, dann bibtex und
-%		dann wieder	pdflatex kompiliert werden
-%
 %		In order to update the table of contents it is necessary to compile twice.
 %		After the first process of compiling, Latex saves the data to a document 
 %		on the hard drive and imports the data only upon a second process of compiling. 	
@@ -65,19 +59,15 @@
 % 		Pakete / Packages 
 % --------------------------------------------------------------------------
 \usepackage{igm}
-\usepackage{xcolor}
+
 \input{01_style/RWTH_Farben}
 
 %
 %---------------------------------------------------------------------------
 %		Ergaenzungen / additions:
 %
-% 		Die Ergaenzungen enthalten selbst definierte Tex- und Latexbefehler
-%		sowie die Liste der Woerter, welche nicht getrennt werden duerfen
-%		(hyphenation)
-%
 % 		Additions contain self-defined Tex and Latex commands as well
-%		as a list of the words that cannot be seperated.
+%		as a list of the words that cannot be separated.
 %		(hyphenation)
 % --------------------------------------------------------------------------
 \input{00_src/Additions}
@@ -130,6 +120,9 @@ the students has to be signed by the professor.}
 \addbibresource{04_refer/References.bib} 
 
 \begin{document}
+\pagecolor{bgColor}
+\color{textColor}
+
 \frontmatter	% Beginn des Vorspanns / Begin of the prefix
 
 % --------------------------------------------------------------------------
@@ -186,7 +179,7 @@ the students has to be signed by the professor.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \include{Contents/01-Introduction}
 
-% \include{Contents/02-Chapter02}
+% \include{Contents/02-Chapter02} 
 
 % \include{Contents/Sample-Chapter}
 % \include{Contents/Beispiel-Kapitel}

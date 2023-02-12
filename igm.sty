@@ -13,6 +13,13 @@
 %====== Required Packages and Options =========================================
 %==============================================================================
 
+% CUSTOM
+\RequirePackage[dvipsnames]{xcolor}
+
+% REMOVE for readability
+\definecolor{textColor}{HTML}{458AFF}
+\definecolor{bgColor}{HTML}{020C0E}
+
 % --------------------------------------------------------------------------
 %	KOMA Script Optionen / KOMA Script options
 % --------------------------------------------------------------------------
@@ -23,6 +30,7 @@
 	bibliography	= totoc,	% 			Literature in table of content
 	% toc 			= chapterentrywithdots,	
 	headinclude}
+\renewcommand{\headfont}{\color{textColor}}
 
 % --------------------------------------------------------------------------
 %	Kompatibilität / Compatibility
@@ -75,16 +83,19 @@
 	headsepline
 ]{scrlayer-scrpage}% Kopf- und Fusszeilen / Header and footer
 \pagestyle{scrheadings}
-\RequirePackage[
+\RequirePackage[]{caption}       	% mehrzeilige Captions ausrichten / adjust multiline captions
+\DeclareCaptionFont{textCaption}{\color{textColor}}
+\captionsetup{
 	format 			= hang,
 	textformat 		= simple, % no modifications, period = full stop at the end
 	justification 	= justified,
 	font 			= {normalsize}, % stretch =1.25},
-	labelfont 		= {bf},
+	labelfont 		= {bf, textCaption},
+	textfont        = {textCaption},
 	parskip			= 24pt,
 	aboveskip 		= 6pt, %,
 	labelseparator  = space % REMOVE substitute for period and colon
-]{caption}       	% mehrzeilige Captions ausrichten / adjust multiline captions
+}
 
 % --------------------------------------------------------------------------
 %	Tabellen / Tables
