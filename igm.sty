@@ -17,10 +17,20 @@
 \RequirePackage[dvipsnames]{xcolor}
 
 % REMOVE for readability
-\definecolor{textColor}{HTML}{458AFF}
-\definecolor{bgColor}{HTML}{020C0E}
-% \definecolor{textColor}{HTML}{000000}
-% \definecolor{bgColor}{HTML}{FFFFFF}
+% \definecolor{textColor}{HTML}{458AFF}
+% \definecolor{bgColor}{HTML}{020C0E}
+\definecolor{textColor}{HTML}{000000}
+\definecolor{bgColor}{HTML}{FFFFFF}
+\definecolor{igmrBlue}{HTML}{00549F}
+\definecolor{igmrLightBlue}{HTML}{8EBAE5}
+\definecolor{qrColor}{HTML}{4CAAFC}
+
+\RequirePackage{tcolorbox}
+\tcbset{
+	colback=igmrLightBlue!20!white,
+	colframe=igmrLightBlue!75!white,
+	fonttitle=\bfseries\color{igmrBlue}
+}
 
 % --------------------------------------------------------------------------
 %	KOMA Script Optionen / KOMA Script options

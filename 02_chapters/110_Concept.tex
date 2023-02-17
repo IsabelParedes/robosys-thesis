@@ -1,7 +1,12 @@
 \chapter{Concept Realization}\label{cha:concept}
 
+    This section provides the major milestones from the project beginning with a
+    brief description of the overall concept solution to the challenges presented
+    in the Introduction, followed by the layers of implementation accomplished 
+    during the development phase.
 
-\section{Concept}\label{sec:concept}
+
+\section{Target Scenario}\label{sec:target}
 
 % Goals:
 % - open source
@@ -11,14 +16,9 @@
 % - connect to a robot via bluetooth
 % - share simulations and algorithms
 
-    Introduce the concept
-
-    \ac{ROS}
-
-
-
-    The goals for this project can be defined by an \textit{target scenario} in 
-    which a high level of usability is reached by an intermediate user. First, an
+    To introduce the concept, a ``target scenario'' is first considered. In this
+    scenario, an intermediate \ac{ROS} user should be able to reach a high level 
+    of usability with the tools developed in this project. First, an
     intermediate user is described as an individual who is familiar with the 
     \ac{ROS} ecosystem but does not have the need to maintain or test \ac{ROS} packages
     across different platforms. In the target scenario, this intermediate
@@ -35,12 +35,64 @@
         \item connecting with robots via bluetooth
     \end{itemize}
 
-
+    Outside of this scenario, another goal for this project includes making the 
+    developed tools available to the general public by distributing them as
+    open-source software. This will allow other roboticists to compile their own
+    packages and share them on the web.
 
 
 \section{Implementation Layers}
 
+    \textcolor{red}{TODO: add some introduction to these layers} 
+
+
+
+
+    \begin{tcolorbox}[title=Note]
+        \begin{minipage}[t]{0.87\linewidth}
+            \vspace*{0pt}
+            If the reader would like to follow along with the demonstrations
+            provided in the following pages, it is recommended to visit 
+            \href{https://ros2wasm.dev/}{\texttt{ros2wasm.dev}}.
+            Throughout the text, links will be provided to redirect the reader 
+            to specific examples.
+        \end{minipage}\hfill%
+        \begin{minipage}[t]{0.1\linewidth}
+            \vspace*{0pt}
+            \includegraphics[height=\linewidth,width=\linewidth]{qr_ros2wasm.png}
+        \end{minipage}
+    \end{tcolorbox}
+
+
     \subsection{User Levels}
+
+        For the purpose of establishing target users for the developed tools,
+        potential users were categorized based on expertise level with \ac{ROS} 
+        and programming in general, as observed in Table~\ref{tab:userlevels}.
+
+        Commencing with Level 0, the \textit{Beginner} category is reserved for
+        students in secondary education who have had little to no experience with
+        programming, and therefore are not familiar with \ac{ROS}. The tools
+        developed in this project would serve as an initial introduction to 
+        robotics for this category of users.
+
+        Level 1 consists of university students who have completed elementary 
+        programming courses but have not yet been introduced to \ac{ROS}. For this
+        type of user, this project will provide essential tutorials to become
+        acquainted with the inner workings of \ac{ROS}.
+
+        With a slightly higher level of expertise, Level 2 comprises students or
+        other enthusiasts who are already familiar with \ac{ROS} and have collaborated
+        in projects which use \ac{ROS} as the main system to handle communications
+        of multiple robotics elements. This ROS user is equivalent to the intermediate
+        user described in the target scenario (Section~\ref{sec:target}).
+
+        Lastly, the highest level of experience is dedicated to roboticists who
+        actively use and contribute to the development of \ac{ROS}. For this 
+        category of users, the intention of this project will be to involve more
+        contributors in order to more promptly meet the needs of most \ac{ROS} users.
+
+
 
         \begin{table}[htbp]
             \color{textColor}
@@ -65,6 +117,8 @@
 
     \subsection{User Levels of Interaction}
 
+        \ac{GUI}
+
         \begin{table}[htbp]
             \color{textColor}
             \centering	
@@ -83,7 +137,7 @@
                     $3$ & Intermediate    & The graphical interface allows the user to accomplish \\
                     & & primary tasks, such as displaying a robot. \\[0.5em]
 
-                    $4$ & Advanced        & A complete \ac{GUI} where the user has full control of the \\
+                    $4$ & Advanced        & A complete GUI where the user has full control of the \\
                     & & environment, can start/stop nodes, modify params, \\
                     & & interact with robots, etc. \\[0.5em]
 
@@ -117,9 +171,9 @@
             \end{tabular}\label{tab:techlevels}
         \end{table}
 
-\section{Scope of Implementation}
+% \section{Scope of Implementation}
 
-    \subsection{Middleware Replacement}
+    % \subsection{Middleware Replacement}
         % Why it needs to be replaced
         % why sockets don't work
 
@@ -127,17 +181,17 @@
         % Interface with ROS
         % JS ROS master to handle communications
 
-    \subsection{User Interface}
+    % \subsection{User Interface}
 
         % Simple website
         % JupyterLite
 
-    \subsection{Automatic Builds}
+    % \subsection{Automatic Builds}
         
         % GitHub Actions for automatically building packages
 
 
-    \subsection{Out of Scope}
+    % \subsection{Out of Scope}
         
         % Gazebo
         % Simulation
