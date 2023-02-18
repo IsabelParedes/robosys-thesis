@@ -32,6 +32,9 @@
 	fonttitle=\bfseries\color{igmrBlue}
 }
 
+\RequirePackage{tikz}
+\renewcommand*{\ttdefault}{qcr}
+
 % --------------------------------------------------------------------------
 %	KOMA Script Optionen / KOMA Script options
 % --------------------------------------------------------------------------
@@ -171,13 +174,16 @@
 	pdftex,	
 	pdfusetitle,		
 	pdfborder			={0 0 0},			% Unterdruecken der PDF Rahmen/ Avoid borders in PDF
-	colorlinks			= false,			% Setzen der Textfarbe / Set text color
-	linkcolor			= red, 				% einfache interne Verknuepfungen / simple internal links
+	% colorlinks			= false,			% Setzen der Textfarbe / Set text color
+	colorlinks			= true,             % REMOVE ???
+	% linkcolor			= red, 				% einfache interne Verknuepfungen / simple internal links
+	linkcolor			= black,            % REMOVE ???
 	anchorcolor			= black,			% Ankertext / Anchor text
 	citecolor			= blue, 			% Verweise auf Literaturverzeichniseintraege im Text / Reference to entries in the bibliography used in the text
 	filecolor			= magenta, 			% Verknuepfungen, die lokale Dateien oeffnen / Links that open local files
 	menucolor			= red, 				% Acrobat-Menuepunkte / Acrobat-menu
-	urlcolor			= cyan				% Internetverweise / Reference to internet links 
+	% urlcolor			= cyan				% Internetverweise / Reference to internet links 
+	urlcolor            = igmrBlue          % REMOVE ???
 ]{hyperref}
 
 % --------------------------------------------------------------------------

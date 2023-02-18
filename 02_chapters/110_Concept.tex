@@ -5,6 +5,8 @@
     in the Introduction, followed by the layers of implementation accomplished 
     during the development phase.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Target Scenario}\label{sec:target}
 
@@ -30,9 +32,9 @@
         \item interact with the environment to obtain information about 
                 running nodes, this would include echoing topics, listing 
                 parameters, reviewing log files, etc.
-        \item visualization of \ac{URDF} files, transforms, point clouds, markers, etc.
-        \item playing and recording bag files % ???
-        \item connecting with robots via bluetooth
+        \item visualize \ac{URDF} files, transforms, point clouds, markers, etc.
+        \item play and record bag files % ???
+        \item connect with robots via bluetooth
     \end{itemize}
 
     Outside of this scenario, another goal for this project includes making the 
@@ -40,12 +42,16 @@
     open-source software. This will allow other roboticists to compile their own
     packages and share them on the web.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Implementation Layers}
 
-    \textcolor{red}{TODO: add some introduction to these layers} 
-
-
+    The development of this project is subdivided into multiple levels for the 
+    users, the interactions that the users have with the tools developed, and
+    the technical difficulty of developing the tools. These subdivisions are
+    beneficial in providing the reader with an illustration of the progressing 
+    stages of development of this project.
 
 
     \begin{tcolorbox}[title=Note]
@@ -53,7 +59,7 @@
             \vspace*{0pt}
             If the reader would like to follow along with the demonstrations
             provided in the following pages, it is recommended to visit 
-            \href{https://ros2wasm.dev/}{\texttt{ros2wasm.dev}}.
+            \href{https://ros2wasm.dev/}{\textsf{ros2wasm.dev}}.
             Throughout the text, links will be provided to redirect the reader 
             to specific examples.
         \end{minipage}\hfill%
@@ -63,36 +69,14 @@
         \end{minipage}
     \end{tcolorbox}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \subsection{User Levels}
 
         For the purpose of establishing target users for the developed tools,
         potential users were categorized based on expertise level with \ac{ROS} 
-        and programming in general, as observed in Table~\ref{tab:userlevels}.
-
-        Commencing with Level 0, the \textit{Beginner} category is reserved for
-        students in secondary education who have had little to no experience with
-        programming, and therefore are not familiar with \ac{ROS}. The tools
-        developed in this project would serve as an initial introduction to 
-        robotics for this category of users.
-
-        Level 1 consists of university students who have completed elementary 
-        programming courses but have not yet been introduced to \ac{ROS}. For this
-        type of user, this project will provide essential tutorials to become
-        acquainted with the inner workings of \ac{ROS}.
-
-        With a slightly higher level of expertise, Level 2 comprises students or
-        other enthusiasts who are already familiar with \ac{ROS} and have collaborated
-        in projects which use \ac{ROS} as the main system to handle communications
-        of multiple robotics elements. This ROS user is equivalent to the intermediate
-        user described in the target scenario (Section~\ref{sec:target}).
-
-        Lastly, the highest level of experience is dedicated to roboticists who
-        actively use and contribute to the development of \ac{ROS}. For this 
-        category of users, the intention of this project will be to involve more
-        contributors in order to more promptly meet the needs of most \ac{ROS} users.
-
-
+        and programming in general. A summary of these levels can be  observed 
+        in Table~\ref{tab:userlevels}.
 
         \begin{table}[htbp]
             \color{textColor}
@@ -102,71 +86,262 @@
                     \toprule
                     & \textbf{User}   & \textbf{Description} \\
                     \midrule
-                    $0$ & Beginner    & Complete beginners who have never used ROS or programmed \\
+                    $1$ & Beginner    & Complete beginners who have never used ROS or programmed \\
                     & & in any language. \\[0.5em]
 
-                    $1$ & Student     & University students with basic programming experience. \\[0.5em]
+                    $2$ & Student     & University students with basic programming experience. \\[0.5em]
 
-                    $2$ & ROS User    & Students and researchers who actively use ROS for projects. \\[0.5em]
+                    $3$ & ROS User    & Students and researchers who actively use ROS for projects. \\[0.5em]
 
-                    $3$ &  Roboticist & Robotics software developers including contributors to the \\
+                    $4$ &  Roboticist & Robotics software developers including contributors to the \\
                     & & ROS ecosystem. \\
                 \bottomrule
             \end{tabular}\label{tab:userlevels}
         \end{table}
 
-    \subsection{User Levels of Interaction}
+        Commencing with Level 1, the \textit{Beginner} category is reserved for
+        students in secondary education who have had little to no experience with
+        programming, and therefore are not familiar with \ac{ROS}. The tools
+        developed in this project would serve as an initial introduction to 
+        robotics for this category of users.
 
-        \ac{GUI}
+        Level 2 consists of university students who have completed elementary 
+        programming courses but have not yet been introduced to \ac{ROS}. For this
+        type of user, this project will provide essential tutorials to become
+        acquainted with the inner workings of \ac{ROS}.
+
+        With a slightly higher level of expertise, Level 3 comprises students or
+        other enthusiasts who are already familiar with \ac{ROS} and have collaborated
+        in projects which use \ac{ROS} as the main system to handle communications
+        of multiple robotics elements. This ROS user is equivalent to the intermediate
+        user described in the target scenario (Section~\ref{sec:target}).
+
+        Lastly, the highest level of experience is dedicated to roboticists who
+        actively use \ac{ROS} and contribute to its development. For this 
+        category of users, the intention of this project will be to involve more
+        contributors in order to more promptly meet the needs of most \ac{ROS} users.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \subsection{Interaction Levels}
+
+        The \ac{GUI} is an essential element in the development of this project
+        because it determines the benefits the users will receive by utilizing 
+        these tools. Similarly, the interface the user experiences with the tools
+        has been categorized in increasing levels of interaction. These categories
+        are summarized in Table~\ref{tab:uilevels}.
 
         \begin{table}[htbp]
             \color{textColor}
             \centering	
-            \caption{User interface segmented based on the level of interaction.}
+            \caption{\ac{UI} segmented based on the level of interaction.}
                 \begin{tabular}{rll}
                     \toprule
                     & \textbf{Interface} & \textbf{Description} \\
                     \midrule
-                    $0$ & Non-interactive & Nodes run automatically as soon as the site is launched. \\ [0.5em]
+                    $1$ & Non-interactive & A publisher runs automatically as soon as the site\\
+                    & & is loaded. \\ [0.5em]
 
-                    $1$ & Minimal         & User can start/stop 1$-$2 nodes by pressing a button. \\[0.5em]
+                    $2$ & Minimal         & User can start/stop a publisher by pressing a button.\\[0.5em]
 
-                    $2$ & Basic           & User can select which nodes to run and can analyze the \\
-                    & & environment by requesting or viewing information. \\[0.5em]
+                    $3$ & Basic           & User can select and run publisher and subscriber \\
+                    & & nodes simultaneously.\\[0.5em]
 
-                    $3$ & Intermediate    & The graphical interface allows the user to accomplish \\
-                    & & primary tasks, such as displaying a robot. \\[0.5em]
+                    $4$ & Intermediate    & Publishers, subscribers, and services are available,\\
+                    & & and the user can request basic information about\\
+                    & & the environment.\\[0.5em]
 
-                    $4$ & Advanced        & A complete GUI where the user has full control of the \\
-                    & & environment, can start/stop nodes, modify params, \\
-                    & & interact with robots, etc. \\[0.5em]
+                    $5$ & Advanced        & A complete GUI where the user has full control of the \\
+                    & & environment, can start/stop nodes, modify parameters, \\
+                    & & manage bag files, and visualize robots. \\[0.5em]
 
-                    $5$ & Complete        & All ROS 2 features are available and packages can be \\
-                    & & built on the browser \\
+                    $6$ & Complete        & All ROS 2 features are available and packages can be \\
+                    & & built on the browser, plus the user can directly connect\\
+                    & & and interact with external robots.\\
 
                 \bottomrule
             \end{tabular}\label{tab:uilevels}
         \end{table}
+
+
+
+        As the name implies, the \textit{non-interactive} Level 1 does not offer the user
+        any sort of interaction with the \ac{ROS} environment. With this non-interactive
+        interface, the user can do nothing more than load and reload the page. 
+        As soon as the user loads the page, a node which has been pre-compiled 
+        will automatically start running. In the simplest case scenario, a publisher
+        node would run and the published messages would be displayed on the window.
+        Because the user has no ability to interact with the environment, this
+        publisher node will continue to run uninterrupted. The scenario described
+        is illustrated in Figure~\ref{fig:ui1}.
+
+        \begin{figure}[htbp]
+            \centering
+            \begin{tikzpicture}
+                \draw[black, dashed, thin, fill=black!5] (0,0) rectangle (\linewidth,4);
+                \end{tikzpicture}
+            \caption{TODO: Level 1 image}\label{fig:ui1}
+        \end{figure}
+
+        \begin{tcolorbox}[title=Example 1]
+            \begin{minipage}[t]{0.87\linewidth}
+                \vspace*{0pt}
+                A demonstration of a \textit{non-interactive} user interface (Level 1) can
+                be found at \href{https://ros2wasm.dev/pages/demo01/index.html}{\textsf{ros2wasm.dev/pages/demo01}}
+
+                \textsc{Note:} The page must be reloaded to restart the node.
+            \end{minipage}\hfill%
+            \begin{minipage}[t]{0.1\linewidth}
+                \vspace*{0pt}
+                \includegraphics[height=\linewidth,width=\linewidth]{qr_demo01.png}
+            \end{minipage}
+        \end{tcolorbox}
+
+
+
+        By marginally expanding the interface, the \textit{minimal} Level 2 provides
+        the user with the ability to start and stop a pre-compiled node. This 
+        stage is accomplished by the addition of buttons to the website. Continuing
+        with the example previously described, in this level the user can press
+        a button to start a publisher node, view the output of any published 
+        messages, and stop the node at any point. Level 2 is exhibited in Figure~\ref{fig:ui2}
+
+        \begin{figure}[htbp]
+            \centering
+            \begin{tikzpicture}
+                \draw[black, dashed, thin, fill=black!5] (0,0) rectangle (\linewidth,4);
+                \end{tikzpicture}
+            \caption{TODO: Level 2 image}\label{fig:ui2}
+        \end{figure}
+
+        \begin{tcolorbox}[title=Example 2]
+            \begin{minipage}[t]{0.87\linewidth}
+                \vspace*{0.5\baselineskip}
+                A demonstration of a \textit{minimal} user interface (Level 2) can
+                be found at \href{https://ros2wasm.dev/pages/demo02/index.html}{\textsf{ros2wasm.dev/pages/demo02}}
+            \end{minipage}\hfill%
+            \begin{minipage}[t]{0.1\linewidth}
+                \vspace*{0pt}
+                \includegraphics[height=\linewidth,width=\linewidth]{qr_demo02.png}
+            \end{minipage}
+        \end{tcolorbox}
+
+
+
+        The \textit{basic} Level 3 offers the user increasingly more control over
+        the environment. In this level, the user has the ability to run more than
+        one node simultaneously. This makes it possible to have publishers sending
+        messages to a particular topic and subscribers retrieving the published
+        messages accordingly. Nonetheless, the nodes are still pre-compiled and 
+        thus the user does not have the ability to change the topic names or any
+        other parameters of the nodes. Figure~\ref{fig:ui3} demonstrates a snapshot 
+        of Level 3.
+
+        \begin{figure}[htbp]
+            \centering
+            \begin{tikzpicture}
+                \draw[black, dashed, thin, fill=black!5] (0,0) rectangle (\linewidth,4);
+                \end{tikzpicture}
+            \caption{TODO: Level 3 image}\label{fig:ui3}
+        \end{figure}
+
+        \begin{tcolorbox}[title=Example 3]
+            \begin{minipage}[t]{0.87\linewidth}
+                \vspace*{0.5\baselineskip}
+                A demonstration of a \textit{basic} user interface (Level 3) can
+                be found at \href{https://ros2wasm.dev/pages/demo03/index.html}{\textsf{ros2wasm.dev/pages/demo03}}
+            \end{minipage}\hfill%
+            \begin{minipage}[t]{0.1\linewidth}
+                \vspace*{0pt}
+                \includegraphics[height=\linewidth,width=\linewidth]{qr_demo03.png}
+            \end{minipage}
+        \end{tcolorbox}
+
+
+
+        Stepping further into the list, the \textit{intermediate} Level 4 introduces
+        services, these include both the servers and the clients. Additionally,
+        with this level the users now possess the ability to request information
+        from the environment such as the type of nodes which are running at a
+        given time, or which topics are available. A depiction of Level 4 is shown
+        in Figure~\ref{fig:ui4}
+
+        \begin{figure}[htbp]
+            \centering
+            \begin{tikzpicture}
+                \draw[black, dashed, thin, fill=black!5] (0,0) rectangle (\linewidth,4);
+                \end{tikzpicture}
+            \caption{TODO: Level 4 image}\label{fig:ui4}
+        \end{figure}
+
+        \begin{tcolorbox}[title=Example 4]
+            \begin{minipage}[t]{0.87\linewidth}
+                \vspace*{0.5\baselineskip}
+                A demonstration of an \textit{intermediate} user interface (Level 4) can
+                be found at \href{https://ros2wasm.dev/pages/demo04/index.html}{\textsf{ros2wasm.dev/pages/demo04}}
+            \end{minipage}\hfill%
+            \begin{minipage}[t]{0.1\linewidth}
+                \vspace*{0pt}
+                \includegraphics[height=\linewidth,width=\linewidth]{qr_demo04.png}
+            \end{minipage}
+        \end{tcolorbox}
+
+
+
+        Finally arriving at the \textit{advanced} Level 5, this level is more 
+        prominent because it introduces the integration of JupyterLite with the 
+        ROS environment. With JupyterLite, the user can directly interact with
+        the ROS environment by using the ROS client libraries such as \texttt{rclpy}.
+        A typical workspace in JupyterLite is pictured in Figure~\ref{fig:ui5}.
+
+        \begin{figure}[htbp]
+            \centering
+            \begin{tikzpicture}
+                \draw[black, dashed, thin, fill=black!5] (0,0) rectangle (\linewidth,4);
+                \end{tikzpicture}
+            \caption{TODO: Level 5 image}\label{fig:ui5}
+        \end{figure}
+
+        \begin{tcolorbox}[title=Example 5]
+            \begin{minipage}[t]{0.87\linewidth}
+                \vspace*{0.5\baselineskip}
+                A demonstration of an \textit{advanced} user interface (Level 5) can
+                be found at \href{https://ros2wasm.dev/pages/demo05/index.html}{\textsf{ros2wasm.dev/pages/demo05}}
+            \end{minipage}\hfill%
+            \begin{minipage}[t]{0.1\linewidth}
+                \vspace*{0pt}
+                \includegraphics[height=\linewidth,width=\linewidth]{qr_demo05.png}
+            \end{minipage}
+        \end{tcolorbox}
+
+
+        Lastly, Level 6 consists of a \textit{complete} ROS environment also made
+        available to the user through JupyterLite. The user would be able to
+        install any additional ROS packages from \texttt{emscripten- forge}. An
+        extension for JupyterLite could enable communications with external robots
+        by using the Web Bluetooth API.\@ And a web compiler could be implemented 
+        to directly build packages within JupyterLite.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \subsection{Technical Levels}
 
         \begin{table}[htbp]
             \color{textColor}
             \centering	
-            \caption{Implementation categories with increasing technical difficulty.}
+            \caption{Implementation categories with increasing technical complexity.}
                 \begin{tabular}{cl}
                     \toprule
                     \textbf{Level} & \textbf{Description} \\
                     \midrule
-                    $0$ & A publisher is displayed. \\ [0.3em]
-                    $1$ & A publisher and subscriber can communicate with each other and \\
-                        & offer minimal interaction to start and stop each node. \\[0.3em]
-                    $2$ & Multiple nodes and distinct topics with limited interaction. \\[0.3em]
-                    $3$ & Graphical display and interaction with a ROS client library. \\[0.3em]
-                    $4$ & Manipulation of a physical robot wirelessly. \\[0.3em]
-                    $5$ & Visualization of a robot with Zethus. \\[0.3em]
-                    $6$ & Simulation of a robotics scenario with Gazebo. \\[0.3em]
-                    $7$ & Development workspace for creating and debugging ROS packages. \\
+                    $1$ & A publisher is displayed. \\ [0.3em]
+                    $2$ & A publisher and subscriber can communicate with each other.\\[0.3em]
+                    $3$ & Multiple nodes and distinct topics can run simultaneously. \\[0.3em]
+                    $4$ & Graphical display and interaction with a ROS client library. \\[0.3em]
+                    $5$ & Manipulation of a physical robot via bluetooth or wifi. \\[0.3em]
+                    $6$ & Visualization of a robot with Zethus. \\[0.3em]
+                    $7$ & Simulation of a robotics scenario with Gazebo. \\[0.3em]
+                    $8$ & Development workspace for creating and debugging ROS packages. \\
                 \bottomrule
             \end{tabular}\label{tab:techlevels}
         \end{table}
