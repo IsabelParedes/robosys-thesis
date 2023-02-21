@@ -1,4 +1,9 @@
 body {
     background-color: black;
     height: 100vh;
+    margin: 0;
+}
+
+iframe {
+    border: none;
 }
