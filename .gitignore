@@ -280,3 +280,6 @@ TSWLatexianTemp*
 
 # Settings
 .vscode
+
+# Main file
+main.pdf
