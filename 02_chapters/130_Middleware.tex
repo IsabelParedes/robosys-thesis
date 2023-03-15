@@ -1,14 +1,13 @@
-\chapter{Middleware Implementation}\label{cha:middleware}
+\chapter{Middleware Implementation}
 
 
 - What does the middleware do?
-- ROS supported middleware implementations
-- Why it needs to be replaced
-- Minimal implementation (minimal set of functions)
-- Design of middleware packages (tree diagram or something)
 
 
-\section{DDS Middleware}\label{sec:middleware_dds}
+
+\section{DDS Middleware}
+
+    ROS supported middleware implementations
 
     \subsection{FastDDS}
 
@@ -18,19 +17,85 @@
 
     \subsection{Gurum}
 
+    
 
-\section{Custom Middleware}\label{sec:middleware_custom}
+
+\section{Custom Middleware}
+
+    Why it needs to be replaced
 
     \subsection{Email}
 
     \subsection{Zenoh}
 
-\section{Substituting ROS 2 Middleware}\label{sec:middleware_substitute}
+    Minimal implementation (minimal set of functions)
+
+    
+\section{Substituting ROS 2 Middleware}
 
     At run time
 
     At build time
 
-\section{Custom Middleware Design}\label{sec:middleware_design}
+\section{Custom Middleware Design}
+
+    Design of middleware packages (tree diagram or something)
+
+    \subsection{\textsf{wasm\_cpp}}
 
 
+    \begin{figure}[htbp]
+        \centering
+        \begin{tikzpicture}%[show background grid]
+            \begin{abstractclass}[text width=5cm]{Participant}{0,0}
+                \attribute{- name : String}
+                \attribute{- role : String}
+                \attribute{- gid  : String}
+
+                \operation{- is\_valid\_name()}
+                \operation{- is\_valid\_role()}
+                \operation{- registration()}
+                \operation{- deregistration()}
+            \end{abstractclass}
+
+            \begin{class}[text width=5cm]{Publisher}{-5,-6}
+                \inherit{Participant}
+                \attribute{- name = topic\_name}
+                \attribute{- role = publisher}
+                \operation{+ publish(message : String)}
+            \end{class}
+
+            \begin{class}[text width=5cm]{Subscriber}{5,-6}
+                \inherit{Participant}
+                \attribute{- name = topic\_name}
+                \attribute{- role = subscriber}
+                \operation{+ get\_message() : String}
+            \end{class}
+
+            \begin{class}[text width=6.5cm]{ServiceServer}{-4,-11}
+                \inherit{Participant}
+                \attribute{- name = service\_name}
+                \attribute{- role = service\_server}
+                \operation{+ take\_request() : String}
+                \operation{+ send\_response(response : String)}
+            \end{class}
+
+            \composition{ServiceServer}{}{}{Publisher}
+            \composition{ServiceServer}{}{}{Subscriber}
+
+            \begin{class}[text width=6.5cm]{ServiceClient}{4,-11}
+                \inherit{Participant}
+                \attribute{- name = service\_name}
+                \attribute{- role = service\_client}
+                \operation{+ send\_request(request : String)}
+                \operation{+ take\_response() : String}
+                \operation{+ is\_service\_available() : Bool}
+            \end{class}
+
+            \composition{ServiceClient}{}{}{Publisher}
+            \composition{ServiceClient}{}{}{Subscriber}
+
+        \end{tikzpicture}
+        \caption{A class diagram}
+    \end{figure}
+    
