@@ -56,7 +56,7 @@
     keywordstyle=\bfseries\color{Blue},
     numberstyle=\tiny\color{gray},
     stringstyle=\color{Purple},
-    basicstyle=\ttfamily\small,
+    basicstyle=\ttfamily\small\color{textColor},
     breakatwhitespace=false,         
     breaklines=true,                 
     captionpos=b,                    
@@ -82,6 +82,13 @@
   stringstyle=\color{red}\ttfamily,
   morestring=[b]',
   morestring=[b]"
+}
+
+\lstdefinelanguage{JSON}{
+	numbers=none,
+	frame=shadowbox,
+	xleftmargin=.2\textwidth, 
+	xrightmargin=.2\textwidth
 }
 
 \lstset{style=codestyle}
