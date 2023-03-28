@@ -10,14 +10,14 @@
 
         The closest representation of the intended project is the work produced by Michael Allwright known as \textit{ROS on Web}. Allwright shares the same goal as the author to develop the technology which allows for running ROS nodes entirely on the browser by cross-compiling C++ code to WebAssembly and using web workers to handle the internal communication~\cite{rosonweb}.
 
-        Equivalently, Allwright targeted the \ac{ROS} 2 distribution. It is suspected that the \textit{galactic} version was used for the demonstrations. The main demonstration of a running publisher and subscriber is illustrated in Figure~\ref{fig:rosweb}.
+        Equivalently, Allwright targeted the \ac{ROS} 2 distribution. It is suspected that the \textit{galactic} version was used for the demonstrations. The main demonstration of a running publisher and subscriber is illustrated in Figure~\ref{fig:rosonweb}.
         
         
         \begin{figure}[htbp]
             \centering
             \includegraphics[width=\textwidth]{01_rosOnWeb.png}
             \caption{\textit{ROS on Web} publisher and subscriber demonstration.}
-            \label{fig:rosweb}
+            \label{fig:rosonweb}
         \end{figure}
 
         Nonetheless, the greatest disadvantage of \textit{ROS on Web} lies in the fact that the project is not open source. Very little can be derived about how Allwright was able to achieve the demonstrations represented on the website. A few hints are given in the introductory page such as the replacement of the middleware with a custom design and the use of web workers. However, it is not possible to determine the manner in which these technologies were used. Hope remains that in the near future, the repositories for \textit{ROS on Web} become publicly available as an extension of the ROS open source ecosystem.
@@ -40,7 +40,7 @@
 
 \section{Relevant Works}
 
-    There are several other works which do not directly align with the goals for this project but pertinent in regards to the idea of developing a robotics environment which can be used on a web browser. Robot Web Tools maintains a collection of open source libraries and tools which can be used for robotic frameworks on the web~\cite{robotwebtools}.
+    There are several other works which do not directly align with the goals for this project but are pertinent in regards to the idea of developing a robotics environment which can be used on a web browser. Robot Web Tools maintains a collection of open source libraries and tools which can be used for robotic frameworks on the web~\cite{robotwebtools}.
     
     \subsection{Foxglove Studio}
 
@@ -90,14 +90,31 @@
 
         Analogous to Foxglove Studio, \textsf{rosbridge} relies on an existing ROS installation. However, the capabilities of \textsf{rosbridge} are extensive and can be applied to real world scenarios; it also supports \ac{ROS} 1 and \ac{ROS} 2 distributions. Additionally, the community of contributors is highly involved in the maintenance of the client libraries.
 
-    \subsection{ROS Control Center}
+    \subsection{ROS Control Center}\label{sec:roscontrolcenter}
+
+        The \ac{ROS} Control Center is another web application which uses the \textsf{rosbridge\_suite} to establish a WebSocket connection to a robotics system running \ac{ROS}~\cite{controlcenter}. A view of the control center is depicted in Figure~\ref{fig:roscontrolcenter}.
 
         \begin{figure}[htbp]
             \centering
             \includegraphics[width=\linewidth]{02_roscontrolcenter.png}
-            \caption{ROS control center}
+            \caption{ROS control center running locally.}
             \label{fig:roscontrolcenter}
         \end{figure}
+
+        With this \ac{ROS} Control Center, the user is able to display information about running nodes, publish and subscribe to topics, call services, and change \ac{ROS} parameters. Despite its potential, the control center does not offer explicit support for interacting with \ac{ROS} 2 systems.
+
+    \subsection{ROSWeb}
+
+        ROSWeb combines all of the \ac{ROS} widgets collected by Robot Web Tools into a single web application~\cite{rosweb}. As in the case of~\ref{sec:roscontrolcenter}, ROSWeb also depends on \textsf{rosbridge} to interact with \ac{ROS} systems. Figure~\ref{fig:rosweb} demonstrates the ROSWeb application running on a Windows platform and communicating with a \ac{ROS} system in a virtual machine running Ubuntu.
+
+        \begin{figure}[htbp]
+            \centering
+            \includegraphics[width=\linewidth]{02_rosweb.png}
+            \caption{ROSWeb application interacting with a \ac{VM} running \ac{ROS}.}
+            \label{fig:rosweb}
+        \end{figure}
+
+        A major advantage of ROSWeb application is its simplicity. The \ac{ROS} widgets are interactive and require minimal programming experience from the users. It also enables the users to save and modify workspaces to match their needs.
 
     \subsection{ROSboard}
 
