@@ -114,11 +114,24 @@
             \label{fig:rosweb}
         \end{figure}
 
-        A major advantage of ROSWeb application is its simplicity. The \ac{ROS} widgets are interactive and require minimal programming experience from the users. It also enables the users to save and modify workspaces to match their needs.
+        A major advantage of ROSWeb application is its simplicity. The \ac{ROS} widgets are interactive and require minimal programming experience from the users. It also enables the users to easily save and modify workspaces to match their needs.
 
     \subsection{ROSboard}
 
-    \subsection{ROSlink}
+        In contrast to the previous two models, ROSboard does not rely on \textsf{rosbridge\_suite} to interact with \ac{ROS} systems; instead, it has a custom \textsf{Tornado} implementation to function as a web server and WebSocket server~\cite{rosboard}. Figure~\ref{fig:rosboard} shows and example of the ROSboard application with different visualization widgets.
+
+        \begin{figure}[htbp]
+            \centering
+            \includegraphics[width=\linewidth]{02_rosboard.jpg}
+            \caption{ROSboard application visualizing multiple message types.}
+            \label{fig:rosboard}
+        \end{figure}
+
+        ROSboard offers support for both \ac{ROS} 1 and \ac{ROS} 2 systems thanks to its tailored \textsf{rospy2} library which is based on \ac{ROS} 1's \textsf{rospy} but modified to ensure compatibility.
+
+    \subsection{ROSLink}
+
+    TODO: maybe too old to be relevant
 
 \section{State of WASM}
 
