@@ -45,8 +45,44 @@
 
 \section{Compilation Tools}
 
-    Given that the \textsf{colcon} package is already well adapted to build ROS packages, \textsf{colcon} was widely used throughout this project with a few customizations. 
-    In order to cross-compile the \ac{ROS} C++ and C packages to WebAssembly, the \ac{emsdk} version $3.1$ was installed. The Emscripten toolchain was then provided to \textsf{colcon} as a \textsf{cmake} argument (See Appendix~\ref{sec:apxblasm} Line $109$).
+    \subsection{colcon}
+        TODO: more details
+
+        Given that the \textsf{colcon} package is already well adapted to build ROS packages, \textsf{colcon} was widely used throughout this project with a few customizations. 
+
+    \subsection{Emscripten}
+
+        TODO: what is it and why was it used
+    
+        In order to cross-compile the \ac{ROS} C++ and C packages to WebAssembly, the \ac{emsdk} version $3.1$ was installed. The Emscripten toolchain was then provided to \textsf{colcon} as a \textsf{cmake} argument (See Appendix~\ref{sec:apxblasm} Line $109$).
+
+        
+        \begin{figure}[htbp]
+            \centering
+            \begin{tikzpicture}
+                \node (cpp) [fileBox] {C/C++ \\ source code \\ \footnotesize\textsf{talker.cpp}};
+                \node (emsdk) [fileBox, right of=cpp, xshift=4cm] {\textbf{Emscripten}};
+
+                \node (dot) [circle, right of=emsdk, opacity=0, xshift=1.2cm] {\tiny};
+
+                \node (wasm) [fileBox, right of=emsdk, xshift=4cm, yshift=1.2cm] {wasm module \footnotesize\textsf{talker.wasm}};
+                
+                \node (html) [outerBox, right of=emsdk, xshift=4cm, yshift=-0.2cm, anchor=north] {HTML document \\ \footnotesize\textsf{talker.html}};
+
+                \node (js) [innerBox, below of=html, yshift=0.5cm]{JavaScript \\ ``glue'' code \\ \footnotesize\textsf{talker.js}};
+
+                \draw [arrow] (cpp) -- (emsdk);
+                \draw [arrow] (dot.center) |- (wasm);
+                \draw [arrow] (dot.center) |- (html);
+                \draw [arrow] (dot.center) |- (js);
+                \draw [thick] (emsdk.east) -- (dot.center);
+                % \draw [decorate, decoration = {brace, amplitude=10pt, aspect=0.6}] (7.7,-3) --  (7.7,2);
+
+
+            \end{tikzpicture}
+            \caption{The transformation of C/C++ code to WebAssembly through Emscripten. TODO: ref}
+            \label{fig:emscripten}
+        \end{figure}
 
 
 \section{Package Building Process}

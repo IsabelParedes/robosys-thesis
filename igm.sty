@@ -21,6 +21,7 @@
 % \definecolor{bgColor}{HTML}{000C18}
 \definecolor{textColor}{HTML}{000000}
 \definecolor{bgColor}{HTML}{FFFFFF}
+\definecolor{myBlue}{HTML}{654EF0}
 \definecolor{igmrBlue}{HTML}{00549F}
 \definecolor{igmrLightBlue}{HTML}{8EBAE5}
 \definecolor{qrColor}{HTML}{4CAAFC}
@@ -32,7 +33,45 @@
 	fonttitle=\bfseries\color{igmrBlue}
 }
 
+% DIAGRAMS
 \RequirePackage{tikz}
+\usetikzlibrary{shapes.multipart, arrows, decorations.pathreplacing}
+\tikzstyle{fileBox} = [
+	rectangle, 
+	rounded corners,
+	text centered,
+	minimum height = 1.8cm,
+	minimum width = 3.5cm,
+	text width = 3cm,
+	draw=textColor,
+	fill=igmrLightBlue!20,
+]
+\tikzstyle{outerBox} = [
+	rectangle, 
+	rounded corners,
+	text centered,
+	minimum width = 3.5cm,
+	text width = 3cm, 
+	text depth = 2.5cm,
+    draw,
+	anchor=north
+	draw=textColor,
+	fill=igmrLightBlue!20,
+]
+\tikzstyle{innerBox} = [
+	rectangle,
+	rounded corners,
+	text centered,
+	minimum width = 2.8cm,
+	minimum height = 1.5cm,
+	text width = 2.8cm,
+	draw=textColor,
+	fill=igmrLightBlue!40,
+]
+
+\tikzstyle{arrow} = [thick,->,>=stealth,anchor=base]
+
+
 \renewcommand*{\ttdefault}{qcr}
 
 \RequirePackage{tablefootnote}
