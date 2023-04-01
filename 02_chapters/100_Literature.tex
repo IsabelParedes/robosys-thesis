@@ -105,7 +105,7 @@
 
     \subsection{ROSWeb}
 
-        ROSWeb combines all of the \ac{ROS} widgets collected by Robot Web Tools into a single web application~\cite{rosweb}. As in the case of~\ref{sec:roscontrolcenter}, ROSWeb also depends on \textsf{rosbridge} to interact with \ac{ROS} systems. Figure~\ref{fig:rosweb} demonstrates the ROSWeb application running on a Windows platform and communicating with a \ac{ROS} system in a virtual machine running Ubuntu.
+        ROSWeb combines all of the \ac{ROS} widgets collected by Robot Web Tools into a single web application~\cite{rosweb}. As in the case of ROS Control Center (\ref{sec:roscontrolcenter}), ROSWeb also depends on \textsf{rosbridge} to interact with \ac{ROS} systems. Figure~\ref{fig:rosweb} demonstrates the ROSWeb application running on a Windows platform and communicating with a \ac{ROS} system in a virtual machine running Ubuntu.
 
         \begin{figure}[htbp]
             \centering
@@ -133,44 +133,53 @@
 
     TODO: maybe too old to be relevant
 
+    \pagebreak
+
 \section{WebAssembly}
 
-    TODO: describe what it is
+    WebAssembly, also commonly referred to as simply WASM, is one of the newer technologies to enter the web arena. It was initially released in 2017 after representatives from the major browsers, Google Chrome, Microsoft Edge, Mozilla Firefox, and WebKit, agreed that the design of a \ac{MVP} was completed~\cite{krill}.
 
-    \subsection{A Brief History of WebAssembly}
+    In short, WebAssembly is a binary code format for a stack-based virtual machine~\cite{wasmspec}. It is designed to be fast, safe, efficient, and portable; and it can be used inside or outside the browser. Inside the browser, WebAssembly works as a complement to JavaScript. Some of the use cases include: games, scientific visualizations, platform simulations, interactive educational software, virtual machines, developer tools, etc.~\cite{wasmdocs}. Because of its capabilities, it is believed to be an ideal target for the development of a robotics environment on the browser.
 
-        WebAssembly, also commonly referred to as simply WASM, is one of the newer technologies to 
+        
 
     % https://blog.unity.com/technology/webassembly-is-here
-    % https://beta.unity3d.com/jonas/AngryBots/
 
     \subsection{Applications}
 
-    \begin{figure}[htbp]
-        \centering
-        \includegraphics[width=\linewidth]{02_angryBots.png}
-        \caption{Demo of Angry Bots in Unity WebGL}\label{fig:unity}
-    \end{figure}
+        Before WebAssembly was officially released, one of the first demonstrations of its potential involved the game AngryBots developed by Unity Technologies. As illustrated in Figure~\ref{fig:unity}, AngryBots is a first-person shooter game set in a space station filled with menacing robots.
 
+        \begin{figure}[htbp]
+            \centering
+            \includegraphics[width=\linewidth]{02_angryBots.png}
+            \caption{Demonstration of Angry ots in Unity WebGL~\cite{angrybots}.}\label{fig:unity}
+        \end{figure}
 
-    \begin{figure}[htbp]
-        \centering
-        \includegraphics[width=\linewidth]{02_doom.png}
-        \caption{Online demonstration of the \ac{D3wasm} project.}
-        \label{fig:doom}
-    \end{figure}
+        Similar to AngryBots, the Doom 3 Engine was ported to WebAssembly by using Emscripten. This experiment showed that very large and demanding C++ programs can be run inside a web browser~\cite{doom3}. The game, pictured in Figure~\ref{fig:doom} is currently supported by all major desktop web browsers.
 
+        \begin{figure}[htbp]
+            \centering
+            \includegraphics[width=\linewidth]{02_doom.png}
+            \caption{Online demonstration of the \ac{D3wasm} project.}
+            \label{fig:doom}
+        \end{figure}
 
-    \begin{figure}[htbp]
-        \centering
-        \includegraphics[width=\linewidth]{02_pong.png}
-        \caption{TODO:}
-        \label{fig:pong}
-    \end{figure}
+        On a more classic note, the traditional Pong game has also been successfully ported to WebGL using Emscripten~\cite{pong}. Only a single player is supported in the current version of the game, as seen in Figure~\ref{fig:pong}. 
 
-    \begin{figure}[htbp]
-        \centering
-        \includegraphics[width=\linewidth]{02_latexBase.png}
-        \caption{TODO:}
-        \label{fig:latex}
-    \end{figure}
+        \begin{figure}[htbp]
+            \centering
+            \includegraphics[width=\linewidth]{02_pong.png}
+            \caption{Classic Pong running on the browser.}
+            \label{fig:pong}
+        \end{figure}
+
+        Aside from video games, WebAssembly has also been proven to work for other applications such as the web-based \LaTeX\ editor shown in Figure~\ref{fig:latex}, which uses a \LaTeX\ compiler built with Emscripten.
+
+        \begin{figure}[htbp]
+            \centering
+            \includegraphics[width=\linewidth]{02_latexBase.png}
+            \caption{Web-based \LaTeX editor built with Emscripten.}
+            \label{fig:latex}
+        \end{figure}
+
+        TODO: quick mention of other applications and wrap up
