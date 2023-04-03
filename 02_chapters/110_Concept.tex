@@ -302,29 +302,27 @@
             \caption{TODO Level 5 image}\label{fig:ui5}
         \end{figure}
 
-        \begin{tcolorbox}[title=Example 5]
-            \begin{minipage}[t]{0.87\linewidth}
-                \vspace*{0.5\baselineskip}
-                A demonstration of an \textit{advanced} user interface (Level 5) can
-                be found at \href{https://ros2wasm.dev/pages/demo05/index.html}{\textsf{ros2wasm.dev/pages/demo05}}
-            \end{minipage}\hfill%
-            \begin{minipage}[t]{0.1\linewidth}
-                \vspace*{0pt}
-                \includegraphics[height=\linewidth,width=\linewidth]{qr_demo05.png}
-            \end{minipage}
-        \end{tcolorbox}
+        % NO DEMO HERE
+        % \begin{tcolorbox}[title=Example 5]
+        %     \begin{minipage}[t]{0.87\linewidth}
+        %         \vspace*{0.5\baselineskip}
+        %         A demonstration of an \textit{advanced} user interface (Level 5) can
+        %         be found at \href{https://ros2wasm.dev/pages/demo05/index.html}{\textsf{ros2wasm.dev/pages/demo05}}
+        %     \end{minipage}\hfill%
+        %     \begin{minipage}[t]{0.1\linewidth}
+        %         \vspace*{0pt}
+        %         \includegraphics[height=\linewidth,width=\linewidth]{qr_demo05.png}
+        %     \end{minipage}
+        % \end{tcolorbox}
 
 
-        Lastly, Level 6 consists of a \textit{complete} ROS environment also made
-        available to the user through JupyterLite. The user would be able to
-        install any additional ROS packages from \texttt{emscripten- forge}. An
-        extension for JupyterLite could enable communications with external robots
-        by using the Web Bluetooth API.\@ And a web compiler could be implemented 
-        to directly build packages within JupyterLite.
+        Lastly, Level 6 consists of a \textit{complete} ROS environment also made available to the user through JupyterLite. The user would be able to install any additional ROS packages from \texttt{emscripten- forge}. An extension for JupyterLite could enable communications with external robots by using the Web Bluetooth API.\@ And a web compiler could be implemented to directly build packages within JupyterLite.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \subsection{Complexity Levels}
+
+        In regards to technical complexity of the project, a series of complexity levels is outlined in Table~\ref{tab:techlevels}. The first four levels (1-4) must be accomplished in strict order, while levels 5-8 do not have any dependencies on the preceding levels to be able to function.        
 
         \begin{table}[htbp]
             \color{textColor}
@@ -334,40 +332,44 @@
                     \toprule
                     \textbf{Level} & \textbf{Description} \\
                     \midrule
-                    $1$ & A publisher is displayed. \\ [0.3em]
-                    $2$ & A publisher and subscriber can communicate with each other.\\[0.3em]
-                    $3$ & Multiple nodes and distinct topics can run simultaneously. \\[0.3em]
-                    $4$ & Graphical display and interaction with a ROS client library. \\[0.3em]
+                    $1$ & Replacement of the \ac{ROS} middleware implementation. \\ [0.3em]
+                    $2$ & A custom package and its dependencies can be cross-compiled to WebAssembly. \\[0.3em]
+                    $3$ & A publisher and subscriber can communicate with each other on the browser.\\[0.3em]
+                    $4$ & Multiple nodes and distinct topics can run simultaneously. \\[0.3em]
                     $5$ & Manipulation of a physical robot via bluetooth or wifi. \\[0.3em]
-                    $6$ & Visualization of a robot with Zethus. \\[0.3em]
-                    $7$ & Simulation of a robotics scenario with Gazebo. \\[0.3em]
-                    $8$ & Development workspace for creating and debugging ROS packages. \\
+                    $6$ & Interaction with a ROS client library from JupyterLite. \\[0.3em]
+                    $7$ & Visualization of a robot with Amphion and Zethus. \\[0.3em]
+                    $8$ & Simulation of a robotics scenario with Gazebo. \\[0.3em]
+                    $9$ & Development workspace for creating and debugging ROS packages. \\
                 \bottomrule
             \end{tabular}\label{tab:techlevels}
         \end{table}
 
-% \section{Scope of Implementation}
+        Although creating a replacement for the \ac{ROS} middleware implementation denotes the lowest level on the list, its complexity must not be underestimated. Level 1 consists of creating custom middleware packages to handle discovery and communications between nodes. All other \ac{ROS} packages depend on the middleware implementation, and because of this, creating a working replacement is crucial before any other features can be implemented.
 
-    % \subsection{Middleware Replacement}
-        % Why it needs to be replaced
-        % why sockets don't work
+        Once the middleware packages have been introduced, the next level ensures that the core \ac{ROS} packages can be cross-compiled. Level 2 involves the creation of a recipe to build all packages consistently. Minor modifications are needed in a few of the core packages to prevent compilation errors; for details, refer to TODO: add mods to appendix. And in order to set the custom middleware implementation as default, packages belonging to the other implementations must be ignored or removed. 
 
-        % 2 Parts:
-        % Interface with ROS
-        % JS ROS master to handle communications
+        Continuing the progression, Level 3 involves cross-compiling a package containing two executables, a publisher and a subscriber. Once these nodes are successfully loaded on the browser, communication between the nodes must be established by passing messages between web workers and the main thread.
 
-    % \subsection{User Interface}
+        Level 4 is simply an expansion of Level 3. In this case, the system handling communication between nodes can accommodate a multitude of different topics, message types, and node types. In other words, the communication system must be able to create and remove message queues at the time when they are requested by the individual nodes.
 
-        % Simple website
-        % JupyterLite
+        Starting with Level 5, the project begins to develop more practical applications. Manipulating a robot from the browser involves the addition of external libraries which enable communications to the hardware components of the robot. For example, a library which uses the Web Bluetooth \ac{API} to establish a connection to a robot and sends commands commands to activate the robot's motors. This level also involves creating an interface which translates \ac{ROS} messages to commands the robot can receive.
 
-    % \subsection{Automatic Builds}
-        
-        % GitHub Actions for automatically building packages
+        Level 6 requires Python support on the browser. This step consists of cross-compiling the \ac{ROS} client library for Python (\texttt{rclpy}) in order to be able to import it from JupyterLite. The benefit of importing \texttt{rclpy} is that nodes could be created directly from the browser as shown in Figure~\ref{fig:rclpy}. 
 
-    % \subsection{Out of Scope}
-        
-        % Gazebo
-        % Simulation
-        % In-browser compilation
+        \begin{figure}[htbp]
+            \centering
+            \begin{lstlisting}[language=Python]
 
+  import rclpy
+  web_node = rclpy.create_node("web_node")
+            \end{lstlisting}
+            \caption{Example of creating a node with \textsf{rclpy}.}
+            \label{fig:rclpy}
+        \end{figure}
+
+        Visualization of robots begins with Level 7. For this step, the Amphion and Zethus libraries are adapted to receive information from the \ac{ROS} 2 nodes running on the browser. This entails replacing or modifying the dependency on \texttt{rosjslib} (the \ac{ROS} 1 JavaScript library) which interacts with a native \ac{ROS} 1 environment from the browser. Currently, \texttt{roslibjs} does not actively support \ac{ROS} 2, but this is likely to change in the near future as more systems transition to \ac{ROS} 2.
+
+        Unlike Amphion and Zethus, recent versions of Gazebo do support simulations for \ac{ROS} 2 ecosystems. However, for Level 8, Gazebo's tools and libraries would need to be modified to run on the browser or communications must be established to Gazebo's cloud servers.
+
+        Lastly, Level 9 culminates with the implementation of all the previous levels plus additional developer tools such as compilers and debuggers running on the browser which would be equivalent to developing \ac{ROS} packages in a local machine.

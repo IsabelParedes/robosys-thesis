@@ -130,6 +130,25 @@
 	xrightmargin=.2\textwidth
 }
 
+\definecolor{pyGreen}{HTML}{008000}
+\definecolor{pyPurple}{HTML}{AA22FF}
+\definecolor{pyRed}{HTML}{BA2121}
+\lstdefinelanguage{Python}{
+	numbers=none,
+	frame=shadowbox,
+	xleftmargin=.2\textwidth, 
+	xrightmargin=.2\textwidth,
+	keywords={import},
+	keywordstyle=\color{blue}\bfseries,
+	stringstyle=\color{pyGreen},
+	morestring=[b]',
+	morestring=[b]",
+	emph={rclpy},
+	emphstyle=\color{purple}\bfseries,
+}
+
+
+
 \lstset{style=codestyle}
 
 % --------------------------------------------------------------------------
