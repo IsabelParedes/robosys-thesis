@@ -1,18 +1,162 @@
-\chapter{Middleware Implementation}
+\chapter{Middleware}
 
-    \ac{DDS} is a publish-subscribe communication standard defined by \ac{OMG}. \ac{DDS} uses \ac{IDL} for defining and serializing messages~\cite{rosondds}. In contrast to \ac{ROS} 1, which requires a \ac{ROS} master in order for nodes to discover and communicate with each other, \ac{ROS} 2 discovery system is handled by \ac{DDS} and each of the \ac{DDS} vendors provides different options for customizing the communication protocol.
+    A significant change from \ac{ROS} 1 to \ac{ROS} 2 is the shift from a custom transport layer consisting of \ac{TCPROS} to \ac{DDS}. \ac{DDS} is a publish-subscribe communication standard defined by \ac{OMG}. \ac{DDS} uses \ac{IDL} for defining and serializing messages~\cite{rosondds}. In contrast to \ac{ROS} 1, which requires a \ac{ROS} master in order for nodes to discover and communicate with each other, \ac{ROS} 2 discovery system is handled by \ac{DDS} and each of the \ac{DDS} vendors provides different options for customizing the communication layer.
 
-\section{DDS Middleware}
+    One notable advantage of moving away from a custom transport protocol is that the \ac{ROS} client libraries are now agnostic to the middleware interface; this means that the complexities of the \ac{DDS} implementation are not exposed to the end user~\cite{ros2middle}. As a consequence, multiple middleware interfaces can be implemented as long as they fulfill the following requirements: 
+    \begin{itemize}
+        \item publishing and subscribing
+        \item message serialization
+        \item discovery
+    \end{itemize}
+    
+    The interaction between the \ac{ROS} user, the \ac{ROS} client libraries, and the middleware layers is shown in Figure~\ref{fig:middleware}.
 
-    ROS supported middleware implementations
+    \begin{figure}[htbp]
+        \centering
+        \vspace{1em}
+        \begin{tikzpicture}
+            \node (user) [packBox] {ROS User};
 
-    \subsection{FastDDS}
+            \node (rcl) [packBox, yshift=-2cm] {ROS Client Libraries \\ \small\textsf{rclcpp | rclpy}};
 
-    default
+            \node (interface) [packBox, yshift=-4cm] {Middleware Interface \\ \small\textsf{rmw}};
 
-    \subsection{Eclypse}
+            \node (implementation) [packBox, yshift=-6cm] {\textbf{Middleware Implementation} \\ \small\textsf{fastrtps | cyclonedds | connextdds | gurumdds | custom}};
 
-    \subsection{Gurum}
+            \begin{scope}[transform canvas={xshift=-0.5cm}]
+                \draw [-to] (user) -- (rcl);
+                \draw [-to] (rcl) -- (interface);
+                \draw [-to] (interface) -- (implementation);
+            \end{scope}
+
+            \begin{scope}[transform canvas={xshift=0.5cm}]
+                \draw [to-] (user) -- (rcl);
+                \draw [to-] (rcl) -- (interface);
+                \draw [to-] (interface) -- (implementation);
+            \end{scope}
+
+        \end{tikzpicture}
+        \vspace{1em}
+        \caption{Relations between the user, the \ac{ROS} client libraries and the middleware packages~\cite{ros2middle}.}
+        \label{fig:middleware}
+    \end{figure}
+
+
+\section{Supported Implementations}
+
+    Currently, \ac{ROS} 2 releases provide full support for three middleware implementations: eProsima Fast \ac{DDS}, Eclipse Cyclone \ac{DDS}, and \ac{RTI} Connext \ac{DDS}. The binaries also support Gurum \ac{DDS}, but the implementation requires a separate installation~\cite{docsdds}. 
+
+    \subsection{eProsima Fast DDS}
+
+    eProsima Fast \ac{DDS}, also known as Fast \ac{RTPS}, is the default middleware implementation for \ac{ROS} 2 packages. Some of the main advantages of Fast \ac{DDS} is that it is free, open source, and it is developed for most platforms including Linux, Windows, Mac OS, and QNX. A rich set of \ac{QoS} parameters is also available for tuning the communication protocols to any particular system. Fast \ac{DDS} follows a \ac{DCPS} model, which consists four elements: publishers, subscribers, topics, and domains~\cite{dcps}. This model introduces the concept of \textsf{Data Writers} and \textsf{Data Readers} which, as the names imply, have read and write permissions to the ``Global Data Space'' as specified by the \ac{DDS} standard~\cite{introdds}. Figure~\ref{fig:ddsdomain} displays an example of the Fast \ac{DDS} architecture and demonstrates how the different elements interact with each other.
+
+    \begin{figure}[htbp]
+        \centering
+        \vspace{1em}
+        \begin{tikzpicture}
+            \node (domain) [
+                box, 
+                minimum width=14cm,
+                text depth=6cm,
+                fill=igmrLightBlue!10!bgColor,
+            ] {DDS Domain};
+            
+            \node (p1) [
+                box,
+                xshift=-4cm,
+                minimum width = 4cm,
+                text depth=4.5cm,
+                fill=igmrLightBlue!40!bgColor,
+            ] {Domain Participant};
+
+            \node (pub1) [
+                box,
+                xshift=-4cm,
+                yshift=0.5cm,
+                minimum width=3.5cm,
+                text depth=1cm
+            ] {Publisher};
+
+            \node (dw1) [
+                box,
+                xshift=-4cm,
+                yshift=0.2cm,
+                minimum width=3cm,
+                fill=bgColor,
+            ] {Data Writer};
+
+            \node (sub1) [
+                box,
+                xshift=-4cm,
+                yshift=-1.5cm,
+                minimum width=3.5cm,
+                text depth=1cm
+            ] {Subscriber};
+
+            \node (dr1) [
+                box,
+                xshift=-4cm,
+                yshift=-1.8cm,
+                minimum width=3cm,
+                fill=bgColor,
+            ] {Data Reader};
+
+            \node (p2) [
+                box,
+                xshift=4cm,
+                minimum width=4cm,
+                text depth=4.5cm,
+                fill=igmrLightBlue!40!bgColor,
+            ] {Domain Participant};
+
+            \node (sub2) [
+                box,
+                xshift=4cm,
+                yshift=0.5cm,
+                minimum width=3.5cm,
+                text depth=1cm
+            ] {Subscriber};
+
+            \node (dr2) [
+                box,
+                xshift=4cm,
+                yshift=0.2cm,
+                minimum width=3cm,
+                fill=bgColor,
+            ] {Data Reader};
+
+            \node (t1) [
+                box,
+                minimum width=2cm,
+                minimum height=1cm,
+                fill=igmrLightBlue!40!bgColor,
+            ] {Topic};
+
+            \node (dot1) [
+                rectangle,
+                xshift=-1.5cm,
+            ] {};
+
+            \draw [thick] (t1) -- (dot1.center);
+            \draw [arrow] (dw1.east) -- (dw1.east-|t1.west);
+            \draw [arrow] (dot1.center) |- (dr1);
+            \draw [arrow] (t1.east|-dr2.west) -- (dr2.west);
+
+        \end{tikzpicture}
+        \vspace{1em}
+        \caption{Instance of a typical Fast \ac{DDS} domain model.}
+        \label{fig:ddsdomain}
+    \end{figure}
+
+    \subsection{Eclipse Cyclone DDS}
+
+        Similar to Fast \ac{DDS}, Cyclone \ac{DDS} is free and open source and supports the three major platforms, Linux, Windows, and Mac OS. Cyclone \ac{DDS} offers a ``data-centric'' architecture with space- and time-decoupling with a zero configuration discovery system~\cite{eclipse}. Additionally, this implementation includes Python bindings to simplify the definition of data types.
+
+    \subsection{RTI Connext DDS}
+
+        \ac{RTI}
+
+    \subsection{GurumNetworks Gurum DDS}
 
     
 
