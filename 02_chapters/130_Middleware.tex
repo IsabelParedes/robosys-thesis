@@ -1,4 +1,4 @@
-\chapter{Middleware}
+\chapter{ROS 2 Middleware}
 
     A significant change from \ac{ROS} 1 to \ac{ROS} 2 is the shift from a custom transport layer consisting of \ac{TCPROS} to \ac{DDS}. \ac{DDS} is a publish-subscribe communication standard defined by \ac{OMG}. \ac{DDS} uses \ac{IDL} for defining and serializing messages~\cite{rosondds}. In contrast to \ac{ROS} 1, which requires a \ac{ROS} master in order for nodes to discover and communicate with each other, \ac{ROS} 2 discovery system is handled by \ac{DDS} and each of the \ac{DDS} vendors provides different options for customizing the communication layer.
 
@@ -193,7 +193,7 @@
 
         Similar to \textsf{rmw\_email}, the interface between Zenoh and \ac{ROS} 2 is handled by \textsf{rmw\_zenoh}. As of 2023, \textsf{rmw\_zenoh} still remains in the experimental phase. One notable aspect of this implementation, is the adaptation of Fast CDR to provide type support for Zenoh.
 
-    \subsection{Minimal Middleware Implementation}
+    \subsection{Minimal Middleware Implementation}\label{ssec:minimal}
 
         The development of a custom middleware implementations consist of two major parts: the creation of a middleware ``adapter'' to communicate with the \ac{ROS} 2 middleware interface, and the formation of the middleware implementation itself. An overview of a custom middleware architecture is demonstrated in Figure~\ref{fig:rmwarch}. 
 
@@ -274,7 +274,7 @@
                 rmw_subscription_allocation_t,
                 rmw_subscription_options_t,
                 },
-            emphstyle=\color{gray!60!black},
+            emphstyle=\color{gray!60!textColor},
         }
 
 
@@ -506,66 +506,3 @@ RMW_IMPLEMENTATION=rmw_connextdds ros2 run demo_nodes_cpp talker
 
     Nonetheless, the caveat of this first method is that the \ac{ROS} 2 binaries installed must have support for the specified implementation~\cite{subrmw}. Alternatively, the second method involves rebuilding all of the desired \ac{ROS} 2 packages from source and specify the \small\textsf{RMW\_IMPLEMENTATION} as a CMake argument. When building from source, if the packages for multiple \ac{RMW} implementations are available, all of them will be built starting with Fast \ac{DDS} as the default. If Fast \ac{DDS} is not available, then the default implementation will be selected by the next available implementation identifier in alphabetical order~\cite{docsdds}. To ensure that only a single implementation is available for use, the simplest solution is to explicitly ignore or remove the packages belonging to undesired implementations from the workspace.
 
-    
-\section{Custom Middleware Design}
-
-    Design of middleware packages (tree diagram or something)
-
-    \subsection{\textsf{wasm\_cpp}}
-
-
-    \begin{figure}[htbp]
-        \centering
-        \begin{tikzpicture}%[show background grid]
-            \begin{abstractclass}[text width=5cm]{Participant}{0,0}
-                \attribute{- name : String}
-                \attribute{- role : String}
-                \attribute{- gid  : String}
-
-                \operation{- is\_valid\_name()}
-                \operation{- is\_valid\_role()}
-                \operation{- registration()}
-                \operation{- deregistration()}
-            \end{abstractclass}
-
-            \begin{class}[text width=5cm]{Publisher}{-5,-6}
-                \inherit{Participant}
-                \attribute{- name = topic\_name}
-                \attribute{- role = publisher}
-                \operation{+ publish(message : String)}
-            \end{class}
-
-            \begin{class}[text width=5cm]{Subscriber}{5,-6}
-                \inherit{Participant}
-                \attribute{- name = topic\_name}
-                \attribute{- role = subscriber}
-                \operation{+ get\_message() : String}
-            \end{class}
-
-            \begin{class}[text width=6.5cm]{ServiceServer}{-4,-11}
-                \inherit{Participant}
-                \attribute{- name = service\_name}
-                \attribute{- role = service\_server}
-                \operation{+ take\_request() : String}
-                \operation{+ send\_response(response : String)}
-            \end{class}
-
-            \composition{ServiceServer}{}{}{Publisher}
-            \composition{ServiceServer}{}{}{Subscriber}
-
-            \begin{class}[text width=6.5cm]{ServiceClient}{4,-11}
-                \inherit{Participant}
-                \attribute{- name = service\_name}
-                \attribute{- role = service\_client}
-                \operation{+ send\_request(request : String)}
-                \operation{+ take\_response() : String}
-                \operation{+ is\_service\_available() : Bool}
-            \end{class}
-
-            \composition{ServiceClient}{}{}{Publisher}
-            \composition{ServiceClient}{}{}{Subscriber}
-
-        \end{tikzpicture}
-        \caption{A class diagram}
-    \end{figure}
-    
