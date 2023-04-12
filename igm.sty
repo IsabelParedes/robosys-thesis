@@ -28,8 +28,9 @@
 
 \RequirePackage{tcolorbox}
 \tcbset{
-	colback=igmrLightBlue!20!white,
-	colframe=igmrLightBlue!75!white,
+	coltext=textColor,
+	colback=igmrLightBlue!20!bgColor,
+	colframe=igmrLightBlue!75!bgColor,
 	fonttitle=\bfseries\color{igmrBlue}
 }
 
@@ -83,6 +84,17 @@
 	rounded corners,
 	draw = textColor,
 	fill = igmrLightBlue!20!bgColor,
+]
+
+\tikzstyle{webBox} = [
+	rectangle,
+	rounded corners,
+	draw = textColor,
+	fill = igmrLightBlue!30!bgColor,
+	minimum width = 3cm,
+	minimum height = 1.5cm,
+	text centered,
+	text width = 3cm,
 ]
 
 \tikzstyle{arrow} = [thick,->,>=stealth,anchor=base]
@@ -139,6 +151,11 @@
   morestring=[b]"
 }
 
+\lstdefinelanguage{Cpp}{
+	keywords={const,bool,void},
+	keywordstyle=\color{blue}\bfseries,
+}
+
 \lstdefinelanguage{JSON}{
 	numbers=none,
 	frame=shadowbox,
@@ -147,8 +164,14 @@
 }
 
 \lstdefinelanguage{Bash}{
+	columns=fullflexible,
 	numbers=none,
-	frame=shadowbox,
+	backgroundcolor=\color{lightgray!15!bgColor},
+	xleftmargin=10pt,
+	xrightmargin=10pt,
+	frame=lrtb,
+	framesep=10pt,
+	framerule=0pt,
 }
 
 \definecolor{pyGreen}{HTML}{008000}

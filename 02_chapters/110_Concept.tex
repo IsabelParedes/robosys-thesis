@@ -172,41 +172,7 @@
         will automatically start running. In the simplest case scenario, a publisher
         node would run and the published messages would be displayed on the window.
         Because the user has no ability to interact with the environment, this
-        publisher node will continue to run uninterrupted. The scenario described
-        is illustrated in Figure~\ref{fig:ui1}.
-
-        \begin{figure}[htbp]
-            \centering
-            % \begin{tikzpicture}
-            %     \draw[black, dashed, thin, fill=black!5] (0,0) rectangle (\linewidth,4);
-            % \end{tikzpicture}
-            \begin{lstlisting}[language=Bash]
-Publisher initializing.
-[INFO] [168766.57900] [wasm_cpp]: Context initializing.
-[INFO] [168767.91500] [wasm_publisher]: Publishing: 'Hello there! 0'
-[INFO] [168768.98400] [wasm_publisher]: Publishing: 'Hello there! 1'
-[INFO] [168769.94400] [wasm_publisher]: Publishing: 'Hello there! 2'
-[INFO] [168770.90300] [wasm_publisher]: Publishing: 'Hello there! 3'
-[INFO] [168771.96800] [wasm_publisher]: Publishing: 'Hello there! 4'
-[INFO] [168772.92000] [wasm_publisher]: Publishing: 'Hello there! 5'
-[INFO] [168773.97600] [wasm_publisher]: Publishing: 'Hello there! 6'
-[INFO] [168774.93600] [wasm_publisher]: Publishing: 'Hello there! 7'\end{lstlisting}
-            \caption{Output from non-interactive Level 1.}\label{fig:ui1}
-        \end{figure}
-
-        \begin{tcolorbox}[title=Example 1]
-            \begin{minipage}[t]{0.87\linewidth}
-                \vspace*{0pt}
-                A demonstration of a \textit{non-interactive} user interface (Level 1) can
-                be found at \href{https://ros2wasm.dev/pages/demo01/index.html}{\textsf{ros2wasm.dev/pages/demo01}}
-
-                \textsc{Note:} The page must be reloaded to restart the node.
-            \end{minipage}\hfill%
-            \begin{minipage}[t]{0.1\linewidth}
-                \vspace*{0pt}
-                \includegraphics[height=\linewidth,width=\linewidth]{qr_demo01.png}
-            \end{minipage}
-        \end{tcolorbox}
+        publisher node will continue to run uninterrupted. 
 
 
         By marginally expanding the interface, the \textit{minimal} Level 2 provides
@@ -214,35 +180,7 @@ Publisher initializing.
         stage is accomplished by the addition of buttons to the website. Continuing
         with the example previously described, in this level the user can press
         a button to start a publisher node, view the output of any published 
-        messages, and stop the node at any point. Level 2 is exhibited in Figure~\ref{fig:ui2}
-
-        \begin{figure}[htbp]
-            \centering
-            \includegraphics[width=\linewidth]{03_level2.png}
-            \begin{lstlisting}[language=Bash]
-[INFO] [16879468.55200] [wasm_publisher]: Publishing: 'Hello there! 13'
-[INFO] [16879469.60800] [wasm_publisher]: Publishing: 'Hello there! 14'
-[INFO] [16879470.56000] [wasm_publisher]: Publishing: 'Hello there! 15'
-[INFO] [16879471.61600] [wasm_publisher]: Publishing: 'Hello there! 16'
-[INFO] [16879472.56800] [wasm_publisher]: Publishing: 'Hello there! 17'
-[INFO] [16879473.62400] [wasm_publisher]: Publishing: 'Hello there! 18'
-Publisher terminated.\end{lstlisting}
-            \caption{Interactive buttons to start and stop the publisher node.}\label{fig:ui2}
-        \end{figure}
-
-        \begin{tcolorbox}[title=Example 2]
-            \begin{minipage}[t]{0.87\linewidth}
-                \vspace*{0.5\baselineskip}
-                A demonstration of a \textit{minimal} user interface (Level 2) can
-                be found at \href{https://ros2wasm.dev/pages/demo02/index.html}{\textsf{ros2wasm.dev/pages/demo02}}
-            \end{minipage}\hfill%
-            \begin{minipage}[t]{0.1\linewidth}
-                \vspace*{0pt}
-                \includegraphics[height=\linewidth,width=\linewidth]{qr_demo02.png}
-            \end{minipage}
-        \end{tcolorbox}
-
-
+        messages, and stop the node at any point. 
 
         The \textit{basic} Level 3 offers the user increasingly more control over
         the environment. In this level, the user has the ability to run more than
@@ -250,88 +188,19 @@ Publisher terminated.\end{lstlisting}
         messages to a particular topic and subscribers retrieving the published
         messages accordingly. Nonetheless, the nodes are still pre-compiled and 
         thus the user does not have the ability to change the topic names or any
-        other parameters of the nodes. Figure~\ref{fig:ui3} demonstrates a snapshot 
-        of Level 3.
-
-        \begin{figure}[htbp]
-            \centering
-            \begin{tikzpicture}
-                \draw[black, dashed, thin, fill=black!5] (0,0) rectangle (\linewidth,4);
-                \end{tikzpicture}
-            \caption{TODO Level 3 image}\label{fig:ui3}
-        \end{figure}
-
-        \begin{tcolorbox}[title=Example 3]
-            \begin{minipage}[t]{0.87\linewidth}
-                \vspace*{0.5\baselineskip}
-                A demonstration of a \textit{basic} user interface (Level 3) can
-                be found at \href{https://ros2wasm.dev/pages/demo03/index.html}{\textsf{ros2wasm.dev/pages/demo03}}
-            \end{minipage}\hfill%
-            \begin{minipage}[t]{0.1\linewidth}
-                \vspace*{0pt}
-                \includegraphics[height=\linewidth,width=\linewidth]{qr_demo03.png}
-            \end{minipage}
-        \end{tcolorbox}
-
-
+        other parameters of the nodes. 
 
         Stepping further into the list, the \textit{intermediate} Level 4 introduces
         services, these include both the servers and the clients. Additionally,
         with this level the users now possess the ability to request information
         from the environment such as the type of nodes which are running at a
-        given time, or which topics are available. A depiction of Level 4 is shown
-        in Figure~\ref{fig:ui4}
-
-        \begin{figure}[htbp]
-            \centering
-            \begin{tikzpicture}
-                \draw[black, dashed, thin, fill=black!5] (0,0) rectangle (\linewidth,4);
-                \end{tikzpicture}
-            \caption{TODO Level 4 image}\label{fig:ui4}
-        \end{figure}
-
-        \begin{tcolorbox}[title=Example 4]
-            \begin{minipage}[t]{0.87\linewidth}
-                \vspace*{0.5\baselineskip}
-                A demonstration of an \textit{intermediate} user interface (Level 4) can
-                be found at \href{https://ros2wasm.dev/pages/demo04/index.html}{\textsf{ros2wasm.dev/pages/demo04}}
-            \end{minipage}\hfill%
-            \begin{minipage}[t]{0.1\linewidth}
-                \vspace*{0pt}
-                \includegraphics[height=\linewidth,width=\linewidth]{qr_demo04.png}
-            \end{minipage}
-        \end{tcolorbox}
-
-
+        given time, or which topics are available. 
 
         Finally arriving at the \textit{advanced} Level 5, this level is more 
         prominent because it introduces the integration of JupyterLite with the 
         ROS environment. With JupyterLite, the user can directly interact with
         the ROS environment by using the ROS client libraries such as \texttt{rclpy}.
-        A typical workspace in JupyterLite is pictured in Figure~\ref{fig:ui5}.
-
-        \begin{figure}[htbp]
-            \centering
-            \begin{tikzpicture}
-                \draw[black, dashed, thin, fill=black!5] (0,0) rectangle (\linewidth,4);
-                \end{tikzpicture}
-            \caption{TODO Level 5 image}\label{fig:ui5}
-        \end{figure}
-
-        % NO DEMO HERE
-        % \begin{tcolorbox}[title=Example 5]
-        %     \begin{minipage}[t]{0.87\linewidth}
-        %         \vspace*{0.5\baselineskip}
-        %         A demonstration of an \textit{advanced} user interface (Level 5) can
-        %         be found at \href{https://ros2wasm.dev/pages/demo05/index.html}{\textsf{ros2wasm.dev/pages/demo05}}
-        %     \end{minipage}\hfill%
-        %     \begin{minipage}[t]{0.1\linewidth}
-        %         \vspace*{0pt}
-        %         \includegraphics[height=\linewidth,width=\linewidth]{qr_demo05.png}
-        %     \end{minipage}
-        % \end{tcolorbox}
-
-
+        
         Lastly, Level 6 consists of a \textit{complete} ROS environment also made available to the user through JupyterLite. The user would be able to install any additional ROS packages from \texttt{emscripten- forge}. An extension for JupyterLite could enable communications with external robots by using the Web Bluetooth API.\@ And a web compiler could be implemented to directly build packages within JupyterLite.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

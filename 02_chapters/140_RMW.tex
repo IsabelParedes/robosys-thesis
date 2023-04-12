@@ -1,6 +1,6 @@
 \chapter{ROS 2 Middleware Implementation for WebAssembly}
 
-    The design of a custom middleware implementation, \textsf{rms\_wasm}, that can be cross-compiled to WebAssembly modules is divided into three distinct packages as observed in Figure~\ref{fig:rmwwasm}.
+    The design of a custom middleware implementation, \textsf{rms\_wasm}, that can be cross-compiled to WebAssembly modules is divided into three distinct packages as observed in Figure~\ref{fig:rmwwasm}. For this project, these packages were developed in the order shown, starting with \textsf{rmw\_wasm\_cpp}.
 
     \begin{figure}[htbp]
         \centering
@@ -50,17 +50,67 @@
         \label{fig:rmwwasm}
     \end{figure}
 
-    \section{\textsf{rmw\_wasm\_cpp}}
+    \section{rmw\_wasm\_cpp}
 
-        The first package, \textsf{rmw\_wasm\_cpp}, works as the ``adapter'' between \ac{ROS} 2 and the designed middleware. This package implements all of the functions required for \textsf{rmw} as described in Section~\ref{ssec:minimal}. The source code for this package is entirely written in C++ and can be found: TODO:
+        The first package, \textsf{rmw\_wasm\_cpp}, works as the ``adapter'' between \ac{ROS} 2 and the designed middleware. This package implements all of the functions required for \textsf{rmw} as described in Section~\ref{ssec:minimal}. The source code for this package is entirely written in C++ and can be found: TODO: 
 
         TODO: add diagram
 
-    \section{\textsf{wasm\_cpp}}
+        TODO: mention yaml conversion, add diagram?
 
-        The role of \textsf{wasm\_cpp} is to TODO: and to function as a bridge to JavaScript functions.
-    \section{\textsf{wasm\_js}}
+    \section{wasm\_cpp}
 
+        The role of \textsf{wasm\_cpp} is to implement the middleware and to function as a bridge to JavaScript modules. This package, along with \textsf{wasm\_js} constitute the middleware implementation without the adapter, and thus, they can function independently of \textsf{rmw\_wasm\_cpp}. 
+
+        The \ac{ROS} elements in this package build on top of each other, where the smallest unit is a \textsf{Participant}. Any \ac{ROS} subscriber, publisher, service server, service client, action server, or action client is simply a \textsf{Participant} with a specific role. Each \textsf{Participant} must have a valid name which follows the \ac{ROS} guidelines (TODO: add ref for valid names). For publishers and subscribers, this name is their respective topic name. And for servers and clients, the name corresponds to the service or action name.  Upon initialization, each \textsf{Participant} also receives a unique ID or \textsf{gid} which is used to keep track of individual participants. 
+
+        Subscribers and publishers are the simplest type of participants. And each of them only has one function; a publisher needs to be able to \textit{publish} a message, and a subscriber must be able to \textit{retrieve} the message from a specific topic. The messages which the publisher handles are yaml strings. These messages are then passed to \textsf{wasm\_js} by using \textsf{emscripten::val} which transliterates JavaScript code into C++ (TODO: add ref). Figure~\ref{fig:publish} shows how these functions are implemented to create a \textit{bridge} between the two packages.
+
+        \begin{figure}[htbp]
+            \centering
+            \begin{lstlisting}[language=C++]
+// wasm_cpp/src/publisher.cpp
+#include <emscripten/emscripten.h>
+#include <emscripten/val.h>
+...
+emscripten::val js_publish = emscripten::val::module_property("publishMessage");
+bool is_published = js_publish(yaml_message, topic_name).as<bool>();
+\end{lstlisting}
+
+            % To match syntax hightlight
+            \begin{lstlisting}[language=C++] 
+// wasm_js/src/pre.js
+Module["publishMessage"] = function publishMessage(message, topic_name)
+{
+    // Send message to main
+    if (message.startsWith("data:")) {
+    self.postMessage({
+        command: "publish",
+        topic:    topic_name,
+        message: message
+    });
+    }
+
+    return true;
+}
+\end{lstlisting}
+            \caption{Publisher sending a message to JavaScript for publishing.}
+            \label{fig:publish}
+        \end{figure}
+
+    Conversely, the subscriber \textit{waits} for a response from \textsf{wasm\_js} which will indicate that a new message has been published to the topic in question. The response message type is coerced into a yaml string to send back to \textsf{rmw\_wasm\_cpp}. This process is illustrated in Figure~\ref{fig:retrieve}.
+
+    \begin{figure}[htbp]
+        \centering
+        \begin{lstlisting}[language=C++]
+// wasm_cpp/src/subscriber.cpp
+emscripten::val js_retrieve = emscripten::val::module_property("retrieveMessage");
+emscripten::val js_response = js_retrieve(topic_name).await();
+std::string yaml_message = js_response.as<std::string>();
+\end{lstlisting}    
+        \caption{Subscriber retrieving a message from JavaScript.}
+        \label{fig:retrieve}
+    \end{figure}
 
     \begin{figure}[htbp]
         \centering
@@ -117,35 +167,77 @@
         \caption{A class diagram}
     \end{figure}
     
+    \section{wasm\_js}
 
 
-\section{Design of Web Elements}
+    \subsection{Web Workers}
 
-\section{Web Workers}
+        
+        \begin{figure}[htbp]
+            \centering
+            \begin{tikzpicture}
+                \node (thread) [
+                    rectangle,
+                    rounded corners,
+                    draw = textColor,
+                    text depth = 4cm,
+                    minimum width = 4cm,
+                    fill = igmrLightBlue!30!bgColor,
+                ] {Main Thread};
 
-    
+                \node (w1) [
+                    webBox,
+                    xshift = -5cm,
+                    yshift = 1cm,
+                ] {ROS Node 1 \\ \footnotesize{web worker}};
 
-\section{Message Stacks}
+                \node (w2) [
+                    webBox,
+                    xshift = -5cm,
+                    yshift = -2cm,
+                ] {ROS Node 2 \\ \footnotesize{web worker}};
 
-    \begin{figure}[htbp]
-        \centering
-        \begin{subfigure}[t]{0.32\textwidth}
-            \includegraphics[height=0.9\textwidth]{07_stack0.png}
-            \caption{Filling stack}
-        \end{subfigure}
-        \begin{subfigure}[t]{0.32\textwidth}
-            \includegraphics[height=0.9\textwidth]{07_stack1.png}
-            \caption{Overwriting stack}
-        \end{subfigure}
-        \begin{subfigure}[t]{0.32\textwidth}
-            \includegraphics[height=0.9\textwidth]{07_stack2.png}
-            \caption{Reading stack}
-        \end{subfigure}
-        \caption{Modified Circular Stack, \ac{LIFO}}\label{fig:circleStack}
-    \end{figure}
+                \node (w3) [
+                    webBox,
+                    xshift = 5cm,
+                    yshift = 1cm,
+                ] {ROS Node 3 \\ \footnotesize{web worker}};
 
-- Web workers, what are they? why are they needed?
-- Communication channels
-- Registry of topics/subs/pubs
-- Message handling
-width
+                \node (w4) [
+                    webBox,
+                    xshift = 5cm,
+                    yshift = -2cm,
+                ] {ROS Node 4 \\ \footnotesize{web worker}};
+
+            \end{tikzpicture}
+            \caption{TODO: Web Worker communications}
+            \label{fig:webworker}
+        \end{figure}
+
+        
+
+    \subsection{Message Stacks}
+
+        \begin{figure}[htbp]
+            \centering
+            \begin{subfigure}[t]{0.32\textwidth}
+                \includegraphics[height=0.9\textwidth]{07_stack0.png}
+                \caption{Filling stack}
+            \end{subfigure}
+            \begin{subfigure}[t]{0.32\textwidth}
+                \includegraphics[height=0.9\textwidth]{07_stack1.png}
+                \caption{Overwriting stack}
+            \end{subfigure}
+            \begin{subfigure}[t]{0.32\textwidth}
+                \includegraphics[height=0.9\textwidth]{07_stack2.png}
+                \caption{Reading stack}
+            \end{subfigure}
+            \caption{Modified Circular Stack, \ac{LIFO}}
+            \label{fig:circleStack}
+        \end{figure}
+
+    - Web workers, what are they? why are they needed?
+    - Communication channels
+    - Registry of topics/subs/pubs
+    - Message handling
+
