@@ -247,35 +247,35 @@
 
         For the creation of a middleware ``adapter,'' \textsf{rmw} provides a set of primitives which are needed for higher level \ac{ROS} \ac{API}s. Generating the adapter requires implementing all of the relevant interface functions defined by \textsf{rmw}. Figures~\ref{fig:funinit} through~\ref{fig:funclient} highlight a few of the necessary interface functions. 
 
-        \lstset{
-            columns=fullflexible,
-            numbers=none,
-            backgroundcolor=\color{lightgray!15!bgColor},
-            xleftmargin=10pt,
-            xrightmargin=10pt,
-            frame=lrtb,
-            framesep=10pt,
-            framerule=0pt,
-            % emph={int,char,double,float,unsigned,void,bool,const,uint,string},
-            % emphstyle=\color{blue},
-            emph={
-                rmw_context_t, 
-                rmw_ret_t, 
-                rmw_init_options_t,
-                rmw_node_t,
-                rmw_guard_condition_t,
-                size_t,
-                rmw_publisher_t,
-                rmw_publisher_allocation_t,
-                rmw_publisher_options_t,
-                rmw_qos_profile_t,
-                rosidl_message_type_support_t,
-                rmw_subscription_t,
-                rmw_subscription_allocation_t,
-                rmw_subscription_options_t,
-                },
-            emphstyle=\color{gray!60!textColor},
-        }
+        % \lstset{
+        %     columns=fullflexible,
+        %     numbers=none,
+        %     backgroundcolor=\color{lightgray!15!bgColor},
+        %     xleftmargin=10pt,
+        %     xrightmargin=10pt,
+        %     frame=lrtb,
+        %     framesep=10pt,
+        %     framerule=0pt,
+        %     % emph={int,char,double,float,unsigned,void,bool,const,uint,string},
+        %     % emphstyle=\color{blue},
+        %     emph={
+        %         rmw_context_t, 
+        %         rmw_ret_t, 
+        %         rmw_init_options_t,
+        %         rmw_node_t,
+        %         rmw_guard_condition_t,
+        %         size_t,
+        %         rmw_publisher_t,
+        %         rmw_publisher_allocation_t,
+        %         rmw_publisher_options_t,
+        %         rmw_qos_profile_t,
+        %         rosidl_message_type_support_t,
+        %         rmw_subscription_t,
+        %         rmw_subscription_allocation_t,
+        %         rmw_subscription_options_t,
+        %         },
+        %     emphstyle=\color{gray!60!textColor},
+        % }
 
 
         \begin{figure}[htbp]

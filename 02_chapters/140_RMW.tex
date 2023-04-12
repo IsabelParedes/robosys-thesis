@@ -1,6 +1,6 @@
 \chapter{ROS 2 Middleware Implementation for WebAssembly}
 
-    The design of a custom middleware implementation, \textsf{rms\_wasm}, that can be cross-compiled to WebAssembly modules is divided into three distinct packages as observed in Figure~\ref{fig:rmwwasm}. For this project, these packages were developed in the order shown, starting with \textsf{rmw\_wasm\_cpp}.
+    The design of a custom middleware implementation, \textsf{rms-wasm}, that can be cross-compiled to WebAssembly modules is divided into three distinct packages as observed in Figure~\ref{fig:rmwwasm}. For this project, these packages were developed in the order shown, starting with \textsf{rmw-wasm-cpp}.
 
     \begin{figure}[htbp]
         \centering
@@ -15,31 +15,31 @@
                 align = justify,
                 minimum width = 14cm,
                 text width = 13.5cm,
-            ] {\textsf{rmw\_wasm}};
+            ] {\textsf{rmw-wasm}};
 
             \node (rwc) [
                 packBox,
                 yshift = 2.5cm,
                 fill = igmrLightBlue!30!bgColor,
-                ] {\textsf{rmw\_wasm\_cpp}};
+                ] {\textsf{rmw-wasm-cpp}};
 
             \node (wcpp) [
                 packBox,
                 yshift = 0.5cm,
                 fill = igmrLightBlue!30!bgColor,
-                ] {\textsf{wasm\_cpp}};
+                ] {\textsf{wasm-cpp}};
 
             \node (wjs) [
                 packBox,
                 yshift = -2.5cm,
                 fill = igmrLightBlue!30!bgColor,
-                ] {\textsf{wasm\_js}};
+                ] {\textsf{wasm-js}};
             
             \node (ems) [
                 rectangle,
                 yshift = -1cm,
-                xshift = 1.5cm,
-                ] {\textsf{emscripten::val}};
+                xshift = 2cm,
+                ] {\texttt{emscripten::val}};
 
             \draw[thick] (rwc) -- (wcpp);
             \draw[thick] (wcpp) -- (wjs);
@@ -50,21 +50,21 @@
         \label{fig:rmwwasm}
     \end{figure}
 
-    \section{rmw\_wasm\_cpp}
+    \section{rmw-wasm-cpp}
 
-        The first package, \textsf{rmw\_wasm\_cpp}, works as the ``adapter'' between \ac{ROS} 2 and the designed middleware. This package implements all of the functions required for \textsf{rmw} as described in Section~\ref{ssec:minimal}. The source code for this package is entirely written in C++ and can be found: TODO: 
+        The first package, \textsf{rmw-wasm-cpp}, works as the ``adapter'' between \ac{ROS} 2 and the designed middleware. This package implements all of the functions required for \textsf{rmw} as described in Section~\ref{ssec:minimal}. The source code for this package is entirely written in C++ and can be found: TODO: 
 
         TODO: add diagram
 
         TODO: mention yaml conversion, add diagram?
 
-    \section{wasm\_cpp}
+    \section{wasm-cpp}
 
-        The role of \textsf{wasm\_cpp} is to implement the middleware and to function as a bridge to JavaScript modules. This package, along with \textsf{wasm\_js} constitute the middleware implementation without the adapter, and thus, they can function independently of \textsf{rmw\_wasm\_cpp}. 
+        The role of \textsf{wasm-cpp} is to implement the middleware and to function as a bridge to JavaScript modules. This package, along with \textsf{wasm-js} constitute the middleware implementation without the adapter, and thus, they can function independently of \textsf{rmw-wasm-cpp}. 
 
-        The \ac{ROS} elements in this package build on top of each other, where the smallest unit is a \textsf{Participant}. Any \ac{ROS} subscriber, publisher, service server, service client, action server, or action client is simply a \textsf{Participant} with a specific role. Each \textsf{Participant} must have a valid name which follows the \ac{ROS} guidelines (TODO: add ref for valid names). For publishers and subscribers, this name is their respective topic name. And for servers and clients, the name corresponds to the service or action name.  Upon initialization, each \textsf{Participant} also receives a unique ID or \textsf{gid} which is used to keep track of individual participants. 
+        The \ac{ROS} elements in this package build on top of each other, where the smallest unit is a \texttt{Participant}. Any \ac{ROS} subscriber, publisher, service server, service client, action server, or action client is simply a \texttt{Participant} with a specific role. Each \texttt{Participant} must have a valid name which follows the \ac{ROS} guidelines (TODO: add ref for valid names). For publishers and subscribers, this name is their respective topic name. And for servers and clients, the name corresponds to the service or action name.  Upon initialization, each \texttt{Participant} also receives a unique ID or \texttt{gid} which is used to keep track of individual participants. 
 
-        Subscribers and publishers are the simplest type of participants. And each of them only has one function; a publisher needs to be able to \textit{publish} a message, and a subscriber must be able to \textit{retrieve} the message from a specific topic. The messages which the publisher handles are yaml strings. These messages are then passed to \textsf{wasm\_js} by using \textsf{emscripten::val} which transliterates JavaScript code into C++ (TODO: add ref). Figure~\ref{fig:publish} shows how these functions are implemented to create a \textit{bridge} between the two packages.
+        Subscribers and publishers are the simplest type of participants. And each of them only has one function; a publisher needs to be able to \textit{publish} a message, and a subscriber must be able to \textit{retrieve} the message from a specific topic. The messages which the publisher handles are yaml strings. These messages are then passed to \textsf{wasm-js} by using \texttt{emscripten::val} which transliterates JavaScript code into C++ (TODO: add ref). Figure~\ref{fig:publish} shows how these functions are implemented to create a \textit{bridge} between the two packages.
 
         \begin{figure}[htbp]
             \centering
@@ -82,7 +82,6 @@ bool is_published = js_publish(yaml_message, topic_name).as<bool>();
 // wasm_js/src/pre.js
 Module["publishMessage"] = function publishMessage(message, topic_name)
 {
-    // Send message to main
     if (message.startsWith("data:")) {
     self.postMessage({
         command: "publish",
@@ -98,7 +97,7 @@ Module["publishMessage"] = function publishMessage(message, topic_name)
             \label{fig:publish}
         \end{figure}
 
-    Conversely, the subscriber \textit{waits} for a response from \textsf{wasm\_js} which will indicate that a new message has been published to the topic in question. The response message type is coerced into a yaml string to send back to \textsf{rmw\_wasm\_cpp}. This process is illustrated in Figure~\ref{fig:retrieve}.
+    Conversely, the subscriber \textit{waits} for a response from \textsf{wasm-js} which will indicate that a new message has been published to the topic in question. The response message type is coerced into a yaml string to send back to \textsf{rmw-wasm-cpp}. This process is illustrated in Figure~\ref{fig:retrieve}.
 
     \begin{figure}[htbp]
         \centering
@@ -112,8 +111,26 @@ std::string yaml_message = js_response.as<std::string>();
         \label{fig:retrieve}
     \end{figure}
 
+    With the configuration described, subscribers and publishers do not necessarily need to be aware of the existence of other participants within the same topic name. That is to say, a publisher can send messages even when there are no subscribers, and a subscriber can listen to a topic even when there are no messages published. Additionally, this allows multiple publishers to publish to the same topic simultaneously with different \ac{ROS} message types since all messages are handled as strings.
+
+    Services are constructed from publishers and subscribers. A service server and a server client each have one publisher and one subscriber. Before a service client can call a service, it must verify that the service server is available to process a request. This is accomplished by making a query to \textsf{wasm-js} which keeps track of all available entities. If the service server is available, then the service client can \textit{publish} a request to the service request topic. Meanwhile, the service server is \textit{subscribed} to the service request topic to receive the request. Once the service server processes the request, the response tis \textit{published} to the service response topic. And lastly, the service client \textit{subscribed} to the response topic will retrieve the response. This process is summarized in Figure~\ref{fig:service}.
+
+    \begin{figure}[htbp]
+        \begin{tikzpicture}
+            TODO:
+        \end{tikzpicture}
+        \caption{Data flow between \ac{ROS} service client and server.}
+        \label{fig:service}
+    \end{figure}
+
+    Analogously to services, action servers and clients are handled in the same manner with the addition that action servers will continuously publish feedback to the action response topic until the request being processed is completed.
+
+    
+
+
     \begin{figure}[htbp]
         \centering
+        \vspace{1em}
         \begin{tikzpicture}%[show background grid]
             \begin{abstractclass}[text width=5cm]{Participant}{0,0}
                 \attribute{- name : String}
@@ -164,10 +181,14 @@ std::string yaml_message = js_response.as<std::string>();
             \composition{ServiceClient}{}{}{Subscriber}
 
         \end{tikzpicture}
+        \vspace{1em}
         \caption{A class diagram}
     \end{figure}
     
-    \section{wasm\_js}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \section{wasm-js}
 
 
     \subsection{Web Workers}
