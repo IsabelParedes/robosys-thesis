@@ -1,3 +1,5 @@
+Rendered document $\rightarrow$ **main.pdf**
+
 # IGMR thesis template
 
 To use the template for your thesis, you have to download this repository as a zip-file and put it into your thesis directory.
