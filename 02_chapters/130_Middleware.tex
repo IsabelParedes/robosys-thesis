@@ -21,18 +21,22 @@
 
             \node (interface) [packBox, yshift=-4cm] {Middleware Interface \\ \small\textsf{rmw}};
 
-            \node (implementation) [packBox, yshift=-6cm] {\textbf{Middleware Implementation} \\ \small\textsf{fastrtps | cyclonedds | connextdds | gurumdds | custom}};
+            \node (implementation) [
+                packBox, 
+                yshift=-6cm,
+                fill=shade20,
+            ] {\textbf{Middleware Implementation} \\ \small\textsf{fastrtps | cyclonedds | connextdds | gurumdds | custom}};
 
             \begin{scope}[transform canvas={xshift=-0.5cm}]
-                \draw [-to] (user) -- (rcl);
-                \draw [-to] (rcl) -- (interface);
-                \draw [-to] (interface) -- (implementation);
+                \draw [arrow] (user) -- (rcl);
+                \draw [arrow] (rcl) -- (interface);
+                \draw [arrow] (interface) -- (implementation);
             \end{scope}
 
             \begin{scope}[transform canvas={xshift=0.5cm}]
-                \draw [to-] (user) -- (rcl);
-                \draw [to-] (rcl) -- (interface);
-                \draw [to-] (interface) -- (implementation);
+                \draw [arrow] (rcl) -- (user);
+                \draw [arrow] (interface) -- (rcl);
+                \draw [arrow] (implementation) -- (interface);
             \end{scope}
 
         \end{tikzpicture}
@@ -58,7 +62,7 @@
                 box, 
                 minimum width=14cm,
                 text depth=6cm,
-                fill=igmrLightBlue!10!bgColor,
+                fill=shade05,
             ] {DDS Domain};
             
             \node (p1) [
@@ -66,7 +70,7 @@
                 xshift=-4cm,
                 minimum width = 4cm,
                 text depth=4.5cm,
-                fill=igmrLightBlue!40!bgColor,
+                fill=shade20,
             ] {Domain Participant};
 
             \node (pub1) [
@@ -106,7 +110,7 @@
                 xshift=4cm,
                 minimum width=4cm,
                 text depth=4.5cm,
-                fill=igmrLightBlue!40!bgColor,
+                fill=shade20,
             ] {Domain Participant};
 
             \node (sub2) [
@@ -129,7 +133,7 @@
                 box,
                 minimum width=2cm,
                 minimum height=1cm,
-                fill=igmrLightBlue!40!bgColor,
+                fill=shade15,
             ] {Topic};
 
             \node (dot1) [
@@ -167,7 +171,7 @@
 
     \subsection{Email}
 
-        An excellent example of a middleware implementation which is not based on the \ac{DDS} standard is \textsf{rmw-email}\footnote{For readability, package names with underscores, i.e. \textsf{rmw\_email}, are written with dashes.}. With this implementation, all of the \ac{ROS} 2 communications for publishing and subscribing to topics and to call and respond to services are handled by sending emails. 
+        An excellent example of a middleware implementation which is not based on the \ac{DDS} standard is \textsf{rmw-email}\footnote{For readability, package names with underscores, e.g. \textsf{rmw\_email}, are written with dashes.}. With this implementation, all of the \ac{ROS} 2 communications for publishing and subscribing to topics and to call and respond to services are handled by sending emails. 
 
         \begin{figure}[htbp]
             \centering
@@ -210,21 +214,20 @@
                     minimum width=12cm,
                     text width=11.5cm,
                     text height=4.5cm,
-                    draw=textColor,
                     align=justify,
-                    fill=igmrLightBlue!10!bgColor,
+                    fill=shade05,
                 ] {Custom Middleware};
 
                 \node (rmwwasm) [
                     packBox, 
                     yshift=-2.3cm,
-                    fill=igmrLightBlue!40!bgColor,
+                    fill=shade15,
                 ] {Middleware Adapter \\ \small\textsf{rmw-email | rmw-zenoh | rmw-wasm}};
 
                 \node (interface) [
                     packBox, 
                     yshift=-4.3cm,
-                    fill=igmrLightBlue!40!bgColor,
+                    fill=shade15,
                 ] {Middleware Implementation \\ \small\textsf{Email | Zenoh | Web Browser}};
 
                 \begin{scope}[transform canvas={xshift=-0.5cm}]

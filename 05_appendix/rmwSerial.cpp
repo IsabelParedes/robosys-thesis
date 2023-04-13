@@ -11,8 +11,7 @@ const char * rmw_get_serialization_format() {}
 rmw_ret_t rmw_get_serialized_message_size(
         const rosidl_message_type_support_t * type_support,
         const rosidl_runtime_c__Sequence__bound * message_bounds,
-        size_t * size
-) {}
+        size_t * size) {}
 
 // Serialize a ROS message into a rmw_serialized_message_t.
 // The ROS message is serialized into a byte stream contained within the 

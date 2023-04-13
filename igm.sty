@@ -17,14 +17,22 @@
 \RequirePackage[dvipsnames]{xcolor}
 
 % REMOVE for readability
-\definecolor{textColor}{HTML}{98B0BC}
-\definecolor{bgColor}{HTML}{10131B}
-% \definecolor{textColor}{HTML}{000000}
-% \definecolor{bgColor}{HTML}{FFFFFF}
+% \definecolor{textColor}{HTML}{98B0BC}
+% \definecolor{bgColor}{HTML}{10131B}
+\definecolor{textColor}{HTML}{000000}
+\definecolor{bgColor}{HTML}{FFFFFF}
 \definecolor{myBlue}{HTML}{654EF0}
 \definecolor{igmrBlue}{HTML}{00549F}
 \definecolor{igmrLightBlue}{HTML}{8EBAE5}
 \definecolor{qrColor}{HTML}{4CAAFC}
+
+\colorlet{gray03}{textColor!3!bgColor}
+\colorlet{shade05}{textColor!5!bgColor}
+\colorlet{shade10}{textColor!10!bgColor}
+\colorlet{shade15}{textColor!15!bgColor}
+\colorlet{shade20}{textColor!20!bgColor}
+\colorlet{shade30}{textColor!30!bgColor}
+\colorlet{shade40}{textColor!40!bgColor}
 
 \RequirePackage{tcolorbox}
 \tcbset{
@@ -44,8 +52,7 @@
 	minimum height = 1.8cm,
 	minimum width = 3.5cm,
 	text width = 3cm,
-	draw=textColor,
-	fill=igmrLightBlue!20!bgColor,
+	fill=shade15,
 ]
 \tikzstyle{outerBox} = [
 	rectangle, 
@@ -54,10 +61,8 @@
 	minimum width = 3.5cm,
 	text width = 3cm, 
 	text depth = 2.5cm,
-    draw,
-	anchor=north
-	draw=textColor,
-	fill=igmrLightBlue!20!bgColor,
+	anchor = north,
+	fill = shade15,
 ]
 \tikzstyle{innerBox} = [
 	rectangle,
@@ -66,8 +71,7 @@
 	minimum width = 2.8cm,
 	minimum height = 1.5cm,
 	text width = 2.8cm,
-	draw=textColor,
-	fill=igmrLightBlue!40!bgColor,
+	fill = gray03,
 ]
 \tikzstyle{packBox} = [
 	rectangle, 
@@ -76,21 +80,20 @@
 	minimum height = 1.5cm,
 	minimum width = 9cm,
 	text width = 8.5cm,
-	draw = textColor,
-	fill = igmrLightBlue!20!bgColor,
+	fill = shade10,
 ]
 \tikzstyle{box} = [
 	rectangle,
 	rounded corners,
-	draw = textColor,
-	fill = igmrLightBlue!20!bgColor,
+	% draw = shade40,
+	% thick,
+	fill = shade10,
 ]
 
 \tikzstyle{webBox} = [
 	rectangle,
 	rounded corners,
-	draw = textColor,
-	fill = igmrLightBlue!30!bgColor,
+	fill = shade10,
 	minimum width = 3cm,
 	minimum height = 1.5cm,
 	text centered,
@@ -110,7 +113,7 @@
 \RequirePackage[simplified]{pgf-umlcd}
 \renewcommand{\umltextcolor}{textColor}
 \renewcommand{\umldrawcolor}{textColor}
-\renewcommand{\umlfillcolor}{igmrLightBlue!20!bgColor}
+\renewcommand{\umlfillcolor}{shade10}
 
 
 % --------------------------------------------------------------------------

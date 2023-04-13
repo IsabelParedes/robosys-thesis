@@ -5,9 +5,9 @@
 //     memory allocation fails during node creation
 //     an unspecified error occurs
 // The context must be non-null and valid, i.e. it has been initialized by 
-// rmw_init() {} and has not been finalized by rmw_shutdown() {}.
+// rmw_init() and has not been finalized by rmw_shutdown().
 // The name and namespace_ should be valid node name and namespace, and this 
-// should be asserted by the caller (e.g. rcl) {}.
+// should be asserted by the caller (e.g. rcl).
 // The domain ID should be used to physically separate nodes at the 
 // communication graph level by the middleware. For RTPS/DDS this maps 
 // naturally to their concept of domain id.
@@ -34,9 +34,9 @@ rmw_ret_t rmw_destroy_node(
 //     node is NULL
 //     node is invalid
 // The returned handle is made invalid if the node is destroyed or if 
-// rmw_shutdown() {} is called.
+// rmw_shutdown() is called.
 // The guard condition will be triggered anytime a change to the ROS graph 
-// occurs. A ROS graph change includes things like (but not limited to) {} a 
+// occurs. A ROS graph change includes things like (but not limited to) a 
 // new publisher advertises, a new subscription is created, a new service 
 // becomes available, a subscription is canceled, etc.
 const rmw_guard_condition_t * rmw_node_get_graph_guard_condition(

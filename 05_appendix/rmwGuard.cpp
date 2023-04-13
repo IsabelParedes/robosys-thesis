@@ -5,7 +5,7 @@
 //     memory allocation fails during guard condition creation
 //     an unspecified error occurs
 // The context must be non-null and valid, i.e. it has been initialized 
-// by rmw_init() {} and has not been finalized by rmw_shutdown() {}.
+// by rmw_init() and has not been finalized by rmw_shutdown().
 rmw_guard_condition_t * rmw_create_guard_condition(rmw_context_t * context) {}
 
 // Finalize a given guard condition handle, reclaim the resources, 

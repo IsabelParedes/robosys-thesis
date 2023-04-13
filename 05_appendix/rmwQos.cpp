@@ -30,8 +30,8 @@ rmw_ret_t rmw_service_request_subscription_get_actual_qos(
 
 // Check if two qos profiles are compatible
 rmw_ret_t rmw_qos_profile_check_compatible(
-        const rmw_qos_profile_t publisher_profile,
-        const rmw_qos_profile_t subscription_profile,
+    const rmw_qos_profile_t publisher_profile,
+    const rmw_qos_profile_t subscription_profile,
     rmw_qos_compatibility_type_t * compatibility,
     char * reason,
     size_t reason_size) {}

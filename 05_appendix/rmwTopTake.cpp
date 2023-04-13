@@ -29,7 +29,7 @@ rmw_ret_t rmw_take_serialized_message(
 
 // Take a message without deserializing it and with its additional 
 // message information.
-// The same as rmw_take_serialized_message() {}, except it also includes the 
+// The same as rmw_take_serialized_message(), except it also includes the 
 // rmw_message_info_t.
 rmw_ret_t rmw_take_serialized_message_with_info(
         const rmw_subscription_t * subscription,
@@ -73,12 +73,12 @@ rmw_ret_t rmw_return_loaned_message_from_subscription(
 // on the subscription. In this case, only the currently available messages 
 // will be returned. The taken flag indicates the number of messages actually 
 // taken. The method will return RMW_RET_OK even in the case that fewer 
-// (or zero) {} messages were retrieved. from the subscription, and will 
+// (or zero) messages were retrieved. from the subscription, and will 
 // RMW_RET_ERROR in the case of unexpected errors. In the case that count is 
 // zero, the function will return RMW_RET_INVALID_ARGUMENT.
 // message_sequence and message_info_sequence should be initialized and have 
 // sufficient capacity. It is not critical that the sequence sizes match, 
-// and they may be reused from previous calls. Both must be valid (not NULL) {} 
+// and they may be reused from previous calls. Both must be valid (not NULL) 
 // for the method to run successfully.
 rmw_ret_t rmw_take_sequence(
     const rmw_subscription_t * subscription,

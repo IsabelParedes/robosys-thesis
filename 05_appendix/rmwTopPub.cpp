@@ -6,7 +6,10 @@ rmw_ret_t rmw_publish(
 
 // Publish an already serialized message.
 // The publisher must already be registered with the correct message type 
-// support so that it can send serialized data corresponding to that type. This function sends the serialized byte stream directly over the wire without having to serialize the message first. A ROS message can be serialized manually using the rmw_serialize() {} function.
+// support so that it can send serialized data corresponding to that type. 
+// This function sends the serialized byte stream directly over the wire without 
+// having to serialize the message first. A ROS message can be serialized 
+// manually using the rmw_serialize() function.
 rmw_ret_t rmw_publish_serialized_message(
     const rmw_publisher_t * publisher,
     const rmw_serialized_message_t * serialized_message,

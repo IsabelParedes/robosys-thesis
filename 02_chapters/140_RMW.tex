@@ -9,8 +9,7 @@
             \node (pkg) [
                 rectangle,
                 rounded corners,
-                draw = textColor,
-                fill = igmrLightBlue!10!bgColor,
+                fill = shade05,
                 text height = 7cm,
                 align = justify,
                 minimum width = 14cm,
@@ -20,19 +19,19 @@
             \node (rwc) [
                 packBox,
                 yshift = 2.5cm,
-                fill = igmrLightBlue!30!bgColor,
+                fill = shade15,
                 ] {\textsf{rmw-wasm-cpp}};
 
             \node (wcpp) [
                 packBox,
                 yshift = 0.5cm,
-                fill = igmrLightBlue!30!bgColor,
+                fill = shade15,
                 ] {\textsf{wasm-cpp}};
 
             \node (wjs) [
                 packBox,
                 yshift = -2.5cm,
-                fill = igmrLightBlue!30!bgColor,
+                fill = shade15,
                 ] {\textsf{wasm-js}};
             
             \node (ems) [
@@ -183,6 +182,7 @@ std::string yaml_message = js_response.as<std::string>();
                 minimum width=3.5cm,
                 text depth=3cm,
                 xshift=-4cm,
+                fill=shade20,
             ] {Service Client};
 
             \node (cltpub) [
@@ -191,6 +191,7 @@ std::string yaml_message = js_response.as<std::string>();
                 minimum height=1cm,
                 xshift=-4cm,
                 yshift=0.5cm,
+                fill=shade05,
             ] {Publisher};
 
             \node (cltsub) [
@@ -199,6 +200,7 @@ std::string yaml_message = js_response.as<std::string>();
                 minimum height=1cm,
                 xshift=-4cm,
                 yshift=-1cm,
+                fill=shade05,
             ] {Subscriber};
 
             \node (srv) [
@@ -206,6 +208,7 @@ std::string yaml_message = js_response.as<std::string>();
                 minimum width=3.5cm,
                 text depth=3cm,
                 xshift=4cm,
+                fill=shade20,
             ] {Service Server};
 
             \node (srvsub) [
@@ -214,6 +217,7 @@ std::string yaml_message = js_response.as<std::string>();
                 minimum height=1cm,
                 xshift=4cm,
                 yshift=0.5cm,
+                fill=shade05,
             ] {Subscriber};
 
             \node (srvpub) [
@@ -222,6 +226,7 @@ std::string yaml_message = js_response.as<std::string>();
                 minimum height=1cm,
                 xshift=4cm,
                 yshift=-1cm,
+                fill=shade05,
             ] {Publisher};
 
             \node (t1) [
