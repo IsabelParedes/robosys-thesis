@@ -167,7 +167,7 @@
 
     \subsection{Email}
 
-        An excellent example of a middleware implementation which is not based on the \ac{DDS} standard is \textsf{rmw\_email}. With this implementation, all of the \ac{ROS} 2 communications for publishing and subscribing to topics and to call and respond to services are handled by sending emails. 
+        An excellent example of a middleware implementation which is not based on the \ac{DDS} standard is \textsf{rmw-email}\footnote{For readability, package names with underscores, i.e. \textsf{rmw\_email}, are written with dashes.}. With this implementation, all of the \ac{ROS} 2 communications for publishing and subscribing to topics and to call and respond to services are handled by sending emails. 
 
         \begin{figure}[htbp]
             \centering
@@ -184,14 +184,14 @@
             \label{fig:email}
         \end{figure}
 
-        The implementation consists of two parts: \textsf{email} for handling the communications and \textsf{rmw\_email} which acts as an adapter to interface with \textsf{rmw}~\cite{emailblog}. Figure~\ref{fig:email} shows a \ac{ROS} publisher, a service client, and a service server using this \textsf{email} middleware. Although \textsf{rmw\_email} does not reach the level of performance of the standard \ac{DDS} implementations, it showcases the flexibility of the additional abstraction layer integrated in \ac{ROS} 2 to support various middleware designs.
+        The implementation consists of two parts: \textsf{email} for handling the communications and \textsf{rmw-email} which acts as an adapter to interface with \textsf{rmw}~\cite{emailblog}. Figure~\ref{fig:email} shows a \ac{ROS} publisher, a service client, and a service server using this \textsf{email} middleware. Although \textsf{rmw-email} does not reach the level of performance of the standard \ac{DDS} implementations, it showcases the flexibility of the additional abstraction layer integrated in \ac{ROS} 2 to support various middleware designs.
 
 
     \subsection{Zenoh}
 
         Continuing the trend of non-\ac{DDS} middleware implementations, another approach involves the use of Eclipse Zenoh. Zenoh is a publication, subscription and query protocol to unify data which can be used in embedded micro-controllers or even data centers~\cite{zenoh}. Open Robotics has tested the potential of using Zenoh as a middleware for ROS 2 applications and concluded that it could alleviate some of the common problems encountered with the default \ac{DDS} implementations by providing the users with hassle-free experience which does not require configuration and tuning unlike its \ac{DDS} counterparts~\cite{ros2zenoh}.
 
-        Similar to \textsf{rmw\_email}, the interface between Zenoh and \ac{ROS} 2 is handled by \textsf{rmw\_zenoh}. As of 2023, \textsf{rmw\_zenoh} still remains in the experimental phase. One notable aspect of this implementation, is the adaptation of Fast CDR to provide type support for Zenoh.
+        Similar to \textsf{rmw-email}, the interface between Zenoh and \ac{ROS} 2 is handled by \textsf{rmw-zenoh}. As of 2023, \textsf{rmw-zenoh} still remains in the experimental phase. One notable aspect of this implementation, is the adaptation of Fast CDR to provide type support for Zenoh.
 
     \subsection{Minimal Middleware Implementation}\label{ssec:minimal}
 
@@ -219,7 +219,7 @@
                     packBox, 
                     yshift=-2.3cm,
                     fill=igmrLightBlue!40!bgColor,
-                ] {Middleware Adapter \\ \small\textsf{rmw\_email | rmw\_zenoh | rms\_wasm}};
+                ] {Middleware Adapter \\ \small\textsf{rmw-email | rmw-zenoh | rmw-wasm}};
 
                 \node (interface) [
                     packBox, 
