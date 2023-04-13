@@ -248,7 +248,7 @@
 
         There are no standardized guidelines for how the middleware implementation should be formatted or what platforms it should support. The design of the implementation is highly dependent on the use case of the \ac{ROS} application. The only design requirements are that the implementation should have the means to publish and subscribe data, perform message serialization from and to \ac{ROS} message types, and have a discovery system to detect other participants in the specified domain. For this project, all of the communications are handled by the web browser and thus, the middleware is implemented in JavaScript.
 
-        For the creation of a middleware ``adapter,'' \textsf{rmw} provides a set of primitives which are needed for higher level \ac{ROS} \ac{API}s. Generating the adapter requires implementing all of the relevant interface functions defined by \textsf{rmw}. Figures~\ref{fig:funinit} through~\ref{fig:funclient} highlight a few of the necessary interface functions. 
+        For the creation of a middleware ``adapter,'' \textsf{rmw} provides a set of primitives which are needed for higher level \ac{ROS} \ac{API}s. Generating the adapter requires implementing all of the relevant interface functions defined by \textsf{rmw}. Figures~\ref{fig:funinit} through~\ref{fig:funclient} highlight a few of the necessary interface functions.
 
         % \lstset{
         %     columns=fullflexible,
@@ -484,7 +484,7 @@ rmw_ret_t 	rmw_service_server_is_available (
 
 
     \pagebreak
-    Besides the essential functions for creating and destroying nodes, publishers, subscribers, and services, there exists additional functions to handle events, wait sets, guard conditions, \ac{QoS} policies, and allocators. Additionally, there are utility functions and macros for handling errors, customizing log outputs and name validation. A full list of functions can be found in the \textsf{rmw} \ac{API} documentation~\cite{rmwapi} TODO: or appendix??.
+    Besides the essential functions for creating and destroying nodes, publishers, subscribers, and services, there exists additional functions to handle events, wait sets, guard conditions, \ac{QoS} policies, and allocators. Additionally, there are utility functions and macros for handling errors, customizing log outputs and name validation. A full list of all 83 function headers derived from the \textsf{rmw} \ac{API} documentation can be found in Appendix~\ref{sec:apxrmw}~\cite{rmwapi}.
 
 \pagebreak
 \section{Substituting ROS 2 Middleware}

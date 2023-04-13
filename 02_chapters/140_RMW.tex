@@ -264,76 +264,214 @@ std::string yaml_message = js_response.as<std::string>();
 
         The last piece of the puzzle is \textsf{wasm-js}. This package is written in JavaScript and its role is to launch and track all the participating entities, and to store and distribute all \ac{ROS} messages accordingly.
 
-
-    \subsection{Web Workers}
-
-        Given that processes on a browser run on a single ``main thread'', \textsf{wasm-js} uses \textit{web workers} to launch the requested \ac{ROS} nodes. Web workers run in background threads and thus, they do not interfere with the user interface while performing tasks~\cite{workers}. 
+        Given that processes on a browser run on a single ``main thread'', \textsf{wasm-js} uses \textit{web workers} to launch the requested \ac{ROS} nodes. Web workers run in background threads and thus, they do not interfere with the user interface while performing tasks~\cite{workers}. \textsf{wasm-js} spawns a new web worker for each \ac{ROS} node. The \ac{ROS} nodes can pass information to and from the main thread by posting messages (\texttt{postMessage()}). Each of the elements can also be configured to perform a task when a message is received by declaring an \texttt{onmessage()} function. Additionally, the workers can communicate between one another by creating message channels between worker pairs~\cite{mgschannel}. These communication paths are displayed in Figure~\ref{fig:webworker}.
 
         \begin{figure}[htbp]
             \centering
+            \vspace{1em}
             \begin{tikzpicture}
                 \node (thread) [
                     rectangle,
                     rounded corners,
-                    draw = textColor,
-                    text depth = 4cm,
-                    minimum width = 4cm,
-                    fill = igmrLightBlue!30!bgColor,
+                    minimum height = 1.5cm,
+                    minimum width = \linewidth,
+                    fill = shade20,
                 ] {Main Thread};
 
                 \node (w1) [
                     webBox,
-                    xshift = -5cm,
-                    yshift = 1cm,
+                    xshift = -6cm,
+                    yshift = -3cm,
                 ] {ROS Node 1 \\ \footnotesize{web worker}};
 
                 \node (w2) [
                     webBox,
-                    xshift = -5cm,
-                    yshift = -2cm,
+                    xshift = -2cm,
+                    yshift = -3cm,
                 ] {ROS Node 2 \\ \footnotesize{web worker}};
 
                 \node (w3) [
                     webBox,
-                    xshift = 5cm,
-                    yshift = 1cm,
+                    xshift = 2cm,
+                    yshift = -3cm,
                 ] {ROS Node 3 \\ \footnotesize{web worker}};
 
                 \node (w4) [
                     webBox,
-                    xshift = 5cm,
-                    yshift = -2cm,
+                    xshift = 6cm,
+                    yshift = -3cm,
                 ] {ROS Node 4 \\ \footnotesize{web worker}};
 
+                \node (post1) [
+                    rectangle,
+                    yshift = -1cm,
+                    xshift = -3.5cm,
+                ] {\texttt{postMessage()}};
+
+                \node (post2) [
+                    rectangle,
+                    yshift = -2cm,
+                    xshift = 3.5cm,
+                ] {\texttt{postMessage()}};
+
+                \node (onmsg1) [
+                    rectangle,
+                    yshift = -2cm,
+                    xshift = -3.3cm,
+                ] {\texttt{onmessage()}};
+
+                \node (onmsg2) [
+                    rectangle,
+                    yshift = -1cm,
+                    xshift = 3.3cm,
+                ] {\texttt{onmessage()}};
+
+                \node (chann) [
+                    rectangle,
+                    yshift = -4.5cm,
+                    xshift = -2cm,
+                ] {\texttt{MessageChannel()}};
+
+
+                \draw [arrow, <->] (thread.south-|w1.north) -- (w1.north);
+                \draw [arrow,  ->] (thread.south-|w2.north) -- (w2.north);
+                \draw [arrow, <- ] (thread.south-|w3.north) -- (w3.north);
+                \draw [arrow, <->] (thread.south-|w4.north) -- (w4.north);
+                \draw [arrow, <->] (w1.south) -- + (0,-1) -| (w3.south);
+
+
             \end{tikzpicture}
-            \caption{TODO: Web Worker communications}
+            \vspace{1em}
+            \caption{Communication between \ac{ROS} nodes as handled by \textsf{wasm-js}.}
             \label{fig:webworker}
         \end{figure}
 
-        
+        When the main thread receives messages from the web workers, it must not treat all messages equally. To accomplish this, each message contains a \textit{command} which tells the main thread how to process the information within. The commands are limited to the following options:
 
-    \subsection{Message Stacks}
+        \begin{itemize}
+            \item \textbf{\texttt{register}}. A message with this command will also contain the name, the role, and the unique ID of a new participant to be added to the registration map.  
+            \item \textbf{\texttt{deregister}}. This command type will provide the \texttt{gid} of the participant to be removed from the registration list; and in the case where this participant is also the last member of a topic or service, the message stacks for the particular topic or service will also be eliminated.
+            \item \textbf{\texttt{publish}}. With this command, the message that the main thread receives will contain the \ac{ROS} message as a string and the name of the topic to be able to store the \ac{ROS} message in the correct message stack.
+            \item \textbf{\texttt{retrieve}}. This command perform the opposite of publishing. The message data will contain the name of the topic where the most recent message should be retrieved to be able to select the message stack accordingly. And once the last \ac{ROS} message has been taken back and removed from the stack, the main thread will send this \ac{ROS} message back to the web worker which requested its retrieval.
+            \item \textbf{\texttt{console}}. The message data sent with this command will include any errors, warnings, or simply output messages which would normally appear on a terminal. This helps make the information more accessible to the user.
+        \end{itemize}
+
+        To expand on how participants are added to the registration map; this map consists of multiple objects, where each object is responsible for storing all of the information relevant to a unique topic. Each object contains a list of ID's of topic members and a message stack. For services, two topic objects are created, one to store the information about service requests and the other to store service responses.
+
+        
 
         \begin{figure}[htbp]
             \centering
+            \vspace{1em}
             \begin{subfigure}[t]{0.32\textwidth}
-                \includegraphics[height=0.9\textwidth]{07_stack0.png}
+                % \includegraphics[height=0.9\textwidth]{07_stack0.png}
+                \centering
+                \begin{tikzpicture}
+                    \node (m0) [
+                        msg, 
+                        fill = shade15
+                    ] {\textbf{0}};
+                    \node (m1) [
+                        msg,
+                        fill = shade15,
+                        yshift = 1cm,
+                    ] {\textbf{1}};
+                    \node (m2) [
+                        msg,
+                        fill = shade15,
+                        yshift = 2cm,
+                    ] {\textbf{2}};
+                    \node (m3) [
+                        msg,
+                        yshift = 3cm,
+                    ] {\textbf{3}};
+                    \node (m4) [
+                        msg,
+                        yshift = 4cm,
+                    ] {\textbf{4}};
+                    \node (head) [
+                        rectangle,
+                        yshift = 2cm,
+                        xshift = 1.8cm
+                    ] {Head};
+                \end{tikzpicture}
                 \caption{Filling stack}
             \end{subfigure}
             \begin{subfigure}[t]{0.32\textwidth}
-                \includegraphics[height=0.9\textwidth]{07_stack1.png}
+                % \includegraphics[height=0.9\textwidth]{07_stack1.png}
+                \centering
+                \begin{tikzpicture}
+                    \node (m0) [
+                        msg, 
+                        fill = shade30,
+                    ] {\textbf{0}};
+                    \node (m1) [
+                        msg,
+                        fill = shade30,
+                        yshift = 1cm,
+                    ] {\textbf{1}};
+                    \node (m2) [
+                        msg,
+                        fill = shade15,
+                        yshift = 2cm,
+                    ] {\textbf{2}};
+                    \node (m3) [
+                        msg,
+                        fill = shade15,
+                        yshift = 3cm,
+                    ] {\textbf{3}};
+                    \node (m4) [
+                        msg,
+                        fill = shade15,
+                        yshift = 4cm,
+                    ] {\textbf{4}};
+                    \node (head) [
+                        rectangle,
+                        yshift = 1cm,
+                        xshift = 1.8cm
+                    ] {Head};
+
+                    \draw [arrow] (m4.west) -- + (-0.5,0) |- (m0.west);
+                \end{tikzpicture}
                 \caption{Overwriting stack}
             \end{subfigure}
             \begin{subfigure}[t]{0.32\textwidth}
-                \includegraphics[height=0.9\textwidth]{07_stack2.png}
+                % \includegraphics[height=0.9\textwidth]{07_stack2.png}
+                \centering
+                \begin{tikzpicture}
+                    \node (m0) [
+                        msg, 
+                        fill = shade30,
+                    ] {\textbf{0}};
+                    \node (m1) [
+                        msg,
+                        yshift = 1cm,
+                    ] {\textbf{1}};
+                    \node (m2) [
+                        msg,
+                        fill = shade15,
+                        yshift = 2cm,
+                    ] {\textbf{2}};
+                    \node (m3) [
+                        msg,
+                        fill = shade15,
+                        yshift = 3cm,
+                    ] {\textbf{3}};
+                    \node (m4) [
+                        msg,
+                        fill = shade15,
+                        yshift = 4cm,
+                    ] {\textbf{4}};
+
+                    \draw [arrow] (m1.east) -- + (0.5, 0);
+                \end{tikzpicture}
                 \caption{Reading stack}
             \end{subfigure}
+            \vspace{1em}
             \caption{Modified Circular Stack, \ac{LIFO}}
             \label{fig:circleStack}
         \end{figure}
 
-    - Web workers, what are they? why are they needed?
-    - Communication channels
-    - Registry of topics/subs/pubs
+
     - Message handling
 
