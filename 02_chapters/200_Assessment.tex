@@ -1,20 +1,47 @@
 \chapter{Concept Assessment}\label{cha:assessment}
 
-- Survey
-- Performance measures
-- Limitations
+    The assessment of this project is calculated based on the number of interaction and complexity levels achieved as described in Chapter~\ref{cha:concept}. Illustrated in Table~\ref{tab:levelCompare} is the relation between the level of user interaction and the technical complexity. The blue dots indicate the complexity level required to achieve a specific level of interaction. For example, interaction level $\mathcal{I}4$ (intermediate) requires a complexity of $\mathcal{C}5$ in order to be implemented. The highlighted section denotes the completed objectives for this project.
 
-\section{Levels}
+    \newcommand{\bmark}{\hskip 0.5em $\color{igmrBlue}\bullet$ \hskip 0.5em}
+    \newcommand{\nomark}{\hskip 0.5em $\color{shade30}\circ$ \hskip 0.5em}
+    \newcommand{\cshade}{\cellcolor{shade10}}
 
-    \subsection{Interaction}
+    \begin{table}[htbp]
+        \color{textColor}
+        \centering	
+        \begin{tabular}{ cr|cccccccccc }
+             &&&&&&&&&& \\
+            \multirow{8}{*}{\rotatebox[origin=c]{90}{Interaction $[\,\mathcal{I}\,]\ \longrightarrow$ \quad}} 
+
+             & $\mathcal{I}6$ & \bmark & \bmark & \bmark & \bmark & \bmark & \bmark & \bmark & \bmark & \bmark & \\[1em]
+
+             & $\mathcal{I}5$ & \bmark & \bmark & \bmark & \bmark & \bmark & \bmark & \bmark & \nomark & \nomark & \\[1em]
+
+             & $\mathcal{I}4$ & \cshade \bmark & \cshade \bmark & \cshade \bmark & \cshade \bmark & \cshade \bmark & \nomark & \nomark & \nomark & \nomark & \\[1em]
+
+             & $\mathcal{I}3$ & \cshade \bmark & \cshade \bmark & \cshade \bmark & \cshade \nomark & \cshade \nomark & \nomark & \nomark & \nomark & \nomark & \\[1em]
+
+             & $\mathcal{I}2$ & \cshade \bmark & \cshade \bmark & \cshade \nomark & \cshade \nomark & \cshade \nomark & \nomark & \nomark & \nomark & \nomark & \\[1em]
+
+             & $\mathcal{I}1$ & \cshade \bmark & \cshade \bmark & \cshade \nomark & \cshade \nomark & \cshade \nomark & \nomark & \nomark & \nomark & \nomark & \\[1em]
+             
+            \cline{2-11} 
+             &&&&&&&&&& \\[-5pt]
+             &  & $\mathcal{C}1$ & $\mathcal{C}2$ & $\mathcal{C}3$ & $\mathcal{C}4$ & $\mathcal{C}5$ & $\mathcal{C}6$ & $\mathcal{C}7$ & $\mathcal{C}8$ & $\mathcal{C}9$ & \\[0.5em]
+             &  \multicolumn{10}{c}{Complexity $[\,\mathcal{C}\,]\ \longrightarrow$} \\
+        \end{tabular}
+        \caption{Relation between user interaction and increasing technical complexity.}
+        \label{tab:levelCompare}
+    \end{table}
+
+    \section{Layer Progression}
+
 
         The scenario described is illustrated in Figure~\ref{fig:ui1}.
 
         \begin{figure}[htbp]
             \centering
-            % \begin{tikzpicture}
-            %     \draw[black, dashed, thin, fill=black!5] (0,0) rectangle (\linewidth,4);
-            % \end{tikzpicture}
+
             \begin{lstlisting}[language=Bash]
 Publisher initializing.
 [INFO] [168766.57900] [wasm_cpp]: Context initializing.
@@ -81,8 +108,7 @@ Publisher terminated.\end{lstlisting}
         \begin{tcolorbox}[title=Example 2]
             \begin{minipage}[t]{0.87\linewidth}
                 \vspace*{0.5\baselineskip}
-                A demonstration of a \textit{minimal} user interface (Level 2) can
-                be found at \href{https://ros2wasm.dev/pages/demo02/index.html}{\textsf{ros2wasm.dev/pages/demo02}}
+                A demonstration of a \textit{minimal} user interface (Level 2) can be found at \\ \href{https://ros2wasm.dev/pages/demo02/index.html}{\texttt{https://\textbf{ros2wasm.dev}/pages/demo02}}
             \end{minipage}\hfill%
             \begin{minipage}[t]{0.1\linewidth}
                 \vspace*{0pt}
@@ -95,7 +121,7 @@ Publisher terminated.\end{lstlisting}
         \begin{figure}[htbp]
             \centering
             \begin{tikzpicture}
-                \draw[black, dashed, thin, fill=black!5] (0,0) rectangle (\linewidth,4);
+                \draw[black, dashed, thin, fill=textColor!5!bgColor] (0,0) rectangle (\linewidth,4);
                 \end{tikzpicture}
             \caption{TODO Level 3 image}\label{fig:ui3}
         \end{figure}
@@ -117,7 +143,7 @@ Publisher terminated.\end{lstlisting}
         \begin{figure}[htbp]
             \centering
             \begin{tikzpicture}
-                \draw[black, dashed, thin, fill=black!5] (0,0) rectangle (\linewidth,4);
+                \draw[black, dashed, thin, fill=textColor!5!bgColor] (0,0) rectangle (\linewidth,4);
                 \end{tikzpicture}
             \caption{TODO Level 4 image}\label{fig:ui4}
         \end{figure}
@@ -139,20 +165,10 @@ Publisher terminated.\end{lstlisting}
         \begin{figure}[htbp]
             \centering
             \begin{tikzpicture}
-                \draw[black, dashed, thin, fill=black!5] (0,0) rectangle (\linewidth,4);
+                \draw[black, dashed, thin, fill=textColor!5!bgColor] (0,0) rectangle (\linewidth,4);
                 \end{tikzpicture}
             \caption{TODO Level 5 image}\label{fig:ui5}
         \end{figure}
 
-        % NO DEMO HERE
-        % \begin{tcolorbox}[title=Example 5]
-        %     \begin{minipage}[t]{0.87\linewidth}
-        %         \vspace*{0.5\baselineskip}
-        %         A demonstration of an \textit{advanced} user interface (Level 5) can
-        %         be found at \href{https://ros2wasm.dev/pages/demo05/index.html}{\textsf{ros2wasm.dev/pages/demo05}}
-        %     \end{minipage}\hfill%
-        %     \begin{minipage}[t]{0.1\linewidth}
-        %         \vspace*{0pt}
-        %         \includegraphics[height=\linewidth,width=\linewidth]{qr_demo05.png}
-        %     \end{minipage}
-        % \end{tcolorbox}
+
+    
