@@ -49,7 +49,24 @@ Publisher initializing.
 
         \begin{figure}[htbp]
             \centering
-            \includegraphics[width=\linewidth]{03_level2.png}
+            % \includegraphics[width=\linewidth]{03_level2.png}
+            \begin{tikzpicture}
+                \node (start) [
+                    box,
+                    xshift = -5cm,
+                    minimum width = 2.5cm,
+                ] {\footnotesize{\textbf{START}}};
+                \node (stop) [
+                    box,
+                    minimum width = 2.5cm,
+                    fill = igmrLightBlue,
+                ] {\footnotesize{\textbf{STOP}}};
+                \node (clear) [
+                    box,
+                    xshift = 5cm,
+                    minimum width = 2.5cm,
+                ] {\footnotesize{\textbf{CLEAR}}};
+            \end{tikzpicture}
             \begin{lstlisting}[language=Bash]
 [INFO] [16879468.55200] [wasm_publisher]: Publishing: 'Hello there! 13'
 [INFO] [16879469.60800] [wasm_publisher]: Publishing: 'Hello there! 14'

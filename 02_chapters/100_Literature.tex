@@ -19,18 +19,18 @@
 
         Nonetheless, the greatest disadvantage of \textit{ROS on Web} lies in the fact that the project is not open source. Very little can be derived about how Allwright was able to achieve the demonstrations represented on the website. A few hints are given in the introductory page such as the replacement of the middleware with a custom design and the use of web workers. However, it is not possible to determine the manner in which these technologies were used. Hope remains that in the near future, the repositories for \textit{ROS on Web} become publicly available as an extension of the ROS open source ecosystem.
 
-    \section{roswasm\_suite}
+    \section{roswasm\smallunderscore suite}
 
-        Another project closely related to the author's developments is \textsf{roswasm\_suite} currently maintained mainly by Nils Bore. This suite is a set of libraries which help the user to cross\-compile C++ ROS nodes to WebAssembly~\cite{roswasmsuite}. It also includes a library of helpers to write web \ac{GUI}s for ROS; one such example can be observed in Figure~\ref{fig:roswasm_gui}.
+        Another project closely related to the author's developments is \textsf{roswasm\smallunderscore suite} currently maintained mainly by Nils Bore. This suite is a set of libraries which help the user to cross\-compile C++ ROS nodes to WebAssembly~\cite{roswasmsuite}. It also includes a library of helpers to write web \ac{GUI}s for ROS; one such example can be observed in Figure~\ref{fig:roswasm_gui}.
 
         \begin{figure}[htbp]
             \centering
             \includegraphics[width=\textwidth]{02_roswasm_gui.png}
-            \caption{Example \ac{GUI} for ROS using \textsf{roswasm\_gui}.}
+            \caption{Example \ac{GUI} for ROS using \textsf{roswasm\smallunderscore gui}.}
             \label{fig:roswasm_gui}
         \end{figure}
 
-        Some of the biggest advantages of this \textsf{roswasm\_suite} are that it is open source and actively maintained. The developers have a long history of continuous improvements to the packages, and as of 2023, they have managed to publish ten releases. 
+        Some of the biggest advantages of this \textsf{roswasm\smallunderscore suite} are that it is open source and actively maintained. The developers have a long history of continuous improvements to the packages, and as of 2023, they have managed to publish ten releases. 
 
         Nevertheless, these libraries do come with their set of disadvantages. First, the suite targets a \ac{ROS} 1 distro and it depends on \textsf{catkin} tools to build the packages. Thus, the user is required to have a \ac{ROS} 1 installation and the Emscripten \ac{SDK} before being able to use these libraries to launch \ac{ROS} nodes on the browser.
 
@@ -55,9 +55,9 @@
 
         Another advantage of Foxglove Studio is that it is open source and actively maintained by community members. The application is also highly extensible with plugins to fit any specific needs of the users. Nevertheless, as a side effect of concentrating on observability, the application works as an add-on to an existing ROS installation and not as a replacement.
 
-    \subsection{\textsf{rosbridge\_suite}}
+    \subsection{rosbridge\smallunderscore suite}
 
-        On a similar note, the \textsf{rosbridge\_suite} provides a set of packages which allow the user to interact with a \ac{ROS} system via a \ac{JSON} interface~\cite{rosbridge}. Hypothetically, with these libraries, any non-ROS systems could interact with ROS by sending \ac{JSON} messages. An instance of the \textsf{rosbridge} protocol can be seen in Figure~\ref{fig:rosbridge}.
+        On a similar note, the \textsf{rosbridge\smallunderscore suite} provides a set of packages which allow the user to interact with a \ac{ROS} system via a \ac{JSON} interface~\cite{rosbridge}. Hypothetically, with these libraries, any non-ROS systems could interact with ROS by sending \ac{JSON} messages. An instance of the \textsf{rosbridge} protocol can be seen in Figure~\ref{fig:rosbridge}.
 
         \begin{figure}[htbp]
             \centering
@@ -74,22 +74,22 @@
             \label{fig:rosbridge}
         \end{figure}
 
-        The \textsf{rosbridge\_suite} consists of four main packages:
+        The \textsf{rosbridge\smallunderscore suite} consists of four main packages:
 
         \begin{itemize}
-            \item \textsf{rosbridge\_suite}
-            \item \textsf{rosbridge\_library}
-            \item \textsf{rosbridge\_server}
+            \item \textsf{rosbridge\smallunderscore suite}
+            \item \textsf{rosbridge\smallunderscore library}
+            \item \textsf{rosbridge\smallunderscore server}
             \item \textsf{rosapi}
         \end{itemize}
 
-        From these packages, the \textsf{rosbridge\_library} performs the conversions from \ac{JSON} to \ac{ROS} messages and vice versa. While the \textsf{rosbridge\_server} provides the browsers with a WebSocket connection. A handful of \ac{API}s enable clients to communicate with \textsf{rosbridge}; these \ac{API}s are implemented in JavaScript, Java, Python, and Rust.
+        From these packages, the \textsf{rosbridge\smallunderscore library} performs the conversions from \ac{JSON} to \ac{ROS} messages and vice versa. While the \textsf{rosbridge\smallunderscore server} provides the browsers with a WebSocket connection. A handful of \ac{API}s enable clients to communicate with \textsf{rosbridge}; these \ac{API}s are implemented in JavaScript, Java, Python, and Rust.
 
         Analogous to Foxglove Studio, \textsf{rosbridge} relies on an existing ROS installation. However, the capabilities of \textsf{rosbridge} are extensive and can be applied to real world scenarios; it also supports \ac{ROS} 1 and \ac{ROS} 2 distributions. Additionally, the community of contributors is highly involved in the maintenance of the client libraries.
 
     \subsection{ROS Control Center}\label{sec:roscontrolcenter}
 
-        The \ac{ROS} Control Center is another web application which uses the \textsf{rosbridge\_suite} to establish a WebSocket connection to a robotics system running \ac{ROS}~\cite{controlcenter}. A view of the control center is depicted in Figure~\ref{fig:roscontrolcenter}.
+        The \ac{ROS} Control Center is another web application which uses the \textsf{rosbridge\smallunderscore suite} to establish a WebSocket connection to a robotics system running \ac{ROS}~\cite{controlcenter}. A view of the control center is depicted in Figure~\ref{fig:roscontrolcenter}.
 
         \begin{figure}[htbp]
             \centering
@@ -115,7 +115,7 @@
 
     \subsection{ROSboard}
 
-        In contrast to the previous two models, ROSboard does not rely on \textsf{rosbridge\_suite} to interact with \ac{ROS} systems; instead, it has a custom \textsf{Tornado} implementation to function as a web server and WebSocket server~\cite{rosboard}. Figure~\ref{fig:rosboard} shows and example of the ROSboard application with different visualization widgets.
+        In contrast to the previous two models, ROSboard does not rely on \textsf{rosbridge\smallunderscore suite} to interact with \ac{ROS} systems; instead, it has a custom \textsf{Tornado} implementation to function as a web server and WebSocket server~\cite{rosboard}. Figure~\ref{fig:rosboard} shows and example of the ROSboard application with different visualization widgets.
 
         \begin{figure}[htbp]
             \centering

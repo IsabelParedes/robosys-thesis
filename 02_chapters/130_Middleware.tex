@@ -486,7 +486,6 @@ rmw_ret_t 	rmw_service_server_is_available (
     \pagebreak
     Besides the essential functions for creating and destroying nodes, publishers, subscribers, and services, there exists additional functions to handle events, wait sets, guard conditions, \ac{QoS} policies, and allocators. Additionally, there are utility functions and macros for handling errors, customizing log outputs and name validation. A full list of all 83 function headers derived from the \textsf{rmw} \ac{API} documentation can be found in Appendix~\ref{sec:apxrmw}~\cite{rmwapi}.
 
-\pagebreak
 \section{Substituting ROS 2 Middleware}
 
     There are two methods of using a particular middleware implementations when launching \ac{ROS} applications other than the default implementation. The first method requires setting the environment variable \small\textsf{RMW\_IMPLEMENTATION} to the implementation identifier of choice. An example of how to launch a publisher node with this method is shown in Figure~\ref{fig:envrmw}.

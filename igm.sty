@@ -17,11 +17,10 @@
 \RequirePackage[dvipsnames]{xcolor}
 
 % REMOVE for readability
-% \definecolor{textColor}{HTML}{98B0BC}
-% \definecolor{bgColor}{HTML}{10131B}
-\definecolor{textColor}{HTML}{000000}
-\definecolor{bgColor}{HTML}{FFFFFF}
-\definecolor{myBlue}{HTML}{654EF0}
+\definecolor{textColor}{HTML}{98B0BC}
+\definecolor{bgColor}{HTML}{10131B}
+% \definecolor{textColor}{HTML}{000000}
+% \definecolor{bgColor}{HTML}{FFFFFF}
 \definecolor{igmrBlue}{HTML}{00549F}
 \definecolor{igmrLightBlue}{HTML}{8EBAE5}
 \definecolor{qrColor}{HTML}{4CAAFC}
@@ -114,6 +113,8 @@
 
 \RequirePackage{tablefootnote}
 
+\RequirePackage{textcomp}
+\newcommand{\smallunderscore}{\,\vbox{\hrule width.4em}\,}
 \chardef\_=`_
 
 % UML DIAGRAMS
@@ -171,7 +172,7 @@
 
 \lstdefinelanguage{JSON}{
 	numbers=none,
-	frame=shadowbox,
+	frame=none,
 	xleftmargin=.2\textwidth, 
 	xrightmargin=.2\textwidth
 }
@@ -192,7 +193,7 @@
 \definecolor{pyRed}{HTML}{BA2121}
 \lstdefinelanguage{Python}{
 	numbers=none,
-	frame=shadowbox,
+	frame=none,
 	xleftmargin=.2\textwidth, 
 	xrightmargin=.2\textwidth,
 	keywords={import},
@@ -516,7 +517,7 @@
 	\end{center}
 	selbstständig und ohne unzulässige fremde Hilfe erbracht habe. Ich habe keine anderen als die angegebenen Quellen und Hilfsmittel benutzt. Für den Fall, dass die Arbeit zusätzlich auf einem Datenträger eingereicht wird, erkläre ich, dass die schriftliche und die elektronische Form vollständig übereinstimmen. Die Arbeit hat in gleicher oder ähnlicher Form noch keiner Prüfungsbehörde vorgelegen.
 	
-	Aachen, \@submissiondate \hfill\rule{5cm}{0.5pt}\newline \vspace{-1.5cm}
+	Aachen, \@submissiondate \hfill\rule{5cm}{0.5pt}\newline \vspace{-1.4cm}
 	\begin{flushright}
 		\@author
 	\end{flushright}	
@@ -535,7 +536,7 @@
 	
 	%\vspace{0.5cm}
 	
-	Aachen, \@submissiondate \hfill\rule{5cm}{0.5pt}\newline \vspace{-1.5cm}
+	Aachen, \@submissiondate \hfill\rule{5cm}{0.5pt}\newline \vspace{-1.4cm}
 	\begin{flushright}
 		\@author
 	\end{flushright}
