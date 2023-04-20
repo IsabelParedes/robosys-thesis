@@ -17,10 +17,10 @@
 \RequirePackage[dvipsnames, table]{xcolor}
 
 % REMOVE for readability
-% \definecolor{textColor}{HTML}{98B0BC}
-% \definecolor{bgColor}{HTML}{10131B}
-\definecolor{textColor}{HTML}{000000}
-\definecolor{bgColor}{HTML}{FFFFFF}
+\definecolor{textColor}{HTML}{98B0BC}
+\definecolor{bgColor}{HTML}{10131B}
+% \definecolor{textColor}{HTML}{000000}
+% \definecolor{bgColor}{HTML}{FFFFFF}
 \definecolor{igmrBlue}{HTML}{00549F}
 \definecolor{igmrLightBlue}{HTML}{8EBAE5}
 \definecolor{qrColor}{HTML}{4CAAFC}
@@ -32,6 +32,7 @@
 \colorlet{shade20}{textColor!20!bgColor}
 \colorlet{shade30}{textColor!30!bgColor}
 \colorlet{shade40}{textColor!40!bgColor}
+\colorlet{shade50}{textColor!50!bgColor}
 
 \RequirePackage{tcolorbox}
 \tcbset{
@@ -181,6 +182,19 @@
 	columns=fullflexible,
 	numbers=none,
 	% backgroundcolor=\color{lightgray!15!bgColor},
+	comment=[l]{\#},
+	commentstyle=\color{shade50},
+	xleftmargin=10pt,
+	xrightmargin=10pt,
+	frame=lrtb,
+	framesep=10pt,
+	framerule=0pt,
+}
+
+\lstdefinelanguage{Yaml}{
+	columns=fullflexible,
+	numbers=none,
+	% backgroundcolor=\color{lightgray!15!bgColor},
 	xleftmargin=10pt,
 	xrightmargin=10pt,
 	frame=lrtb,
@@ -193,7 +207,9 @@
 \definecolor{pyRed}{HTML}{BA2121}
 \lstdefinelanguage{Python}{
 	numbers=none,
-	frame=none,
+	frame=lrtb,
+	framesep=10pt,
+	framerule=0pt,
 	xleftmargin=.2\textwidth, 
 	xrightmargin=.2\textwidth,
 	keywords={import},
