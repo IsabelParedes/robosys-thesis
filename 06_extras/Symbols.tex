@@ -4,35 +4,44 @@
 \acroextra{\makebox[18mm][l]{\si{#1}}}
 }
 
-\chapter*{\multilang{Formelzeichen und Indizes}{Formula symbols and indices}}
+\chapter*{Formula symbols and indices}
 
 % Headmarks need to be enforced in every chapter*
 \ihead[]{\multilang{Formelzeichen und Indizes}{Formula symbols and indices}}
 
 % A list of all content has to be enforced in every chapter*
-\addcontentsline{toc}{chapter}{\multilang{Formelzeichen und Indizes}{Formula symbols and indices}}
+\addcontentsline{toc}{chapter}{Formula symbols and indices}
 
-\section*{\multilang{Formelzeichen aus lateinischen Kleinbuchstaben}{Lower case latin letters as formula symbols}}
+% \section*{Lower case latin letters as formula symbols}
+% \begin{acronym}[LONGEST]
+% \acro{a}[\ensuremath{a}]{\acrounit{\mss}acceleration}
+% \end{acronym}
+
+\section*{Upper case latin letters as formula symbols}
 \begin{acronym}[LONGEST]
-\acro{a}[\ensuremath{a}]{\acrounit{\mss}acceleration}
+\acro{P}[\ensuremath{P}]{\acrounit{\%}motor power}
 \end{acronym}
 
-\section*{\multilang{Formelzeichen aus lateinischen Großbuchstaben}{Upper case latin letters as formula symbols}}
-\begin{acronym}[LONGEST]
-\acro{A}[\ensuremath{A}]{\acrounit{\qm}surface}
-\end{acronym}
+% \section*{Lower case greek letters as formula symbols}
+% \begin{acronym}[LONGEST]
+% \acro{alpha}[\ensuremath{\alpha}]{\acrounit{-}Weighting factor}
+% \end{acronym}
 
-\section*{\multilang{Formelzeichen aus griechischen Kleinbuchstaben}{Lower case greek letters as formula symbols}}
-\begin{acronym}[LONGEST]
-\acro{alpha}[\ensuremath{\alpha}]{\acrounit{-}Weighting factor}
-\end{acronym}
+% \section*{Upper case greek letters as formula symbols}
+% \begin{acronym}[LONGEST]
+% \acro{Omega}[\ensuremath{\Omega}]{\acrounit{\radian\per\meter} Angular frequency}
+% \end{acronym}
 
-\section*{\multilang{Formelzeichen aus griechischen Großbuchstaben}{Upper case greek letters as formula symbols}}
+\section*{Indices}
 \begin{acronym}[LONGEST]
-\acro{Omega}[\ensuremath{\Omega}]{\acrounit{\radian\per\meter} Angular frequency}
+\acro{in_A}[\ensuremath{A}]{motor A}
 \end{acronym}
-
-\section*{\multilang{Indizes}{Indices}}
 \begin{acronym}[LONGEST]
-\acro{in_a}[\ensuremath{a}]{Amplitude}
+    \acro{in_B}[\ensuremath{B}]{motor B}
+\end{acronym}
+\begin{acronym}[LONGEST]
+    \acro{in_lin}[\ensuremath{lin}]{linear}
+\end{acronym}
+\begin{acronym}[LONGEST]
+    \acro{in_rot}[\ensuremath{rot}]{rotational}
 \end{acronym}

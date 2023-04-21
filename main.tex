@@ -104,15 +104,48 @@
 \studentno{415723}
 
 \type{Master Thesis}
-\title{Cross-Compiling ROS2 Humble to WebAssembly for the Development of a Web Browser Supported Robotics Environment}
+\title{Cross-Compiling ROS 2 Humble to WebAssembly for the Development of a Web Browser Supported Robotics Environment}
 \submissiondate{22 April 2023}
 \supervisor{M.Sc. Markus Schmitz and M.Sc. Wolf Vollprecht}
 
 % Text der Aufgabenstellung / text of the issue
-\issuetext{The issue will be inserted here after being drafted and provided 
-by the supervisor beforehand. The issue should contain a detailed list of 
-all work packages. It should not exceed one page and the version handed to 
-the students has to be signed by the professor.}
+% The issue will be inserted here after being drafted and provided 
+% by the supervisor beforehand. The issue should contain a detailed list of 
+% all work packages. It should not exceed one page and the version handed to 
+% the students has to be signed by the professor.
+
+\newcommand{\bulletini}{$\textcolor{bgColor}{000}$ \footnotesize$\bullet$ \normalsize \  }
+
+\issuetext{
+The accessibility of ROS 2 has been greatly improved as it now supports development on the most common platforms (Ubuntu, Windows and macOS), however, it is oftentimes desirable to share robotic applications without the need to set up a full installation in a local environment. As an example, consider an algorithm that solves a robotics task and is developed and published in a research paper. The authors of this paper would like that any reader should be able to replicate those results, but even with extensive installation instructions not everyone would be able to replicate the authors' setup identically. One possibility would be for the authors to share their work from a web browser to make it more accessible.\\ \\
+There exist tools such as those developed by Robot Web Tools which allow for a limited interaction with ROS from the browser, but these tools rely on a connection to a system already running ROS. Other methods rely on a connection to a server to provide access to a ROS environment, for example, those using Docker containers. To solve this problem, the creation of a ROS 2 environment which runs entirely on a web browser is proposed. This solution is divided into three main components: \\
+\bulletini the cross-compilation of ROS 2 packages to WebAssembly \\
+\bulletini the development of a middleware to handle all ROS communications on the browser \\
+\bulletini the deployment of a web-based platform where the users can interact with ROS 2 \\ \\
+The scope of this thesis will be dedicated to setting up the ground work for a functioning ROS 2 environment on a web browser. In other words, the essential ROS 2 packages will be cross-compiled to WebAssembly, a middleware to replace the currently employed DDS (Data Distribution Service) will be created to handle communications, and a website where this ROS 2 environment can be accessed will be deployed.\\ \\
+The outcome of this project will be tested based on its performance according to the following criteria:\\
+\bulletini executability of ROS 2 nodes on the browser \\
+\bulletini communication between the nodes \\
+\bulletini shareability of workspaces and packages with other ROS developers \\
+The results of the tests will be analyzed and evaluated depending on how closely they meet the given requirements. \\ \\
+In summary, this project is to set the foundation for a web-based ROS 2 environment with the possibility of being extensible to
+custom applications. Future developments could include: \\
+\bulletini addition of specialized ROS 2 packages such as ``MoveIt2'' or custom packages \\
+\bulletini adaptation of the Jupyter-ROS extensions from JupyterLab to JupyterLite \\
+\bulletini optimization of browser performance and middleware solution \\
+\bulletini streamlining the process of cross-compiling packages for other ROS 2distribution \\ \\
+Planned workflow: \\
+\bulletini Literature review and familiarization with ROS 2 and WebAssembly (1 Week) \\
+\bulletini Compile, test and publish base packages and ROS 2 client libraries (3 Weeks) \\
+\bulletini Development of a DDS replacement to handle communications (4 Weeks) \\ 
+\bulletini Publish and subscribe to topics and define message types (3 Weeks) \\
+\bulletini File management on the browser (1 Week) \\
+\bulletini Compile example packages and packages for robot visualization (2 Weeks) \\
+\bulletini Testing performance, establishing benchmarks, and comparison to other tools (2 Weeks) \\
+\bulletini Testing shareability and deployment with a group of ROS developers (1 Week) \\
+\bulletini Analysis of test results (1 Week) \\
+\bulletini Writing of the report (2 Week)   
+}
 
 % --------------------------------------------------------------------------
 % 		Literaturdatei / Bibliography file
@@ -160,7 +193,7 @@ the students has to be signed by the professor.}
 % --------------------------------------------------------------------------
 %		Formelzeichenverzeichnis / List of symbols 
 % -------------------------------------------------------------------------- 
-% \input{06_extras/Symbols}			%  Formelzeichenverzeichnis / List of symbols
+\input{06_extras/Symbols}			%  Formelzeichenverzeichnis / List of symbols
 
 % --------------------------------------------------------------------------
 %		Abkuerzungsverzeichnis / List of abbreviations
