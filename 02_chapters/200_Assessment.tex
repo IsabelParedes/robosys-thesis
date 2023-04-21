@@ -264,7 +264,7 @@ Publisher terminated.
         \end{tcolorbox}
 
 
-        \subsection{Complexity Level 3}
+        \subsection{Complexity Level 3}\label{sec:topicmap}
 
         Achieving $\mathcal{C}3$ requires two components. The first is the formation of a message storing system in \textsf{wasm-js} in order to allow publishers and subscribers to communicate with each other; this systems is composed of message stacks depicted in Figure~\ref{fig:msgStack}. 
         
@@ -308,7 +308,7 @@ let onMessageFromWorker = function( event ) {
             \begin{tikzpicture}
                 \node (title) [
                     rectangle, 
-                    xshift = -7cm,
+                    text width = 15.5cm,
                     yshift = 1cm,
                 ] {\textbf{Publisher}};
 
@@ -344,7 +344,7 @@ let onMessageFromWorker = function( event ) {
             \begin{tikzpicture}
                 \node (title) [
                     rectangle, 
-                    xshift = -7cm,
+                    text width = 15.5cm,
                     yshift = 1cm,
                 ] {\textbf{Subscriber}};
 
@@ -471,6 +471,11 @@ topicMap:
         \begin{figure}[htbp]
             \centering
             \begin{tikzpicture}
+                \node (title) [
+                    rectangle, 
+                    text width = 15.5cm,
+                    yshift = 2cm,
+                ] {\textbf{LEGO BOOST Vernie}};
                 \node (start) [
                     box,
                     xshift = -5cm,
@@ -492,31 +497,32 @@ topicMap:
             \begin{tikzpicture}
                 \node (title) [
                     rectangle, 
-                    xshift = -7cm,
+                    text width = 15.5cm,
                     yshift = 1cm,
                 ] {\textbf{Publish LED colors}};
 
                 \node (led) [
                     circle,
                     minimum size = 0.5cm,
-                    xshift = -8cm,
+                    xshift = -7cm,
                     draw = textColor,
                     fill = vernOrange,
                 ] {};
 
                 \node (start) [
                     box,
-                    xshift = -5cm,
+                    xshift = -4cm,
                     minimum width = 2.5cm,
                     fill = igmrLightBlue,
                 ] {\footnotesize{\textbf{START}}};
                 \node (stop) [
                     box,
+                    xshift = 1cm,
                     minimum width = 2.5cm,
                 ] {\footnotesize{\textbf{STOP}}};
                 \node (clear) [
                     box,
-                    xshift = 5cm,
+                    xshift = 6cm,
                     minimum width = 2.5cm,
                 ] {\footnotesize{\textbf{CLEAR}}};
             \end{tikzpicture}
@@ -582,24 +588,16 @@ Initializing...
 
         \subsection{User Interaction Level 4: Intermediate}
 
-        services and info about environment
+        With the elements developed in previous sections, $\mathcal{C}4$ and $\mathcal{C}5$, it is now possible to demonstrate a web page capable of running services and displaying some basic information about the \ac{ROS} environment. This page meets the criteria for $\mathcal{I}4$.
 
+        The addition of services is the logical progression of publishers and subscribers. A service client contains a publisher and a subscriber within to be able to call a service and receive information. Calling a service consists of sending a request by publishing a message to the main thread. Waiting for a response from the service called requires subscribing to the response topic for that particular service. A service server works in the same manner as a client but with the topics for the internal publisher and subscriber switched. Figure~\ref{fig:ui4} shows a service server being called by a client to perform the addition of two integers.
 
-
-
-
-
-
-
-
-        A depiction of Level 4 is shown in Figure~\ref{fig:ui4}
 
         \begin{figure}[htbp]
-            \centering
             \begin{tikzpicture}
                 \node (title) [
-                    rectangle, 
-                    xshift = -7cm,
+                    rectangle,
+                    text width = 15.5cm,
                     yshift = 1cm,
                 ] {\textbf{Service Server}};
 
@@ -629,10 +627,11 @@ Server initializing.
 [INFO] [1682083644.968000000] [rclcpp]: [server] Sending back response: [13]
 \end{lstlisting}
 
+            \vspace{2em}
             \begin{tikzpicture}
                 \node (title) [
                     rectangle, 
-                    xshift = -7cm,
+                    text width = 15.5cm,
                     yshift = 1cm,
                 ] {\textbf{Service Client}};
 
@@ -664,9 +663,56 @@ Client initializing.
             \label{fig:ui4}
         \end{figure}
 
+        In addition to services, the user can request information about the environment such as a list of topics which are currently active as shown in Figure~\ref{fig:topics}. Since all of the information in the topic map (see Section~\ref{sec:topicmap}) already resides in the main thread, it is a matter of manipulating the interface to make this information available to the user. Besides listing the topics, the interface can be adapted to \textit{echo} the messages being published to a selected topic. It is also possible to calculate the number of members participating in each topic.
 
 
+        \begin{figure}[htbp]
+            \centering
+            \begin{tikzpicture}
+                \node (title) [
+                    rectangle, 
+                    text width = 15.5cm,
+                    yshift = 1cm,
+                ] {\textbf{Topics}};
 
+                \node (start) [
+                    box,
+                    minimum width = 2.5cm,
+                    fill = igmrLightBlue,
+                ] {\footnotesize{\textbf{REFRESH}}};
+            \end{tikzpicture}
+
+            \vspace{1em}
+            \begin{lstlisting}[language=Bash]
+/rosout
+/add_two_ints_server/get_parameters
+/response/add_two_ints_server/get_parameters
+/request/add_two_ints_server/get_parameters
+/add_two_ints_server/get_parameter_types
+/response/add_two_ints_server/get_parameter_types
+/request/add_two_ints_server/get_parameter_types
+/add_two_ints_server/set_parameters
+/response/add_two_ints_server/set_parameters
+/request/add_two_ints_server/set_parameters
+/add_two_ints_server/set_parameters_atomically
+/response/add_two_ints_server/set_parameters_atomically
+/request/add_two_ints_server/set_parameters_atomically
+/add_two_ints_server/describe_parameters
+/response/add_two_ints_server/describe_parameters
+/request/add_two_ints_server/describe_parameters
+/add_two_ints_server/list_parameters
+/response/add_two_ints_server/list_parameters
+/request/add_two_ints_server/list_parameters
+/parameter_events
+/add_two_ints
+/response/add_two_ints
+/request/add_two_ints
+\end{lstlisting}
+            \caption{List of active topics requested by the user while a service server is running.}
+            \label{fig:topics}
+        \end{figure}
+
+        \vspace{1em}
         \begin{tcolorbox}[title=Example 8]
             \begin{minipage}[t]{0.87\linewidth}
                 \vspace*{0.5\baselineskip}
@@ -681,4 +727,14 @@ Client initializing.
         \end{tcolorbox}
 
 
+
     
+    \subsection{Complexity Level 6}
+
+    Although $\mathcal{C}6$ is not considered as completed for this project, this section describes the current obstacles which must be overcome to achieve this level. $\mathcal{C}6$ can be subdivided into two requirements: the integration of JupyterLite and the availability of a \ac{ROS} client library useable from the browser. Since JupyterLite is developed externally, it is a matter of following the developers' instructions for integration. 
+
+    The major obstacle in this case is having a \ac{ROS} client library on the browser. Officially, \ac{ROS} has two client libraries, one for C++ (\textsf{rclcpp}) and one for Python (\textsf{rclpy}). All of the previous examples have used \textsf{rclcpp}; however, using C++ requires all the code to be pre-compiled before it can be run on the browser. One solution would be to add an online compiler such as Emception, which compiles C and C++ code in the browser using Emscripten~\cite{emception}. However, adding an online compiler was only projected as part of $\mathcal{C}9$ since it would fall in the category of development tools, plus the drawback that it may not be as beginner friendly.
+
+    With Python being an interpreted language, \textsf{rclpy} became the best target client library. Nonetheless, after multiple failed cross-compilation attempts, it is suspected that Python cannot (yet) work well with Emscripten's Asyncify. Asyncify is required in \textsf{wasm-cpp} for calling asynchronous JavaScript functions to retrieve messages. Thus, it is an integral part of the custom middleware implementation which could not be replaced without a complete redesign. 
+
+    Looking outside the two supported client libraries, there exists a handful of community-maintained libraries which may be suitable for the goals of this project. Two of these libraries were developed by Robot Web Tools, \textsf{rclnodejs} and \textsf{roslibjs}, and they both provide JavaScript \ac{API}s to interact with \ac{ROS} 2.
