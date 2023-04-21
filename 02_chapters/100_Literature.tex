@@ -32,7 +32,7 @@
 
         Some of the biggest advantages of this \textsf{roswasm\smallunderscore suite} are that it is open source and actively maintained. The developers have a long history of continuous improvements to the packages, and as of 2023, they have managed to publish ten releases. 
 
-        Nevertheless, these libraries do come with their set of disadvantages. First, the suite targets a \ac{ROS} 1 distro and it depends on \textsf{catkin} tools to build the packages. Thus, the user is required to have a \ac{ROS} 1 installation and the Emscripten \ac{SDK} before being able to use these libraries to launch \ac{ROS} nodes on the browser.
+        Nevertheless, these libraries do come with their own set of disadvantages. First, the suite targets a \ac{ROS} 1 distro and it depends on \textsf{catkin} tools to build the packages. Thus, the user is required to have a \ac{ROS} 1 installation and the Emscripten \ac{SDK} before being able to use these libraries to launch \ac{ROS} nodes on the browser.
 
 
 \section{Related Projects}
@@ -41,7 +41,7 @@
     
     \subsection{Foxglove Studio}
 
-        One of the most notorious examples of robotics applications on the browser consists of Foxglove Studio. The main focus of Foxglove Studio is visualization and debugging of robotic tasks~\cite{foxglove}. Given that their products are based on observability and not on direct control of robotic systems, this allows them to expand their service area to a wider range of systems and platforms. For example, Foxglove Studio supports both \ac{ROS} 1 and \ac{ROS} 2 distributions and the application can be installed on Linux, Windows and MacOS or run directly in Google Chrome.
+        One of the most leading examples of robotics applications on the browser consists of Foxglove Studio. The main focus of Foxglove Studio is visualization and debugging of robotic tasks~\cite{foxglove}. Given that their products are based on observability and not on direct control of robotic systems, this allows them to expand their service area to a wider range of systems and platforms. For example, Foxglove Studio supports both \ac{ROS} 1 and \ac{ROS} 2 distributions and the application can be installed on Linux, Windows and MacOS or run directly in Google Chrome.
         
         % https://foxglove.dev/blog/publishing-and-visualizing-ros2-transforms
         \begin{figure}[htbp]
@@ -53,7 +53,7 @@
 
         The wide range of visualization panels is one of the greatest strengths of Foxglove Studio. An example of a panel is shown in Figure~\ref{fig:foxglove} where \ac{ROS} 2 transforms are drawn in a graphical display. Additional examples of panels include support for visualizing raw messages, image topics, plots, parameters, \ac{URDF} models, etc.
 
-        Another advantage of Foxglove Studio is that it is open source and actively maintained by community members. The application is also highly extensible with plugins to fit any specific needs of the users. Nevertheless, as a side effect of concentrating on observability, the application works as an add-on to an existing ROS installation and not as a replacement.
+        Another advantage of Foxglove Studio is that it is open source and actively maintained by community members. The application is also highly extensible with plugins to fit any specific needs of the users. As a side effect of concentrating on observability, the application works as an add-on to an existing ROS installation and not as a replacement.
 
     \subsection{rosbridge\smallunderscore suite}
 
@@ -124,7 +124,7 @@
             \label{fig:rosboard}
         \end{figure}
 
-        ROSboard offers support for both \ac{ROS} 1 and \ac{ROS} 2 systems thanks to its tailored \textsf{rospy2} library which is based on \ac{ROS} 1's \textsf{rospy} but modified to ensure compatibility.
+        ROSboard offers support for both \ac{ROS} 1 and \ac{ROS} 2 systems thanks to its tailored \textsf{rospy2} library, which is based on \ac{ROS} 1's \textsf{rospy} but modified to ensure compatibility.
 
     \subsection{ROSLink}
 
@@ -134,9 +134,9 @@
 
 \section{WebAssembly}
 
-    WebAssembly, also commonly referred to as simply WASM, is one of the newer technologies to enter the web arena. It was initially released in 2017 after representatives from the major browsers, Google Chrome, Microsoft Edge, Mozilla Firefox, and WebKit, agreed that the design of a \ac{MVP} was completed~\cite{krill}.
+    WebAssembly, also commonly referred to as simply WASM, is one of the newer technologies to enter the web arena. It was initially released in 2017 after representatives from the major browsers, Google Chrome, Microsoft Edge, Mozilla Firefox, and Apple Safari, agreed that the design of a \ac{MVP} was completed~\cite{krill}.
 
-    In short, WebAssembly is a binary code format for a stack-based virtual machine~\cite{wasmspec}. It is designed to be fast, safe, efficient, and portable; and it can be used inside or outside the browser. Inside the browser, WebAssembly works as a complement to JavaScript. Some of the use cases include: games, scientific visualizations, platform simulations, interactive educational software, virtual machines, developer tools, etc.~\cite{wasmdocs}. Because of its capabilities, it is believed to be an ideal target for the development of a robotics environment on the browser.
+    In short, WebAssembly is a binary code format for a stack-based virtual machine~\cite{wasmspec}. It is designed to be fast, safe, efficient, and portable; and it can be used inside or outside the browser. Inside the browser, WebAssembly works as a complement to JavaScript. Some of the use cases include: games, scientific visualizations, platform simulations, interactive educational software, virtual machines, developer tools, etc.~\cite{wasmdocs}. Because of its capabilities, it is an ideal target for the development of a robotics environment on the browser.
 
         
 
@@ -144,7 +144,7 @@
 
     \subsection{Applications}
 
-        Before WebAssembly was officially released, one of the first demonstrations of its potential involved the game AngryBots developed by Unity Technologies. As illustrated in Figure~\ref{fig:unity}, AngryBots is a first-person shooter game set in a space station filled with menacing robots.
+        Before WebAssembly was officially released, one of the first demonstrations of its potential involved the game AngryBots developed by Unity Technologies. As illustrated in Figure~\ref{fig:unity}, AngryBots is a third-person shooter game set in a space station filled with menacing robots.
 
         \begin{figure}[htbp]
             \centering
@@ -152,7 +152,7 @@
             \caption{Demonstration of Angry ots in Unity WebGL~\cite{angrybots}.}\label{fig:unity}
         \end{figure}
 
-        Similar to AngryBots, the Doom 3 Engine was ported to WebAssembly by using Emscripten. This experiment showed that very large and demanding C++ programs can be run inside a web browser~\cite{doom3}. The game, pictured in Figure~\ref{fig:doom} is currently supported by all major desktop web browsers.
+        Similar to AngryBots, the Doom 3 Engine was ported to WebAssembly by using Emscripten. This experiment showed that very large and demanding C++ programs can be run inside a web browser~\cite{doom3}. The game, pictured in Figure~\ref{fig:doom}, is currently supported by all major desktop web browsers.
 
         \begin{figure}[htbp]
             \centering
@@ -161,7 +161,7 @@
             \label{fig:doom}
         \end{figure}
 
-        On a more classic note, the traditional Pong game has also been successfully ported to WebGL using Emscripten~\cite{pong}. Only a single player is supported in the current version of the game, as seen in Figure~\ref{fig:pong}. 
+        On a more classic note, the traditional Pong game has also been successfully ported to WebGL using Emscripten~\cite{pong}. The current version of the game can support one or two players, as seen in Figure~\ref{fig:pong}. 
 
         \begin{figure}[htbp]
             \centering
@@ -188,6 +188,5 @@
             \label{fig:atmos}
         \end{figure}
 
-        All of the mentioned examples emphasize the ability of WebAssembly to be adapted to a wide range of applications. This feature is one of the most appealing characteristics for merging WebAssembly and robotics.
-
+        All of the mentioned examples emphasize the ability of WebAssembly to be adapted to a wide range of applications. This adaptability is one of the most appealing characteristics for merging WebAssembly and robotics.
 
