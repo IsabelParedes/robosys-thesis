@@ -488,7 +488,7 @@ rmw_ret_t 	rmw_service_server_is_available (
 
 \section{Substituting ROS 2 Middleware}
 
-    There are two methods of using a particular middleware implementations when launching \ac{ROS} applications other than the default implementation. The first method requires setting the environment variable \small\textsf{RMW\_IMPLEMENTATION} to the implementation identifier of choice. An example of how to launch a publisher node with this method is shown in Figure~\ref{fig:envrmw}.
+    There are two methods of using a particular middleware implementations when launching \ac{ROS} applications other than the default implementation. The first method requires setting the environment variable \small\texttt{RMW\smallunderscore IMPLEMENTATION} \normalsize to the implementation identifier of choice. An example of how to launch a publisher node with this method is shown in Figure~\ref{fig:envrmw}.
 
     \begin{figure}[thbp]
         \centering
@@ -506,4 +506,4 @@ RMW_IMPLEMENTATION=rmw_connextdds ros2 run demo_nodes_cpp talker
         \label{fig:envrmw}
     \end{figure}
 
-    Nonetheless, the caveat of this first method is that the \ac{ROS} 2 binaries installed must have support for the specified implementation~\cite{subrmw}. Alternatively, the second method involves rebuilding all of the desired \ac{ROS} 2 packages from source and specify the \small\textsf{RMW\_IMPLEMENTATION} as a CMake argument. When building from source, if the packages for multiple \ac{RMW} implementations are available, all of them will be built starting with Fast \ac{DDS} as the default. If Fast \ac{DDS} is not available, then the default implementation will be selected by the next available implementation identifier in alphabetical order~\cite{docsdds}. To ensure that only a single implementation is available for use, the simplest solution is to explicitly ignore or remove the packages belonging to undesired implementations from the workspace.
+    Nonetheless, the caveat of this first method is that the \ac{ROS} 2 binaries installed must have support for the specified implementation~\cite{subrmw}. Alternatively, the second method involves rebuilding all of the desired \ac{ROS} 2 packages from source and specify the \small\texttt{RMW\smallunderscore IMPLEMENTATION} \normalsize as a CMake argument. When building from source, if the packages for multiple \ac{RMW} implementations are available, all of them will be built starting with Fast \ac{DDS} as the default. If Fast \ac{DDS} is not available, then the default implementation will be selected by the next available implementation identifier in alphabetical order~\cite{docsdds}. To ensure that only a single implementation is available for use, the simplest solution is to explicitly ignore or remove the packages belonging to undesired implementations from the workspace.

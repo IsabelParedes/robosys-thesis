@@ -38,7 +38,7 @@
 
 \section{Layer Progression}
 
-    The following sections describe the chronological progression of layers to achieve the results highlighted with gray in Table~\ref{tab:levelCompare}. As observed in the table, the progression through the levels is not a linear path, but a series of steps in multiple directions.
+    The following sections describe the chronological progression of layers to achieve the results highlighted with gray in Table~\ref{tab:levelCompare}. As observed in the table, the progression through the levels is not a linear path, but a series of zigzag steps in multiple directions.
 
     \vspace{1em}
     \begin{tcolorbox}[title=Note]
@@ -184,15 +184,13 @@ vcs import --input https://raw.githubusercontent.com/ros2/ros2/humble/ros2.repos
 
             \begin{lstlisting}[language=Bash]
 Publisher initializing.
-[INFO] [168766.57900] [wasm_cpp]: Context initializing.
-[INFO] [168767.91500] [wasm_publisher]: Publishing: 'Hello there! 0'
-[INFO] [168768.98400] [wasm_publisher]: Publishing: 'Hello there! 1'
-[INFO] [168769.94400] [wasm_publisher]: Publishing: 'Hello there! 2'
-[INFO] [168770.90300] [wasm_publisher]: Publishing: 'Hello there! 3'
-[INFO] [168771.96800] [wasm_publisher]: Publishing: 'Hello there! 4'
-[INFO] [168772.92000] [wasm_publisher]: Publishing: 'Hello there! 5'
-[INFO] [168773.97600] [wasm_publisher]: Publishing: 'Hello there! 6'
-[INFO] [168774.93600] [wasm_publisher]: Publishing: 'Hello there! 7'
+[INFO] [1682069093.833000000] [wasm_cpp]: Context initializing.
+[INFO] [1682069094.864000000] [wasm_publisher]: Publishing: 'Hello there! 0'
+[INFO] [1682069095.877000000] [wasm_publisher]: Publishing: 'Hello there! 1'
+[INFO] [1682069096.894000000] [wasm_publisher]: Publishing: 'Hello there! 2'
+[INFO] [1682069097.906000000] [wasm_publisher]: Publishing: 'Hello there! 3'
+[INFO] [1682069098.922000000] [wasm_publisher]: Publishing: 'Hello there! 4'
+[INFO] [1682069099.940000000] [wasm_publisher]: Publishing: 'Hello there! 5'
 \end{lstlisting}
             \caption{Output from non-interactive $\mathcal{I}1$.}\label{fig:ui1}
         \end{figure}
@@ -240,13 +238,16 @@ Publisher initializing.
             \end{tikzpicture}
             \vspace{1em}
             \begin{lstlisting}[language=Bash]
-[INFO] [16879468.55200] [wasm_publisher]: Publishing: 'Hello there! 13'
-[INFO] [16879469.60800] [wasm_publisher]: Publishing: 'Hello there! 14'
-[INFO] [16879470.56000] [wasm_publisher]: Publishing: 'Hello there! 15'
-[INFO] [16879471.61600] [wasm_publisher]: Publishing: 'Hello there! 16'
-[INFO] [16879472.56800] [wasm_publisher]: Publishing: 'Hello there! 17'
-[INFO] [16879473.62400] [wasm_publisher]: Publishing: 'Hello there! 18'
-Publisher terminated.\end{lstlisting}
+...
+[INFO] [1682069126.872000000] [wasm_publisher]: Publishing: 'Hello there! 32'
+[INFO] [1682069127.886000000] [wasm_publisher]: Publishing: 'Hello there! 33'
+[INFO] [1682069128.900000000] [wasm_publisher]: Publishing: 'Hello there! 34'
+[INFO] [1682069129.925000000] [wasm_publisher]: Publishing: 'Hello there! 35'
+[INFO] [1682069130.940000000] [wasm_publisher]: Publishing: 'Hello there! 36'
+[INFO] [1682069131.858000000] [wasm_publisher]: Publishing: 'Hello there! 37'
+[INFO] [1682069132.873000000] [wasm_publisher]: Publishing: 'Hello there! 38'
+Publisher terminated.
+\end{lstlisting}
             \caption{Interactive buttons to start and stop the publisher node.}\label{fig:ui2}
         \end{figure}
 
@@ -265,35 +266,176 @@ Publisher terminated.\end{lstlisting}
 
         \subsection{Complexity Level 3}
 
+        Achieving $\mathcal{C}3$ requires two components. The first is the formation of a message storing system in \textsf{wasm-js} in order to allow publishers and subscribers to communicate with each other; this systems is composed of message stacks depicted in Figure~\ref{fig:msgStack}. 
+        
+        The second component is developing a mechanism to retrieve the messages stored in the stacks. This functionality is not as trivial as it might seem. The message stacks live in the main thread, and the web workers can only communicate with the main thread via \texttt{postMessage( )}; however, the \texttt{postMessage( )} function does not offer any return values. Thus, in order to solve this the web worker will post a message to the main thread making a \textit{request} to retrieve the most recent message for a particular topic. When the main thread receives this request, it will pop the relevant message from one of the message stacks and post the contents to \textit{all} web workers available. Although this is not the most efficient strategy, it ensures that subscribers to the same topic receive the most recent message. Once the web worker receives a new message from the main thread, it will temporarily store this message so that whenever the next retrieve function is called, it can return the message contents via \textsf{wasm-cpp}. Figure~\ref{fig:retrieval} shows how the main thread handles requests to retrieve messages from web workers; in this case, the web worker containing a subscriber is called the \textit{listener}.
 
+        \begin{figure}[htbp]
+            \begin{lstlisting}[language=javascript]
+// wasm_js/rosMain.js
+
+// Receive messages from workers
+let onMessageFromWorker = function( event ) {
+    switch( event.data.command )
+    {
+        case "retrieve":
+            let msgPopped = topicMap[event.data.topic].messages.pop();
+            
+            if (msgPopped !== null) {
+                // Broadcast to all subscribers
+                if (listener !== null) { 
+                    listener.postMessage({
+                        topic: event.data.topic,
+                        message: msgPopped
+                    }); 
+                };         
+                break;
+            }
+    }
+}
+\end{lstlisting}
+            \caption{Handling of requests by the web workers to retrieve messages from the stacks in the main thread.}
+            \label{fig:retrieval}
+        \end{figure}
 
 
         \subsection{User Interface Level 3: Basic}
 
-
-
-
-        Figure~\ref{fig:ui3} demonstrates a snapshot of Level 3.
+        After $\mathcal{C}3$ is up and running, this permits the creation of a basic user interface, $\mathcal{I}3$. This consists of a publisher and a subscriber node which can both be started and stopped by the user. The messages from the publisher are sent to the main thread to be stored in a stack so that the subscriber can retrieve the messages as needed. This process follows the message flow shown in Figure~\ref{fig:msgFlow}. A demonstration of $\mathcal{I}3$ with the \textit{talker} and \textit{listener} running concurrently on the same web page is shown in Figure~\ref{fig:ui3}.
 
         \begin{figure}[htbp]
             \centering
             \begin{tikzpicture}
-                \draw[black, dashed, thin, fill=textColor!5!bgColor] (0,0) rectangle (\linewidth,4);
-                \end{tikzpicture}
-            \caption{TODO Level 3 image}\label{fig:ui3}
+                \node (start) [
+                    box,
+                    xshift = -5cm,
+                    minimum width = 2.5cm,
+                    fill = igmrLightBlue,
+                ] {\footnotesize{\textbf{START}}};
+                \node (stop) [
+                    box,
+                    minimum width = 2.5cm,
+                ] {\footnotesize{\textbf{STOP}}};
+                \node (clear) [
+                    box,
+                    xshift = 5cm,
+                    minimum width = 2.5cm,
+                ] {\footnotesize{\textbf{CLEAR}}};
+            \end{tikzpicture}
+            \vspace{1em}
+
+            \begin{lstlisting}[language=bash]
+[INFO] [1682068596.347000000] [wasm_publisher]: Publishing: 'Hello there! 16'
+[INFO] [1682068597.361000000] [wasm_publisher]: Publishing: 'Hello there! 17'
+[INFO] [1682068598.375000000] [wasm_publisher]: Publishing: 'Hello there! 18'
+[INFO] [1682068599.394000000] [wasm_publisher]: Publishing: 'Hello there! 19'
+[INFO] [1682068600.407000000] [wasm_publisher]: Publishing: 'Hello there! 20'
+[INFO] [1682068601.321000000] [wasm_publisher]: Publishing: 'Hello there! 21'
+[INFO] [1682068602.342000000] [wasm_publisher]: Publishing: 'Hello there! 22'
+\end{lstlisting}
+
+            \vspace{1em}
+            \begin{tikzpicture}
+                \node (start) [
+                    box,
+                    xshift = -5cm,
+                    minimum width = 2.5cm,
+                ] {\footnotesize{\textbf{START}}};
+                \node (stop) [
+                    box,
+                    minimum width = 2.5cm,
+                    fill = igmrLightBlue,
+                ] {\footnotesize{\textbf{STOP}}};
+                \node (clear) [
+                    box,
+                    xshift = 5cm,
+                    minimum width = 2.5cm,
+                ] {\footnotesize{\textbf{CLEAR}}};
+            \end{tikzpicture}
+            \vspace{1em}
+
+            \begin{lstlisting}[language=bash]
+Subscriber initializing.
+[INFO] [1682068598.495000000] [wasm_cpp]: Context initializing.
+[INFO] [1682068598.812000000] [wasm_subscriber]: I heard: 'Hello there! 18'
+[INFO] [1682068599.632000000] [wasm_subscriber]: I heard: 'Hello there! 19'
+[INFO] [1682068600.675000000] [wasm_subscriber]: I heard: 'Hello there! 20'
+[INFO] [1682068601.495000000] [wasm_subscriber]: I heard: 'Hello there! 21'
+[INFO] [1682068602.513000000] [wasm_subscriber]: I heard: 'Hello there! 22'
+Subscriber terminated.
+\end{lstlisting}
+
+            \caption{Publisher and subscriber nodes running simultaneously.}\label{fig:ui3}
         \end{figure}
 
         \begin{tcolorbox}[title=Example 6]
             \begin{minipage}[t]{0.87\linewidth}
                 \vspace*{0.5\baselineskip}
-                A demonstration of a \textit{basic} user interface (Level 3) can
-                be found at \href{https://ros2wasm.dev/pages/demo03/index.html}{\textsf{ros2wasm.dev/pages/demo03}}
+                A demonstration of a \textit{basic} user interface ($\mathcal{I}3$) can be found at 
+                
+                \href{https://ros2wasm.dev/pages/demo03/index.html}{\textsf{https://ros2wasm.dev/pages/demo03/index.html}}
             \end{minipage}\hfill%
             \begin{minipage}[t]{0.1\linewidth}
                 \vspace*{0pt}
                 \includegraphics[height=\linewidth,width=\linewidth]{qr_demo03.png}
             \end{minipage}
         \end{tcolorbox}
+
+
+
+        \subsection{Complexity Level 4}
+
+        To establish $\mathcal{C}4$, changes were only required in the \textsf{wasm-js} packages. Compared to all the previous levels where only one message stack was required to store incoming messages regardless of the topic, $\mathcal{C}4$ makes a distinction between the topics. A topic \textit{map} is created to store a message stack for each unique topic. The structure and information contained in the topic map is shown in Figure~\ref{fig:topicMap}.
+
+        \begin{figure}[htbp]
+            \centering
+            \begin{lstlisting}[language=Bash]
+topicMap:
+    topic_1:
+        messages:    [stack]
+        publishers:  [gid_1, gid_2, ..., gid_n]
+        subscribers: [gid_1, gid_2, ..., gid_n]
+    topic_2:
+        messages:    [stack]
+        publishers:  [gid_1, gid_2, ..., gid_n]
+        subscribers: [gid_1, gid_2, ..., gid_n]
+
+    ...
+
+    topic_N:
+        messages:    [stack]
+        publishers:  [gid_1, gid_2, ..., gid_n]
+        subscribers: [gid_1, gid_2, ..., gid_n]
+\end{lstlisting}
+            \caption{Topic map to store message stacks for each topic.}
+            \label{fig:topicMap}
+        \end{figure}
+
+        Apart from storing the messages, the topic map stores information about the members for each topic. The members are subdivided into publishers and subscribers but these can also be service participants. As an example, a service server will subscriber member to a service request topic, as well as a publisher member to a service response topic. The information stored about these topic members is simply their unique identifier or \texttt{gid}. This \texttt{gid} is randomly generated when the participant is first created. 
+
+        The message stacks stored for each topic are not (yet) configurable. However, they are initialized with default values to match the \ac{QoS} settings described in Section~\ref{sec:wasmjs}. This means that all message stacks have a length of $10$, and the oldest message is overwritten when it reaches capacity. Popping a message from the stack will remove that message from the \textit{head} to provide the most recent message. A visualization is shown in Figure~\ref{fig:msgStack}.
+
+        Another feature of $\mathcal{C}4$ is that there is no limit imposed on the number of members a topic can have or the number of topics in general. A topic branch is eliminated when there are no publishers or subscribers left. Similarly, the \texttt{gid} of a participant is removed from the relevant topic whenever the participant requests to be deregistered, this can happen when the node is terminated. 
+
+
+        \subsection{Complexity Level 5}
+
+        manipulation of a physical robot via bluetooth or wifi
+
+
+        \subsection{User Interaction Level 4: Intermediate}
+
+        services and info about environment
+
+
+
+
+
+
+
+
+
+
 
         A depiction of Level 4 is shown in Figure~\ref{fig:ui4}
 
