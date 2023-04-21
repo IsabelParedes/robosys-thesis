@@ -306,6 +306,12 @@ let onMessageFromWorker = function( event ) {
         \begin{figure}[htbp]
             \centering
             \begin{tikzpicture}
+                \node (title) [
+                    rectangle, 
+                    xshift = -7cm,
+                    yshift = 1cm,
+                ] {\textbf{Publisher}};
+
                 \node (start) [
                     box,
                     xshift = -5cm,
@@ -336,6 +342,12 @@ let onMessageFromWorker = function( event ) {
 
             \vspace{1em}
             \begin{tikzpicture}
+                \node (title) [
+                    rectangle, 
+                    xshift = -7cm,
+                    yshift = 1cm,
+                ] {\textbf{Subscriber}};
+
                 \node (start) [
                     box,
                     xshift = -5cm,
@@ -368,6 +380,8 @@ Subscriber terminated.
             \caption{Publisher and subscriber nodes running simultaneously.}\label{fig:ui3}
         \end{figure}
 
+
+        \vspace{2em}
         \begin{tcolorbox}[title=Example 6]
             \begin{minipage}[t]{0.87\linewidth}
                 \vspace*{0.5\baselineskip}
@@ -381,8 +395,7 @@ Subscriber terminated.
             \end{minipage}
         \end{tcolorbox}
 
-
-
+        \pagebreak
         \subsection{Complexity Level 4}
 
         To establish $\mathcal{C}4$, changes were only required in the \textsf{wasm-js} packages. Compared to all the previous levels where only one message stack was required to store incoming messages regardless of the topic, $\mathcal{C}4$ makes a distinction between the topics. A topic \textit{map} is created to store a message stack for each unique topic. The structure and information contained in the topic map is shown in Figure~\ref{fig:topicMap}.
@@ -420,7 +433,151 @@ topicMap:
 
         \subsection{Complexity Level 5}
 
-        manipulation of a physical robot via bluetooth or wifi
+        Manipulation of a physical robot with $\mathcal{C}5$ marks the beginning of practical applications for this project. Data can be sent and received from a robot with the publishers and subscribers developed in the previous steps as long as there is a communication bridge between the robot and the web browser. There are two primary ways to communicate with a robot. The most widely used solution is configure a robot which to launch a \texttt{rosbridge\smallunderscore server} to send information to the browser. The constraint of this method is that the robot must already be running \ac{ROS} to create a \texttt{rosbridge}.
+
+        An alternative for robots which do not run \ac{ROS} natively is to create an interface between the browser and the robot's system. The bridge can be established via bluetooth, WiFi, or a wired connection. For this project, the LEGO BOOST Vernie robot was tested. Vernie can be connected to any computer via bluetooth. A pre-existing library, \textsf{lego-boost-browser} was used to established the interface between \ac{ROS} and Vernie. This library uses Web Bluetooth \ac{API} to control the LEGO BOOST robot~\cite{boosted}.  Additional upgrades for this external \textsf{lego-boost-browser} package were performed by Thorsten Beier~\cite{thoboost}.
+
+        
+        \begin{figure}[htbp]
+            \centering
+            \begin{tikzpicture}
+                \node (vern) [rectangle] {\includegraphics[width=0.8\textwidth]{07_vernie.jpg}};
+                \node (led) [
+                    circle,
+                    draw = textColor,
+                    ultra thick,
+                    minimum size = 0.8cm,
+                    yshift = -1.15cm,
+                    xshift = -0.5cm,
+                ] {};
+    
+                \node (text) [
+                    rectangle,
+                    xshift = -3cm,
+                    yshift = 1.5cm,
+                ] {\textbf{LED}};
+    
+                \draw[arrow, ultra thick] (text) to[bend right] (led);
+    
+            \end{tikzpicture}
+    
+            \caption{Position of \ac{LED} on the Vernie robot.}
+            \label{fig:vernie}
+        \end{figure}
+
+        The \textsf{lego-boost-browser} library can send commands to Vernie to change the \ac{LED} color (Figure~\ref{fig:vernie}) or activate the two motors for locomotion. A publisher is created which simply publishes every second a different \ac{LED} color as a string from the acceptable list of colors by Vernie. When these messages reach the message stacks of the respective topic (e.g. \texttt{rainbow\smallunderscore topic}), they are forwarded to the robot through \textsf{lego-boost-browser}. Figure~\ref{fig:rainbow} displays what a web page running an \ac{LED} color publisher appears like. The user would have to first connect to Vernie via bluetooth before being able to send the commands to change \ac{LED} color to the one that matches the last message published. 
+
+        \definecolor{vernOrange}{HTML}{F28B08}
+        \begin{figure}[htbp]
+            \centering
+            \begin{tikzpicture}
+                \node (start) [
+                    box,
+                    xshift = -5cm,
+                    minimum width = 2.5cm,
+                    fill = igmrLightBlue,
+                ] {\footnotesize{\textbf{CONNECT}}};
+                \node (vernie) [
+                    rectangle,
+                ] {\includegraphics[width=3cm]{07_vernie_happy.png}};
+                \node (clear) [
+                    box,
+                    xshift = 5cm,
+                    minimum width = 2.5cm,
+                ] {\footnotesize{\textbf{DISCONNECT}}};
+
+            \end{tikzpicture}
+            \vspace{2em}
+
+            \begin{tikzpicture}
+                \node (title) [
+                    rectangle, 
+                    xshift = -7cm,
+                    yshift = 1cm,
+                ] {\textbf{Publish LED colors}};
+
+                \node (led) [
+                    circle,
+                    minimum size = 0.5cm,
+                    xshift = -8cm,
+                    draw = textColor,
+                    fill = vernOrange,
+                ] {};
+
+                \node (start) [
+                    box,
+                    xshift = -5cm,
+                    minimum width = 2.5cm,
+                    fill = igmrLightBlue,
+                ] {\footnotesize{\textbf{START}}};
+                \node (stop) [
+                    box,
+                    minimum width = 2.5cm,
+                ] {\footnotesize{\textbf{STOP}}};
+                \node (clear) [
+                    box,
+                    xshift = 5cm,
+                    minimum width = 2.5cm,
+                ] {\footnotesize{\textbf{CLEAR}}};
+            \end{tikzpicture}
+            \vspace{1em}
+            
+            \begin{lstlisting}[language=Bash]
+Initializing...
+[INFO] [1682077173.551000000] [wasm_cpp]: Context initializing.
+[INFO] [1682077174.584000000] [rainbow_publisher]: Publishing: 'pink'
+[INFO] [1682077175.598000000] [rainbow_publisher]: Publishing: 'purple'
+[INFO] [1682077176.614000000] [rainbow_publisher]: Publishing: 'blue'
+[INFO] [1682077177.633000000] [rainbow_publisher]: Publishing: 'lightblue'
+[INFO] [1682077178.652000000] [rainbow_publisher]: Publishing: 'cyan'
+[INFO] [1682077179.574000000] [rainbow_publisher]: Publishing: 'green'
+[INFO] [1682077180.591000000] [rainbow_publisher]: Publishing: 'yellow'
+[INFO] [1682077181.607000000] [rainbow_publisher]: Publishing: 'orange'
+\end{lstlisting}
+            \caption{Publisher sending \ac{LED} colors to the Vernie robot.}
+            \label{fig:rainbow}
+        \end{figure}
+
+
+        To control the position of the Vernie robot, a publisher which sends \texttt{geometry\smallunderscore msgs/Twist} messages was created. These messages contain a linear and an angular vector to express the velocity in free space. To ensure compatibility with \textsf{lego-boost-browser}, a few simplifications were made. First, the robot can only move forward or backwards along the $x$-axis and rotate on the same plane, $z$-axis; thus, the only relevant values from the \texttt{Twist} message are the linear velocity $\dot{x}_{lin}$ and the angular velocity $\dot{z}_{rot}$. Since the commands sent to Vernie with \textsf{lego-boost-browser} can only be expressed in terms of motor power ($P$), from 0 to $100\%$, the linear and angular command velocities are converted with the following formula:
+        
+        \begin{equation}
+            \hskip 5cm
+            \begin{bmatrix}
+                1 & -1 \\
+                1 & 1
+            \end{bmatrix}
+            \begin{bmatrix}
+                x_{lin} \\
+                z_{rot}
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                P_A \\
+                P_B
+            \end{bmatrix}
+        \end{equation}
+
+        Afterwards, the motor power is normalized to ensure that it does not exceed the $100\%$ limit. 
+        
+        With this implementation, a \ac{ROS} publisher can send command velocities by publishing a \texttt{Twist} message, then these messages are converted and forwarded to the Vernie robot to activate the motors with the desired velocities.
+
+        \vspace{1em}
+        \begin{tcolorbox}[title=Example 7]
+            \begin{minipage}[t]{0.87\linewidth}
+                \vspace*{0.5\baselineskip}
+                A demonstration of $\mathcal{C}4$ with Vernie can be found at:
+                
+                \href{https://ros2wasm.dev/pages/demo04/index.html}{\textsf{https://ros2wasm.dev/pages/demo04/index.html}}
+
+                \textsc{Note:} The Web Bluetooth \ac{API} is experimental and must be enabled manually in some browsers. Chrome is recommended.
+            \end{minipage}\hfill%
+            \begin{minipage}[t]{0.1\linewidth}
+                \vspace{14pt}
+                \includegraphics[height=\linewidth,width=\linewidth]{qr_demo04.png}
+            \end{minipage}
+        \end{tcolorbox}
+
 
 
         \subsection{User Interaction Level 4: Intermediate}
@@ -435,68 +592,93 @@ topicMap:
 
 
 
-
-
         A depiction of Level 4 is shown in Figure~\ref{fig:ui4}
 
         \begin{figure}[htbp]
             \centering
             \begin{tikzpicture}
-                \draw[black, dashed, thin, fill=textColor!5!bgColor] (0,0) rectangle (\linewidth,4);
-                \end{tikzpicture}
-            \caption{TODO Level 4 image}\label{fig:ui4}
+                \node (title) [
+                    rectangle, 
+                    xshift = -7cm,
+                    yshift = 1cm,
+                ] {\textbf{Service Server}};
+
+                \node (start) [
+                    box,
+                    xshift = -5cm,
+                    minimum width = 2.5cm,
+                    fill = igmrLightBlue,
+                ] {\footnotesize{\textbf{START}}};
+                \node (stop) [
+                    box,
+                    minimum width = 2.5cm,
+                ] {\footnotesize{\textbf{STOP}}};
+                \node (clear) [
+                    box,
+                    xshift = 5cm,
+                    minimum width = 2.5cm,
+                ] {\footnotesize{\textbf{CLEAR}}};
+
+            \end{tikzpicture}
+            \vspace{1em}
+
+            \begin{lstlisting}[language=Bash]
+Server initializing.
+[INFO] [1682083640.136000000] [rclcpp]: [server] Ready to add two ints.
+[INFO] [1682083644.967000000] [rclcpp]: [server] Incoming request X: 5 Y: 8
+[INFO] [1682083644.968000000] [rclcpp]: [server] Sending back response: [13]
+\end{lstlisting}
+
+            \begin{tikzpicture}
+                \node (title) [
+                    rectangle, 
+                    xshift = -7cm,
+                    yshift = 1cm,
+                ] {\textbf{Service Client}};
+
+                \node (start) [
+                    box,
+                    xshift = -5cm,
+                    minimum width = 2.5cm,
+                    fill = igmrLightBlue,
+                ] {\footnotesize{\textbf{START}}};
+                \node (stop) [
+                    box,
+                    minimum width = 2.5cm,
+                ] {\footnotesize{\textbf{STOP}}};
+                \node (clear) [
+                    box,
+                    xshift = 5cm,
+                    minimum width = 2.5cm,
+                ] {\footnotesize{\textbf{CLEAR}}};
+            \end{tikzpicture}
+
+            \begin{lstlisting}[language=Bash]
+Client initializing.
+[INFO] [1682083643.384000000] [rclcpp]: [client] add_two_ints_client X Y
+[INFO] [1682083643.645000000] [rclcpp]: [client] Send request X: 5  Y: 8
+[INFO] [1682083646.101000000] [rclcpp]: [client] Sum: 13
+\end{lstlisting}
+
+            \caption{Service server and client interacting on the browser.}
+            \label{fig:ui4}
         \end{figure}
 
-        \begin{tcolorbox}[title=Example 4]
+
+
+
+        \begin{tcolorbox}[title=Example 8]
             \begin{minipage}[t]{0.87\linewidth}
                 \vspace*{0.5\baselineskip}
-                A demonstration of an \textit{intermediate} user interface (Level 4) can
-                be found at \href{https://ros2wasm.dev/pages/demo04/index.html}{\textsf{ros2wasm.dev/pages/demo04}}
+                A demonstration of an \textit{intermediate} user interface ($\mathcal{I}4$) can be found at 
+                
+                \href{https://ros2wasm.dev/pages/demo05/index.html}{\textsf{https://ros2wasm.dev/pages/demo05/index.html}}
             \end{minipage}\hfill%
             \begin{minipage}[t]{0.1\linewidth}
                 \vspace*{0pt}
-                \includegraphics[height=\linewidth,width=\linewidth]{qr_demo04.png}
+                \includegraphics[height=\linewidth,width=\linewidth]{qr_demo05.png}
             \end{minipage}
         \end{tcolorbox}
 
-        A typical workspace in JupyterLite is pictured in Figure~\ref{fig:ui5}.
 
-        \begin{figure}[htbp]
-            \centering
-            \begin{tikzpicture}
-                \draw[black, dashed, thin, fill=textColor!5!bgColor] (0,0) rectangle (\linewidth,4);
-                \end{tikzpicture}
-            \caption{TODO Level 5 image}\label{fig:ui5}
-        \end{figure}
-
-
-
-    \definecolor{vernOrange}{HTML}{F28B08}
-
-    \begin{figure}
-        \centering
-        \begin{tikzpicture}
-            \node (vern) [rectangle] {\includegraphics[width=0.8\textwidth]{07_vernie.jpg}};
-            \node (led) [
-                circle,
-                draw = textColor,
-                ultra thick,
-                minimum size = 0.8cm,
-                yshift = -1.15cm,
-                xshift = -0.5cm,
-            ] {};
-
-            \node (text) [
-                rectangle,
-                xshift = -3cm,
-                yshift = 1.5cm,
-            ] {\textbf{LED}};
-
-            \draw[arrow, ultra thick] (text) to[bend right] (led);
-
-        \end{tikzpicture}
-
-        \caption{Position of \ac{LED} on the Vernie robot.}
-        \label{fig:vernie}
-    \end{figure}
     
