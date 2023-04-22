@@ -67,7 +67,7 @@
                 \vspace*{0pt}
                 The source code for the custom middleware implementation packages can be found in the following repository:
 
-                \href{https://github.com/ihuicatl/rmw_wasm/}{\textsf{https://github.com/ihuicatl/rmw\smallunderscore wasm/}}
+                \href{https://github.com/ihuicatl/rmw_wasm/}{\textsf{https://github.com/ihuicatl/rmw\smallunderscore  wasm/}}
             \end{minipage}\hfill%
             \begin{minipage}[t]{0.1\linewidth}
                 \vspace*{0pt}
@@ -85,7 +85,7 @@
                 \vspace*{0pt}
                 The testing package, \textsf{test-wasm}, used for this project can be found in the following repository:
 
-                \href{https://github.com/ihuicatl/rmw_wasm/tree/main/test_wasm}{\textsf{https://github.com/ihuicatl/rmw\smallunderscore wasm/tree/main/test\smallunderscore wasm}}
+                \href{https://github.com/ihuicatl/rmw_wasm/tree/main/test_wasm}{\textsf{https://github.com/ihuicatl/rmw\smallunderscore  wasm/tree/main/test\smallunderscore  wasm}}
             \end{minipage}\hfill%
             \begin{minipage}[t]{0.1\linewidth}
                 \vspace*{0pt}
@@ -431,31 +431,32 @@ topicMap:
 
         \subsection{Complexity Level 5}
 
-        Manipulation of a physical robot with $\mathcal{C}5$ marks the beginning of practical applications for this project. Data can be sent and received from a robot with the publishers and subscribers developed in the previous steps as long as there is a communication bridge between the robot and the web browser. There are two primary ways to communicate with a robot. The most widely used solution is to configure a robot which is able to launch a \texttt{rosbridge\smallunderscore server} to send information to the browser. The constraint of this method is that the robot must already be running \ac{ROS} to create a \texttt{rosbridge}.
+        Manipulation of a physical robot with $\mathcal{C}5$ marks the beginning of practical applications for this project. Data can be sent and received from a robot with the publishers and subscribers developed in the previous steps as long as there is a communication bridge between the robot and the web browser. There are two primary ways to communicate with a robot. The most widely used solution is to configure a robot which is able to launch a \texttt{rosbridge\smallunderscore  server} to send information to the browser. The constraint of this method is that the robot must already be running \ac{ROS} to create a \texttt{rosbridge}.
 
         An alternative for robots which do not run \ac{ROS} natively is to create an interface between the browser and the robot's system. The bridge can be established via bluetooth, WiFi, or a wired connection. For this project, the LEGO BOOST Vernie robot was tested. Vernie can be connected to any computer via bluetooth. A pre-existing library, \textsf{lego-boost-browser} was used to established the interface between \ac{ROS} and Vernie. This library uses Web Bluetooth \ac{API} to control the LEGO BOOST robot~\cite{boosted}.  Additional upgrades for this external \textsf{lego-boost-browser} package were performed by Thorsten Beier~\cite{thoboost}.
 
+        \definecolor{vernOrange}{HTML}{FF701A}
         
         \begin{figure}[htbp]
             \centering
             \begin{tikzpicture}
-                \node (vern) [rectangle] {\includegraphics[width=0.8\textwidth]{07_vernie.jpg}};
+                \node (vern) [rectangle] {\includegraphics[width=0.8\textwidth]{07_vernie2.jpg}};
                 \node (led) [
                     circle,
-                    draw = textColor,
+                    draw = vernOrange,
                     ultra thick,
                     minimum size = 0.8cm,
-                    yshift = -1.15cm,
-                    xshift = -0.5cm,
+                    yshift = -3.3cm,
+                    xshift = -0.3cm,
                 ] {};
     
                 \node (text) [
                     rectangle,
-                    xshift = -3cm,
+                    xshift = 4cm,
                     yshift = 1.5cm,
                 ] {\textbf{LED}};
     
-                \draw[arrow, ultra thick] (text) to[bend right] (led);
+                \draw[arrow, ultra thick] (text) to[bend left] (led);
     
             \end{tikzpicture}
     
@@ -463,9 +464,9 @@ topicMap:
             \label{fig:vernie}
         \end{figure}
 
-        The \textsf{lego-boost-browser} library can send commands to Vernie to change the \ac{LED} color (Figure~\ref{fig:vernie}) or activate the two motors for locomotion. A publisher is created which simply publishes a different \ac{LED} color as a string from the acceptable list of colors by Vernie. When these messages reach the message stacks of the respective topic (e.g. \texttt{rainbow\smallunderscore topic}), they are forwarded to the robot through \textsf{lego-boost-browser}. Figure~\ref{fig:rainbow} displays how a web page running an \ac{LED} color publisher appears. The user would have to connect to Vernie via bluetooth before being able to send the commands to change \ac{LED} color based on the last published message. 
+        The \textsf{lego-boost-browser} library can send commands to Vernie to change the \ac{LED} color (Figure~\ref{fig:vernie}) or activate the two motors for locomotion. A publisher is created which simply publishes a different \ac{LED} color as a string from the acceptable list of colors by Vernie. When these messages reach the message stacks of the respective topic (e.g. \texttt{rainbow\smallunderscore  topic}), they are forwarded to the robot through \textsf{lego-boost-browser}. Figure~\ref{fig:rainbow} displays how a web page running an \ac{LED} color publisher appears. The user would have to connect to Vernie via bluetooth before being able to send the commands to change \ac{LED} color based on the last published message. 
 
-        \definecolor{vernOrange}{HTML}{FF701A}
+        % \definecolor{vernOrange}{HTML}{FF701A}
         \begin{figure}[htbp]
             \centering
             \begin{tikzpicture}
@@ -543,7 +544,7 @@ Initializing...
         \end{figure}
 
 
-        To control the position of the Vernie robot, a publisher which sends \texttt{geometry\smallunderscore msgs/Twist} messages was created. These messages contain a linear and an angular vector to express the velocity in free space. To ensure compatibility with \textsf{lego-boost-browser}, a few simplifications were made. The Vernie robot can only move forward or backwards along the $x$-axis and rotate on the same $xy$-plane, along the $z$-axis; thus, the only relevant values from the \texttt{Twist} message are the linear velocity $\dot{x}_{lin}$ and the angular velocity $\dot{z}_{rot}$. Since the commands sent to Vernie with \textsf{lego-boost-browser} can only be expressed in terms of motor power ($P$), from 0 to $100\%$, the linear and angular command velocities are converted with the following formula:
+        To control the position of the Vernie robot, a publisher which sends \texttt{geometry\smallunderscore  msgs/Twist} messages was created. These messages contain a linear and an angular vector to express the velocity in free space. To ensure compatibility with \textsf{lego-boost-browser}, a few simplifications were made. The Vernie robot can only move forward or backwards along the $x$-axis and rotate on the same $xy$-plane, along the $z$-axis; thus, the only relevant values from the \texttt{Twist} message are the linear velocity $\dot{x}_{lin}$ and the angular velocity $\dot{z}_{rot}$. Since the commands sent to Vernie with \textsf{lego-boost-browser} can only be expressed in terms of motor power ($P$), from 0 to $100\%$, the linear and angular command velocities are converted with the following formula:
         
         \begin{equation}
             \hskip 5cm

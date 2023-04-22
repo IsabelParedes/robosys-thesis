@@ -10,7 +10,7 @@ rmw_ret_t rmw_subscription_event_init(
     const rmw_subscription_t * subscription,
     rmw_event_type_t event_type) {}
 
-// 
+// Set an event callback
 rmw_ret_t rmw_event_set_callback(
     rmw_event_t * rmw_event,
         rmw_event_callback_t callback,

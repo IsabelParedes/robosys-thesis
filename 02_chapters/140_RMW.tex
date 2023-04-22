@@ -1,6 +1,7 @@
 \chapter{ROS 2 Middleware Implementation for WebAssembly}\label{cha:rmw}
 
-    The design of a custom middleware implementation, \textsf{rms-wasm}, that can be cross-compiled to WebAssembly modules is divided into three distinct packages as observed in Figure~\ref{fig:rmwwasm}. For this project, these packages were developed in the order shown, starting with \textsf{rmw-wasm-cpp}.
+    The design of a custom middleware implementation, \textsf{rms-wasm}, that can be cross-compiled to WebAssembly modules is divided into three distinct packages as observed in Figure~\ref{fig:rmwwasm}. For this project, these packages were developed in the order shown, starting with \textsf{rmw-wasm-cpp}. The source code for these packages can be found through the following link: \\
+    \href{https://github.com/ihuicatl/rmw_wasm/}{https://github.com/ihuicatl/rmw\smallunderscore  wasm/}.
 
     \begin{figure}[htbp]
         \centering
@@ -51,9 +52,8 @@
 
     \section{rmw-wasm-cpp}
 
-        The first package, \textsf{rmw-wasm-cpp}, works as the ``adapter'' between \ac{ROS} 2 and the designed middleware. This package implements all of the functions required for \textsf{rmw} as described in Section~\ref{ssec:minimal}. The source code for this package is entirely written in C++ and can be found: TODO: 
+        The first package, \textsf{rmw-wasm-cpp}, works as the \textit{adapter} between \ac{ROS} 2 and the designed middleware. This package implements all of the functions required for \textsf{rmw} as described in Section~\ref{ssec:minimal}. The source code for this package is entirely written in C++.
 
-        TODO: add diagram (maybe)
 
         In addition to the \textsf{rmw} function, one main objective of this package is to convert the \ac{ROS} messages to \ac{YAML} strings. This is accomplished with the help of a dynamic message introspection (\textsf{dynmsg}) package developed by Open Robotics. These \ac{YAML} strings are sent to the middleware implementation, and when a message is returned, it is then converted back from a \ac{YAML} string into a ROS message. 
 
@@ -61,7 +61,7 @@
 
         The role of \textsf{wasm-cpp} is to implement the middleware and to function as a bridge to JavaScript modules. This package, along with \textsf{wasm-js} constitute the middleware implementation without the adapter, and thus, they can function independently of \textsf{rmw-wasm-cpp}. 
 
-        The \ac{ROS} elements in this package build on top of each other, where the smallest unit is a \texttt{Participant}. Any \ac{ROS} subscriber, publisher, service server, service client, action server, or action client is simply a \texttt{Participant} with a specific role. Each \texttt{Participant} must have a valid name which follows the \ac{ROS} guidelines (TODO: add ref for valid names). For publishers and subscribers, this name is their respective topic name. And for servers and clients, the name corresponds to the service or action name.  Upon initialization, each \texttt{Participant} also receives a unique ID or \texttt{gid} which is used to keep track of individual participants. A class diagram illustrating the relations between the different elements is shown in Figure~\ref{fig:classes}.
+        The \ac{ROS} elements in this package build on top of each other, where the smallest unit is a \texttt{Participant}. Any \ac{ROS} subscriber, publisher, service server, service client, action server, or action client is simply a \texttt{Participant} with a specific role. Each \texttt{Participant} must have a valid name which follows the \ac{ROS} guidelines~\cite{naming}. For publishers and subscribers, this name is their respective topic name. And for servers and clients, the name corresponds to the service or action name.  Upon initialization, each \texttt{Participant} also receives a unique ID or \texttt{gid} which is used to keep track of individual participants. A class diagram illustrating the relations between the different elements is shown in Figure~\ref{fig:classes}.
 
         \begin{figure}[htbp]
             \centering
@@ -122,7 +122,7 @@
         \end{figure}
         
 
-        Subscribers and publishers are the simplest type of participants. And each of them only has a single function; a publisher needs to be able to \textit{publish} a message, and a subscriber must be able to \textit{retrieve} the message from a specific topic. The messages which the publisher handles are \ac{YAML} strings. These messages are then passed to \textsf{wasm-js} by using \texttt{emscripten::val} which transliterates JavaScript code into C++ (TODO: add ref). Figure~\ref{fig:publish} shows how these functions are implemented to create a \textit{bridge} between the two packages.
+        Subscribers and publishers are the simplest type of participants. And each of them only has a single function; a publisher needs to be able to \textit{publish} a message, and a subscriber must be able to \textit{retrieve} the message from a specific topic. The messages which the publisher handles are \ac{YAML} strings. These messages are then passed to \textsf{wasm-js} by using \texttt{emscripten::val} which transliterates JavaScript code into C++~\cite{valh}. Figure~\ref{fig:publish} shows how these functions are implemented to create a \textit{bridge} between the two packages.
 
         \begin{figure}[htbp]
             \centering
@@ -264,7 +264,7 @@ std::string yaml_message = js_response.as<std::string>();
 
     The last piece of the puzzle is \textsf{wasm-js}. This package is written in JavaScript and its role is to launch and track all the participating entities, and to store and distribute all \ac{ROS} messages accordingly.
 
-    Given that processes on a browser run on a single ``main thread'', \textsf{wasm-js} uses \textit{web workers} to launch the requested \ac{ROS} nodes. Web workers run in background threads and thus, they do not inhibit the user interface while performing tasks~\cite{workers}. \textsf{wasm-js} spawns a new web worker for each \ac{ROS} node. The \ac{ROS} nodes can pass information to and from the main thread by posting messages (\texttt{postMessage()}). Each of the elements can also be configured to perform a task when a message is received by declaring an \texttt{onmessage()} function. Additionally, the workers can communicate between one another by creating message channels between worker pairs~\cite{mgschannel}. These communication paths are displayed in Figure~\ref{fig:webworker}.
+    Given that processes on a browser run on a single main thread, \textsf{wasm-js} uses \textit{web workers} to launch the requested \ac{ROS} nodes. Web workers run in background threads and thus, they do not inhibit the user interface while performing tasks~\cite{workers}. \textsf{wasm-js} spawns a new web worker for each \ac{ROS} node. The \ac{ROS} nodes can pass information to and from the main thread by posting messages (\texttt{postMessage()}). Each of the elements can also be configured to perform a task when a message is received by declaring an \texttt{onmessage()} function. Additionally, the workers can communicate between one another by creating message channels between worker pairs~\cite{mgschannel}. These communication paths are displayed in Figure~\ref{fig:webworker}.
 
     \begin{figure}[htbp]
         \centering
@@ -359,12 +359,12 @@ std::string yaml_message = js_response.as<std::string>();
     To expand on how participants are added to the registration map; this map consists of multiple objects, where each object is responsible for storing all of the information relevant to a unique topic. Each object contains a list of ID's of topic members and a message stack. For services, two topic objects are created, one to store the information about service \textit{requests} and the other to store service \textit{responses}. Additionally, each node automatically creates the following subtopics for parameters:
 
     \begin{itemize}
-        \item \textsf{/get\smallunderscore parameters}
-        \item \textsf{/get\smallunderscore parameter\smallunderscore types}
-        \item \textsf{/set\smallunderscore parameters}
-        \item \textsf{/set\smallunderscore parameters\smallunderscore automatically}
-        \item \textsf{/describe\smallunderscore parameters}
-        \item \textsf{/list\smallunderscore parameters}
+        \item \textsf{/get\smallunderscore  parameters}
+        \item \textsf{/get\smallunderscore  parameter\smallunderscore  types}
+        \item \textsf{/set\smallunderscore  parameters}
+        \item \textsf{/set\smallunderscore  parameters\smallunderscore  automatically}
+        \item \textsf{/describe\smallunderscore  parameters}
+        \item \textsf{/list\smallunderscore  parameters}
     \end{itemize}
 
 

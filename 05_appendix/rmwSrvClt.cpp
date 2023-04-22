@@ -10,24 +10,13 @@ rmw_ret_t rmw_destroy_client(
     rmw_node_t * node, 
     rmw_client_t * client) {}
 
-//
+// Set a response callback.
 rmw_ret_t rmw_client_set_on_new_response_callback(
     rmw_client_t * client,
         rmw_event_callback_t callback,
         const void * user_data) {}
 
 // Check if a service server is available for the given service client.
-// This function will return true for is_available if there is a service 
-// server available for the given client.
-// The node parameter must not be NULL, and must point to a valid node.
-// The client parameter must not be NULL, and must point to a valid client.
-// The given client and node must match, i.e. the client must have been 
-// created using the given node.
-// The is_available parameter must not be NULL, and must point to a bool 
-// variable. The result of the check will be stored in the is_available 
-// parameter.
-// This function does manipulate heap memory. 
-// This function is not thread-safe. This function is lock-free.
 rmw_ret_t rmw_service_server_is_available(
     const rmw_node_t * node,
     const rmw_client_t * client,

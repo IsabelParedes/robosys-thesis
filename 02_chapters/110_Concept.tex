@@ -15,7 +15,7 @@
 % - connect to a robot via bluetooth
 % - share simulations and algorithms
 
-    To introduce the concept, a ``target scenario'' is first considered. In this
+    To introduce the concept, a target scenario is first considered. In this
     scenario, an intermediate \ac{ROS} user should be able to reach a high level 
     of usability with the tools developed in this project. First, an
     intermediate user is described as an individual who is familiar with the 
@@ -209,7 +209,7 @@
 
         Although creating a replacement for the \ac{ROS} middleware implementation is the lowest level on the list, its complexity must not be underestimated. Level 1 consists of creating custom middleware packages to handle discovery and communications between nodes. All other \ac{ROS} packages depend on the middleware implementation, and because of this, creating a working replacement is crucial before any other features can be implemented.
 
-        Once the middleware packages have been introduced, the next level ensures that the core \ac{ROS} packages can be cross-compiled. Level 2 involves the creation of a recipe to build all packages consistently. Minor modifications are needed in a few of the core packages to prevent compilation errors; for details, refer to TODO: add mods to appendix. And in order to set the custom middleware implementation as default, packages belonging to the other implementations must be ignored or removed. 
+        Once the middleware packages have been introduced, the next level ensures that the core \ac{ROS} packages can be cross-compiled. Level 2 involves the creation of a recipe to build all packages consistently. Minor modifications are needed in a few of the core packages such as \textsf{rcutils} to prevent compilation errors; a patch for \textsf{rcutils} is provided in Appendix~\ref{sec:apxpatch}. And in order to set the custom middleware implementation as default, packages belonging to the other implementations must be ignored or removed. 
 
         Continuing the progression, Level 3 involves cross-compiling a package containing two executables, a publisher and a subscriber. Once these nodes are successfully loaded on the browser, communication between the nodes must be established by passing messages between web workers and the main thread.
 

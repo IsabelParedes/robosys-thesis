@@ -52,7 +52,7 @@
 
     \subsection{eProsima Fast DDS}
 
-    eProsima Fast \ac{DDS}, also known as Fast \ac{RTPS}, is the default middleware implementation for \ac{ROS} 2 packages. Some of the main advantages of Fast \ac{DDS} is that it is free, open source, and it is developed for most platforms including Linux, Windows, Mac OS, and QNX. A rich set of \ac{QoS} parameters is also available for tuning the communication protocols to any particular system. Fast \ac{DDS} follows a \ac{DCPS} model, which consists four elements: publishers, subscribers, topics, and domains~\cite{dcps}. This model introduces the concept of \textsf{Data Writers} and \textsf{Data Readers} which, as the names imply, have read and write permissions to the ``Global Data Space'' as specified by the \ac{DDS} standard~\cite{introdds}. Figure~\ref{fig:ddsdomain} displays an example of the Fast \ac{DDS} architecture and demonstrates how the different elements interact with each other.
+    eProsima Fast \ac{DDS}, also known as Fast \ac{RTPS}, is the default middleware implementation for \ac{ROS} 2 packages. Some of the main advantages of Fast \ac{DDS} is that it is free, open source, and it is developed for most platforms including Linux, Windows, Mac OS, and QNX. A rich set of \ac{QoS} parameters is also available for tuning the communication protocols to any particular system. Fast \ac{DDS} follows a \ac{DCPS} model, which consists four elements: publishers, subscribers, topics, and domains~\cite{dcps}. This model introduces the concept of \textsf{Data Writers} and \textsf{Data Readers} which, as the names imply, have read and write permissions to the Global Data Space as specified by the \ac{DDS} standard~\cite{introdds}. Figure~\ref{fig:ddsdomain} displays an example of the Fast \ac{DDS} architecture and demonstrates how the different elements interact with each other.
 
     \begin{figure}[htbp]
         \centering
@@ -154,7 +154,7 @@
 
     \subsection{Eclipse Cyclone DDS}
 
-        Similar to Fast \ac{DDS}, Cyclone \ac{DDS} is free and open source and supports the three major platforms, Linux, Windows, and Mac OS. Cyclone \ac{DDS} offers a ``data-centric'' architecture with space- and time-decoupling with a zero configuration discovery system~\cite{eclipse}. Additionally, this implementation includes Python bindings to simplify the definition of data types. 
+        Similar to Fast \ac{DDS}, Cyclone \ac{DDS} is free and open source and supports the three major platforms, Linux, Windows, and Mac OS. Cyclone \ac{DDS} offers a data-centric architecture with space- and time-decoupling with a zero configuration discovery system~\cite{eclipse}. Additionally, this implementation includes Python bindings to simplify the definition of data types. 
 
     \subsection{RTI Connext DDS}
 
@@ -171,7 +171,7 @@
 
     \subsection{Email}
 
-        An excellent example of a middleware implementation which is not based on the \ac{DDS} standard is \textsf{rmw-email}\footnote{For readability, package names with underscores, e.g. \textsf{rmw\_email}, are written with dashes.}. With this implementation, all of the \ac{ROS} 2 communications for publishing and subscribing to topics and to call and respond to services are handled by sending emails. 
+        An excellent example of a middleware implementation which is not based on the \ac{DDS} standard is \textsf{rmw-email}\footnote{For readability, package names with underscores, e.g. \textsf{rmw\smallunderscore email}, are written with dashes.}. With this implementation, all of the \ac{ROS} 2 communications for publishing and subscribing to topics and to call and respond to services are handled by sending emails. 
 
         \begin{figure}[htbp]
             \centering
@@ -199,7 +199,7 @@
 
     \subsection{Minimal Middleware Implementation}\label{ssec:minimal}
 
-        The development of a custom middleware implementations consist of two major parts: the creation of a middleware ``adapter'' to communicate with the \ac{ROS} 2 middleware interface, and the formation of the middleware implementation itself. An overview of a custom middleware architecture is demonstrated in Figure~\ref{fig:rmwarch}. 
+        The development of a custom middleware implementations consist of two major parts: the creation of a middleware \textit{adapter} to communicate with the \ac{ROS} 2 middleware interface, and the formation of the middleware implementation itself. An overview of a custom middleware architecture is demonstrated in Figure~\ref{fig:rmwarch}. 
 
         \begin{figure}[htbp]
             \centering
@@ -248,7 +248,7 @@
 
         There are no standardized guidelines for how the middleware implementation should be formatted or what platforms it should support. The design of the implementation is highly dependent on the use case of the \ac{ROS} application. The only design requirements are that the implementation should have the means to publish and subscribe data, perform message serialization from and to \ac{ROS} message types, and have a discovery system to detect other participants in the specified domain. For this project, all of the communications are handled by the web browser and thus, the middleware is implemented in JavaScript.
 
-        For the creation of a middleware ``adapter,'' \textsf{rmw} provides a set of primitives which are needed for higher level \ac{ROS} \ac{API}s. Generating the adapter requires implementing all of the relevant interface functions defined by \textsf{rmw}. Figures~\ref{fig:funinit} through~\ref{fig:funclient} highlight a few of the necessary interface functions.
+        For the creation of a middleware adapter, \textsf{rmw} provides a set of primitives which are needed for higher level \ac{ROS} \ac{API}s. Generating the adapter requires implementing all of the relevant interface functions defined by \textsf{rmw}. Figures~\ref{fig:funinit} through~\ref{fig:funclient} highlight a few of the necessary interface functions.
 
         % \lstset{
         %     columns=fullflexible,
@@ -484,11 +484,11 @@ rmw_ret_t 	rmw_service_server_is_available (
 
 
     \pagebreak
-    Besides the essential functions for creating and destroying nodes, publishers, subscribers, and services, there exists additional functions to handle events, wait sets, guard conditions, \ac{QoS} policies, and allocators. Additionally, there are utility functions and macros for handling errors, customizing log outputs and name validation. A full list of all 83 function headers derived from the \textsf{rmw} \ac{API} documentation can be found in Appendix~\ref{sec:apxrmw}~\cite{rmwapi}.
+    Besides the essential functions for creating and destroying nodes, publishers, subscribers, and services, there exists additional functions to handle events, wait sets, guard conditions, \ac{QoS} policies, and allocators. Additionally, there are utility functions and macros for handling errors, customizing log outputs and name validation. A full list of all 83 function headers can be found in the \textsf{rmw} \ac{API}~\cite{rmwapi}.
 
 \section{Substituting ROS 2 Middleware}
 
-    There are two methods of using a particular middleware implementations when launching \ac{ROS} applications other than the default implementation. The first method requires setting the environment variable \small\texttt{RMW\smallunderscore IMPLEMENTATION} \normalsize to the implementation identifier of choice. An example of how to launch a publisher node with this method is shown in Figure~\ref{fig:envrmw}.
+    There are two methods of using a particular middleware implementations when launching \ac{ROS} applications other than the default implementation. The first method requires setting the environment variable \small\texttt{RMW\smallunderscore  IMPLEMENTATION} \normalsize to the implementation identifier of choice. An example of how to launch a publisher node with this method is shown in Figure~\ref{fig:envrmw}.
 
     \begin{figure}[thbp]
         \centering
@@ -506,4 +506,4 @@ RMW_IMPLEMENTATION=rmw_connextdds ros2 run demo_nodes_cpp talker
         \label{fig:envrmw}
     \end{figure}
 
-    The caveat of this first method is that the \ac{ROS} 2 binaries installed must have support for the specified implementation~\cite{subrmw}. The second method involves rebuilding all of the desired \ac{ROS} 2 packages from source and specify the \small\texttt{RMW\smallunderscore IMPLEMENTATION} \normalsize as a CMake argument. When building from source, if the packages for multiple \ac{RMW} implementations are available, all of them will be built starting with Fast \ac{DDS} as the default. If Fast \ac{DDS} is not available, then the default implementation will be selected by the next available implementation identifier in alphabetical order~\cite{docsdds}. To ensure that only a single implementation is available for use, the simplest solution is to explicitly ignore or remove the packages belonging to undesired implementations from the workspace.
+    The caveat of this first method is that the \ac{ROS} 2 binaries installed must have support for the specified implementation~\cite{subrmw}. The second method involves rebuilding all of the desired \ac{ROS} 2 packages from source and specify the \small\texttt{RMW\smallunderscore  IMPLEMENTATION} \normalsize as a CMake argument. When building from source, if the packages for multiple \ac{RMW} implementations are available, all of them will be built starting with Fast \ac{DDS} as the default. If Fast \ac{DDS} is not available, then the default implementation will be selected by the next available implementation identifier in alphabetical order~\cite{docsdds}. To ensure that only a single implementation is available for use, the simplest solution is to explicitly ignore or remove the packages belonging to undesired implementations from the workspace.

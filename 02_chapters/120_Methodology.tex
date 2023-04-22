@@ -21,7 +21,7 @@
 
             \textsf{numpy} & $1.24$ \\ 
 
-            \textsf{lark}\tablefootnote{The \textsf{lark} package is required for \textsf{builtin}\texttt{\_}\textsf{interfaces}} & $1.1$ \\
+            \textsf{lark}\tablefootnote{The \textsf{lark} package is required for \textsf{builtin}\texttt{\smallunderscore }\textsf{interfaces}} & $1.1$ \\
 
             \textsf{rosdep} & $0.22$ \\
 
@@ -44,8 +44,6 @@
 
 
 \section{Compilation Tools}
-
-    TODO: more details
 
     Given that the \textsf{colcon} package is already well adapted to build ROS packages, \textsf{colcon} was widely used throughout this project with a few customizations. 
 
@@ -78,7 +76,7 @@
             
             \node (html) [outerBox, right of=emsdk, xshift=4cm, yshift=-0.2cm, anchor=north] {HTML document \\ \footnotesize\textsf{talker.html}};
 
-            \node (js) [innerBox, below of=html, yshift=0.5cm]{JavaScript \\ ``glue'' code \\ \footnotesize\textsf{talker.js}};
+            \node (js) [innerBox, below of=html, yshift=0.5cm]{JavaScript \\ glue code \\ \footnotesize\textsf{talker.js}};
 
             \draw [arrow] (cpp) -- (emsdk);
             \draw [arrow] (dot.center) |- (wasm);
@@ -98,9 +96,9 @@
 
 \section{Package Building Process}
 
-    Before any packages could be built, all of the ROS 2 core packages were cloned in a local workspace. To prevent compilation issues, packages related to the default middleware implementations were excluded by adding a \textsf{COLCON}\texttt{\_}\textsf{IGNORE} file in their respective root directories; these include \textsf{iceoryx}, \textsf{cyclonedds}, \textsf{fastrtps}, and \textsf{connextdds}. A secondary purpose for excluding these packages is to ensure that the custom middleware implementation is the only implementation available at runtime. This custom middleware implementation must also be included in the current workspace before proceeding. 
+    Before any packages could be built, all of the ROS 2 core packages were cloned in a local workspace. To prevent compilation issues, packages related to the default middleware implementations were excluded by adding a \textsf{COLCON}\texttt{\smallunderscore }\textsf{IGNORE} file in their respective root directories; these include \textsf{iceoryx}, \textsf{cyclonedds}, \textsf{fastrtps}, and \textsf{connextdds}. A secondary purpose for excluding these packages is to ensure that the custom middleware implementation is the only implementation available at runtime. This custom middleware implementation must also be included in the current workspace before proceeding. 
 
-    Additionally, a ``blasm'' script was created to aid in the building of packages given that the number of arguments quickly became exceedingly lengthy for manual input. The entire script is included in Appendix~\ref{sec:apxblasm} for reference. With this script, it is possible to build any package and its dependencies, or to build a package individually. Care must be taken to ensure that the environment variables for the tools such as \textsf{EMSDK}\texttt{\_}\textsf{DIR} are set accordingly. The list of options for this script are shown in Figure~\ref{fig:blasm}.
+    Additionally, a \textsf{blasm} script was created to aid in the building of packages given that the number of arguments quickly became exceedingly lengthy for manual input. The entire script is included in Appendix~\ref{sec:apxblasm} for reference. With this script, it is possible to build any package and its dependencies, or to build a package individually. Care must be taken to ensure that the environment variables for the tools such as \textsf{EMSDK}\texttt{\smallunderscore }\textsf{DIR} are set accordingly. The list of options for this script are shown in Figure~\ref{fig:blasm}.
 
     \begin{figure}[htbp]
         \centering
@@ -115,24 +113,16 @@
 
 \section{Debugging Tools}
 
-    When working with new ROS packages, there are two main sources of errors: errors during compilation and errors at runtime. To tackle compilation errors, the first step is to obtain a full description of the error. The ``blasm'' script has the option to dynamically activate verbose (\textsf{-v}) mode as needed.
+    When working with new ROS packages, there are two main sources of errors: errors during compilation and errors at runtime. To tackle compilation errors, the first step is to obtain a full description of the error. The \textsf{blasm} script has the option to dynamically activate verbose (\textsf{-v}) mode as needed.
 
     Secondly, for debugging errors at runtime, one of the most effective tools is the use of logs. Core \ac{ROS} packages such as \textsf{rcutils} and \textsf{rcpputils} already include logging functionalities. Adapting these \ac{ROS} logs into any newly created packages allows for efficient and quick debugging. Alternatively, customized logging functions could be implemented for an in-depth analysis at the expense of increasing the complexity of the package in question.
 
 \section{Post Processing}
 
-    Once the executables have been successfully compiled, the generated JavaScript files are augmented with additional functions to enable communication between the main thread and the ROS packages. The added functions are described in Appendix~\ref{sec:apxmodule}. (TODO: OR provide link to file on GitHub)
+    Once the executables have been successfully compiled, the generated JavaScript files are augmented with additional functions to enable communication between the main thread and the ROS packages. The added functions are described in Appendix~\ref{sec:apxmodule}.
 
 \section{Testing Environment}
 
     Lastly, there are two phases of testing. The first phase consists of testing the packages directly from the terminal. For the early stages such as during the replacement of the middleware implementation, cross-compilation is not yet required; thus, it is possible to locally test the middleware packages by comparing their behavior with the default middleware implementations. This can be achieved in a separate \textsf{conda} environment with \ac{ROS} 2 packages preinstalled by creating and installing an overlay which only includes the customized middleware implementation.
 
     And the second phase involves testing the packages on a web browser. For this project, only Firefox and Chrome were subject to testing due to their popularity. The tools developed in this project may be suitable for other browsers, however, their full functionality is not guaranteed.
-
-
-\subsection{Package Management and Distribution}
-
-    TODO:
-    - Automating package building
-    - Pipelines
-    - robostack?

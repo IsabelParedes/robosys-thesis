@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#-------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # HELP
-#-------------------------------------------------------------
+#-------------------------------------------------------------------------------
 Help()
 {
     echo -e "Options:"
@@ -11,15 +11,15 @@ Help()
     echo "-d     activate cmake debug mode"
     echo "-u     build up to package"
     echo "-s     build selected package"
-    echo "-i     ignore \'listed packages\'"
+    echo "-i     ignore \"listed packages\""
     echo "-p     install emscripten python"
     echo "-v     verbose"
     echo -e "\n"
 }
 
-#-------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # INSTALL PYTHON
-#-------------------------------------------------------------
+#-------------------------------------------------------------------------------
 InstallPython()
 {
     # Install emscripten python
@@ -30,9 +30,9 @@ InstallPython()
     mv ./install/bin/python3 ./install/bin/old_python3
 }
 
-#-------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # VARIABLES
-#-------------------------------------------------------------
+#-------------------------------------------------------------------------------
 VERBOSE=0
 EMSDK_VERBOSE=0
 verbose_args=""
@@ -42,11 +42,11 @@ debug_mode=OFF
 
 export RMW_IMPLEMENTATION="rmw_wasm_cpp"
 
-#-------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # OPTIONS
-#-------------------------------------------------------------
+#-------------------------------------------------------------------------------
 
-while getopts "hcvpu:s:i:" option; do
+while getopts "hcdvpu:s:i:" option; do
     case $option in
         h) # Display help
             Help
@@ -93,9 +93,9 @@ while getopts "hcvpu:s:i:" option; do
     esac
 done
 
-#-------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # MAIN
-#-------------------------------------------------------------
+#-------------------------------------------------------------------------------
 [[ -z "${package_args}" ]] && { echo "No args given."; exit 1; }
 [[ -d "${PWD}/src" ]] || { echo "Not a workspace directory"; exit 1; }
 
@@ -110,9 +110,10 @@ colcon build \
         -DBUILD_TESTING=OFF \
         -DBUILD_SHARED_LIBS=ON \
         -DCMAKE_VERBOSE_MAKEFILE=${debug_mode} \
+        -DRMW_IMPLEMENTATION=${RMW_IMPLEMENTATION} \
         -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=ON \
         -DCMAKE_CROSSCOMPILING=TRUE \
         -DCMAKE_FIND_DEBUG_MODE=${debug_mode} \
         -DFORCE_BUILD_VENDOR_PKG=ON \
-        -DPYBIND11_PYTHONLIBS_OVERWRITE=OFF 
-        
+        -DPYBIND11_PYTHONLIBS_OVERWRITE=OFF \
+        -DPython3_EXECUTABLE=${CONDA_PREFIX}/bin/python \
