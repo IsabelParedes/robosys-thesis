@@ -242,7 +242,21 @@ Planned workflow: \\
 %		- List of tables
 %		- Appendix
 
+\newcommand\blankpage{
+    \clearpage
+    \begingroup
+      \null
+      \thispagestyle{empty}%
+      \addtocounter{page}{-1}%
+      \hypersetup{pageanchor=false}%
+      \clearpage
+    \endgroup
+}
+
+\blankpage
+
 \include{02_chapters/000_Introduction.tex} 
+
 
 \include{02_chapters/100_Literature.tex}
 
