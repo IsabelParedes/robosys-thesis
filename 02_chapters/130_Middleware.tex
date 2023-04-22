@@ -1,6 +1,6 @@
-\chapter{ROS 2 Middleware}
+\chapter{ROS 2 Middleware}\label{cha:middleware}
 
-    A significant change from \ac{ROS} 1 to \ac{ROS} 2 is the shift from a custom transport layer consisting of \ac{TCPROS} to \ac{DDS}. \ac{DDS} is a publish-subscribe communication standard defined by \ac{OMG}. \ac{DDS} uses \ac{IDL} for defining and serializing messages~\cite{rosondds}. In contrast to \ac{ROS} 1, which requires a \ac{ROS} master in order for nodes to discover and communicate with each other, \ac{ROS} 2 discovery system is handled by \ac{DDS} and each of the \ac{DDS} vendors provides different options for customizing the communication layer.
+    A significant change from \ac{ROS} 1 to \ac{ROS} 2 is the shift from a custom transport layer consisting of \ac{TCPROS} to \ac{DDS}. \ac{DDS} is a publish-subscribe communication standard defined by \ac{OMG}. \ac{DDS} uses \ac{IDL} for defining and serializing messages~\cite{rosondds}. In contrast to \ac{ROS} 1, which requires a \ac{ROS} master in order for nodes to discover and communicate with each other, \ac{ROS} 2 discovery system is handled by \ac{DDS} and each of the \ac{DDS} vendors provides different options for customizing the communication layer~\cite{ros2cite}.
 
     One notable advantage of moving away from a custom transport protocol is that the \ac{ROS} client libraries are now agnostic to the middleware interface; this means that the complexities of the \ac{DDS} implementation are not exposed to the end user~\cite{ros2middle}. As a consequence, multiple middleware interfaces can be implemented as long as they fulfill the following requirements: 
     \begin{itemize}
