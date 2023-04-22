@@ -59,7 +59,7 @@
 
         \subsection{Complexity Level 1}
 
-        The groundwork for achieving any sort of user interface with \ac{ROS} running on the browser, lies on the development of a compatible middleware implementation ($\mathcal{C}1$). The design of this middleware implementation has been described in Chapter~\ref{cha:rmw}. The three packages (\textsf{rmw-wasm-cpp}, \textsf{wasm-cpp}, and \textsf{wasm-js}) on their own, do not aid the user in interacting with \ac{ROS}.
+        The groundwork for achieving any sort of user interface with \ac{ROS} running on the browser lies on the development of a compatible middleware implementation ($\mathcal{C}1$). The design of this middleware implementation has been described in Chapter~\ref{cha:rmw}. The three packages (\textsf{rmw-wasm-cpp}, \textsf{wasm-cpp}, and \textsf{wasm-js}) on their own, do not aid the user in interacting with \ac{ROS}.
 
         \vspace{0.5em}
         \begin{tcolorbox}[title=Example 1]
@@ -105,7 +105,7 @@ vcs import --input https://raw.githubusercontent.com/ros2/ros2/humble/ros2.repos
             \label{fig:vcs}
         \end{figure}
 
-        An even simpler solution for new users to build packages is to use a GitHub workflow. An example of such workflow is given in Appendix~\ref{sec:apxworkflow}. By adding this script to a repository which includes the desired \ac{ROS} package to be built, the user can manually trigger this workflow to build the target package without the need to have a local build set up. Figure~\ref{fig:workflow} displays the interface for running the \textsf{build-package} workflow from GitHub.
+        An even simpler solution to help new users build packages is to utilize a GitHub workflow. An example of such a workflow is given in Appendix~\ref{sec:apxworkflow}. By adding this script to a repository which includes the desired \ac{ROS} package to be built, the user can manually trigger this workflow to build the target package without the need to have a local build set up. Figure~\ref{fig:workflow} displays the interface for running the \textsf{build-package} workflow from GitHub.
 
         \begin{figure}[htbp]
             \centering
@@ -113,8 +113,6 @@ vcs import --input https://raw.githubusercontent.com/ros2/ros2/humble/ros2.repos
             \caption{Triggering \textsf{build-package} workflow to build \textsf{rclcpp}.}
             \label{fig:workflow}
         \end{figure}
-
-        \pagebreak
 
         The workflow runs through the following steps:
 
@@ -152,7 +150,7 @@ vcs import --input https://raw.githubusercontent.com/ros2/ros2/humble/ros2.repos
 
         \subsection{User Interaction Level 1: Non-Interactive}
 
-        Once $\mathcal{C}1$ and $\mathcal{C}2$ levels are completed, this opens the door for minimal user interaction. With the testing package described above containing a publisher derived from the \ac{ROS} tutorials, a \ac{WASM} and a JavaScript are generated when cross-compiling the publisher executable. By creating a bare bones \ac{HTML} page, the publisher (\textit{talker}) can be run on the browser.
+        Once $\mathcal{C}1$ and $\mathcal{C}2$ levels are completed, this opens the door for minimal user interaction. With the testing package described above containing a publisher derived from the \ac{ROS} tutorials, a \ac{WASM} file and a JavaScript file are generated when cross-compiling the publisher executable. By creating a bare bones \ac{HTML} page, the publisher (\textit{talker}) can be run on the browser.
 
         \begin{figure}[htbp]
             \begin{lstlisting}[language=html]
@@ -175,7 +173,7 @@ vcs import --input https://raw.githubusercontent.com/ros2/ros2/humble/ros2.repos
             \label{fig:html}
         \end{figure}
 
-        As indicated in Figure~\ref{fig:html}, the \textit{talker} depends on \textsf{wasm-js} for handling messages and to display outputs on the page. Alternatively, these outputs can also be observed from the console. It is important to note that at this complexity level, $\mathcal{C}2$, \textsf{wasm-js} does not need to be fully equipped; it suffices to receive a \ac{YAML} string message from the publisher node and to display the information on the page. Since there are no subscriber nodes, messages can be discarded automatically.
+        As indicated in Figure~\ref{fig:html}, the \textit{talker} depends on \textsf{wasm-js} for handling messages and to display outputs on the page. Alternatively, these outputs can also be observed from the console. It is important to note that at this complexity level, $\mathcal{C}2$, \textsf{wasm-js} does not need to be fully equipped; it is sufficient to receive a \ac{YAML} string message from the publisher node and to display the information on the page. Since there are no subscriber nodes, messages can be discarded automatically.
         
         This type of setup constitutes $\mathcal{I}1$ or non-interactive. The user has no control of the publisher node other than reloading the page to restart the publisher. The output from a publisher in this level is seen in Figure~\ref{fig:ui1}. 
 
@@ -424,7 +422,7 @@ topicMap:
             \label{fig:topicMap}
         \end{figure}
 
-        Apart from storing the messages, the topic map stores information about the members for each topic. The members are subdivided into publishers and subscribers but these can also be service participants. As an example, a service server will subscriber member to a service request topic, as well as a publisher member to a service response topic. The information stored about these topic members is simply their unique identifier or \texttt{gid}. This \texttt{gid} is randomly generated when the participant is first created. 
+        Apart from storing the messages, the topic map stores information about the members for each topic. The members are subdivided into publishers and subscribers but these can also be service participants. As an example, a service server will become a subscriber member to a request topic, as well as becoming a publisher member to a response topic. The information stored about these topic members is simply their unique identifier or \texttt{gid}. This \texttt{gid} is randomly generated when the participant is first created. 
 
         The message stacks stored for each topic are not (yet) configurable. However, they are initialized with default values to match the \ac{QoS} settings described in Section~\ref{sec:wasmjs}. This means that all message stacks have a length of $10$, and the oldest message is overwritten when it reaches capacity. Popping a message from the stack will remove that message from the \textit{head} to provide the most recent message. A visualization is shown in Figure~\ref{fig:msgStack}.
 
@@ -433,7 +431,7 @@ topicMap:
 
         \subsection{Complexity Level 5}
 
-        Manipulation of a physical robot with $\mathcal{C}5$ marks the beginning of practical applications for this project. Data can be sent and received from a robot with the publishers and subscribers developed in the previous steps as long as there is a communication bridge between the robot and the web browser. There are two primary ways to communicate with a robot. The most widely used solution is configure a robot which to launch a \texttt{rosbridge\smallunderscore server} to send information to the browser. The constraint of this method is that the robot must already be running \ac{ROS} to create a \texttt{rosbridge}.
+        Manipulation of a physical robot with $\mathcal{C}5$ marks the beginning of practical applications for this project. Data can be sent and received from a robot with the publishers and subscribers developed in the previous steps as long as there is a communication bridge between the robot and the web browser. There are two primary ways to communicate with a robot. The most widely used solution is to configure a robot which is able to launch a \texttt{rosbridge\smallunderscore server} to send information to the browser. The constraint of this method is that the robot must already be running \ac{ROS} to create a \texttt{rosbridge}.
 
         An alternative for robots which do not run \ac{ROS} natively is to create an interface between the browser and the robot's system. The bridge can be established via bluetooth, WiFi, or a wired connection. For this project, the LEGO BOOST Vernie robot was tested. Vernie can be connected to any computer via bluetooth. A pre-existing library, \textsf{lego-boost-browser} was used to established the interface between \ac{ROS} and Vernie. This library uses Web Bluetooth \ac{API} to control the LEGO BOOST robot~\cite{boosted}.  Additional upgrades for this external \textsf{lego-boost-browser} package were performed by Thorsten Beier~\cite{thoboost}.
 
@@ -465,7 +463,7 @@ topicMap:
             \label{fig:vernie}
         \end{figure}
 
-        The \textsf{lego-boost-browser} library can send commands to Vernie to change the \ac{LED} color (Figure~\ref{fig:vernie}) or activate the two motors for locomotion. A publisher is created which simply publishes every second a different \ac{LED} color as a string from the acceptable list of colors by Vernie. When these messages reach the message stacks of the respective topic (e.g. \texttt{rainbow\smallunderscore topic}), they are forwarded to the robot through \textsf{lego-boost-browser}. Figure~\ref{fig:rainbow} displays what a web page running an \ac{LED} color publisher appears like. The user would have to first connect to Vernie via bluetooth before being able to send the commands to change \ac{LED} color to the one that matches the last message published. 
+        The \textsf{lego-boost-browser} library can send commands to Vernie to change the \ac{LED} color (Figure~\ref{fig:vernie}) or activate the two motors for locomotion. A publisher is created which simply publishes a different \ac{LED} color as a string from the acceptable list of colors by Vernie. When these messages reach the message stacks of the respective topic (e.g. \texttt{rainbow\smallunderscore topic}), they are forwarded to the robot through \textsf{lego-boost-browser}. Figure~\ref{fig:rainbow} displays how a web page running an \ac{LED} color publisher appears. The user would have to connect to Vernie via bluetooth before being able to send the commands to change \ac{LED} color based on the last published message. 
 
         \definecolor{vernOrange}{HTML}{FF701A}
         \begin{figure}[htbp]
@@ -545,7 +543,7 @@ Initializing...
         \end{figure}
 
 
-        To control the position of the Vernie robot, a publisher which sends \texttt{geometry\smallunderscore msgs/Twist} messages was created. These messages contain a linear and an angular vector to express the velocity in free space. To ensure compatibility with \textsf{lego-boost-browser}, a few simplifications were made. First, the robot can only move forward or backwards along the $x$-axis and rotate on the same plane, $z$-axis; thus, the only relevant values from the \texttt{Twist} message are the linear velocity $\dot{x}_{lin}$ and the angular velocity $\dot{z}_{rot}$. Since the commands sent to Vernie with \textsf{lego-boost-browser} can only be expressed in terms of motor power ($P$), from 0 to $100\%$, the linear and angular command velocities are converted with the following formula:
+        To control the position of the Vernie robot, a publisher which sends \texttt{geometry\smallunderscore msgs/Twist} messages was created. These messages contain a linear and an angular vector to express the velocity in free space. To ensure compatibility with \textsf{lego-boost-browser}, a few simplifications were made. The Vernie robot can only move forward or backwards along the $x$-axis and rotate on the same $xy$-plane, along the $z$-axis; thus, the only relevant values from the \texttt{Twist} message are the linear velocity $\dot{x}_{lin}$ and the angular velocity $\dot{z}_{rot}$. Since the commands sent to Vernie with \textsf{lego-boost-browser} can only be expressed in terms of motor power ($P$), from 0 to $100\%$, the linear and angular command velocities are converted with the following formula:
         
         \begin{equation}
             \hskip 5cm
@@ -590,7 +588,7 @@ Initializing...
 
         With the elements developed in previous sections, $\mathcal{C}4$ and $\mathcal{C}5$, it is now possible to demonstrate a web page capable of running services and displaying some basic information about the \ac{ROS} environment. This page meets the criteria for $\mathcal{I}4$.
 
-        The addition of services is the logical progression of publishers and subscribers. A service client contains a publisher and a subscriber within to be able to call a service and receive information. Calling a service consists of sending a request by publishing a message to the main thread. Waiting for a response from the service called requires subscribing to the response topic for that particular service. A service server works in the same manner as a client but with the topics for the internal publisher and subscriber switched. Figure~\ref{fig:ui4} shows a service server being called by a client to perform the addition of two integers.
+        The addition of services is the logical progression of publishers and subscribers. A service client contains a publisher and a subscriber in order to be able to call a service and receive a response. Calling a service consists of sending a request by publishing a message to the main thread. Waiting for a response from the service called requires subscribing to the response topic for that particular service. A service server works in the same manner as a client but with the topics for the internal publisher and subscriber switched. Figure~\ref{fig:ui4} shows a service server being called by a client to perform the addition of two integers.
 
 
         \begin{figure}[htbp]

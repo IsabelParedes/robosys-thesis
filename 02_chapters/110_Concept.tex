@@ -1,9 +1,6 @@
 \chapter{Concept Realization}\label{cha:concept}
 
-    This section provides the major milestones from the project beginning with a
-    brief description of the overall concept solution to the challenges presented
-    in the Introduction, followed by the layers of implementation accomplished 
-    during the development phase.
+    This section provides the major milestones from the project, beginning with a brief description of the overall concept solution to the challenges presented in the Introduction, followed by the layers of implementation accomplished during the development phase.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -50,8 +47,7 @@
     The development of this project is subdivided into multiple levels for the 
     users, the interactions that the users have with the tools developed, and
     the technical difficulty of developing the tools. These subdivisions are
-    beneficial in providing the reader with an illustration of the progressing 
-    stages of development of this project.
+    beneficial in providing the reader with an illustration of the progressive stages of development of this project.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -170,9 +166,7 @@
         the environment. In this level, the user has the ability to run more than
         one node simultaneously. This makes it possible to have publishers sending
         messages to a particular topic and subscribers retrieving the published
-        messages accordingly. Nonetheless, the nodes are still pre-compiled and 
-        thus the user does not have the ability to change the topic names or any
-        other parameters of the nodes. 
+        messages accordingly. The nodes remain pre-compiled and thus the user does not have the ability to change the topic names or any other parameters of the nodes.
 
         Stepping further into the list, the \textit{intermediate} Level 4 introduces
         services, these include both the servers and the clients. Additionally,
@@ -180,8 +174,7 @@
         from the environment such as the type of nodes which are running at a
         given time, or which topics are available. 
 
-        Finally arriving at the \textit{advanced} Level 5, this level is more 
-        prominent because it introduces the integration of JupyterLite with the 
+        Finally arriving at the \textit{advanced} Level 5, this level is more practical because it introduces the integration of JupyterLite with the 
         ROS environment. With JupyterLite, the user can directly interact with
         the ROS environment by using the ROS client libraries such as \texttt{rclpy}.
         
@@ -214,7 +207,7 @@
             \end{tabular}\label{tab:techlevels}
         \end{table}
 
-        Although creating a replacement for the \ac{ROS} middleware implementation denotes the lowest level on the list, its complexity must not be underestimated. Level 1 consists of creating custom middleware packages to handle discovery and communications between nodes. All other \ac{ROS} packages depend on the middleware implementation, and because of this, creating a working replacement is crucial before any other features can be implemented.
+        Although creating a replacement for the \ac{ROS} middleware implementation is the lowest level on the list, its complexity must not be underestimated. Level 1 consists of creating custom middleware packages to handle discovery and communications between nodes. All other \ac{ROS} packages depend on the middleware implementation, and because of this, creating a working replacement is crucial before any other features can be implemented.
 
         Once the middleware packages have been introduced, the next level ensures that the core \ac{ROS} packages can be cross-compiled. Level 2 involves the creation of a recipe to build all packages consistently. Minor modifications are needed in a few of the core packages to prevent compilation errors; for details, refer to TODO: add mods to appendix. And in order to set the custom middleware implementation as default, packages belonging to the other implementations must be ignored or removed. 
 
@@ -222,7 +215,7 @@
 
         Level 4 is simply an expansion of Level 3. In this case, the system handling communication between nodes can accommodate a multitude of different topics, message types, and node types. In other words, the communication system must be able to create and remove message queues at the time when they are requested by the individual nodes.
 
-        Starting with Level 5, the project begins to develop more practical applications. Manipulating a robot from the browser involves the addition of external libraries which enable communications to the hardware components of the robot. For example, a library which uses the Web Bluetooth \ac{API} to establish a connection to a robot and sends commands commands to activate the robot's motors. This level also involves creating an interface which translates \ac{ROS} messages to commands the robot can receive.
+        Starting with Level 5, the project begins to develop more practical applications. Manipulating a robot from the browser involves the addition of external libraries which enable communications to the hardware components of the robot. For example, a library which uses the Web Bluetooth \ac{API} to establish a connection to a robot and sends commands to activate the robot's motors. This level also involves creating an interface which translates \ac{ROS} messages to commands the robot can receive.
 
         Level 6 requires Python support on the browser. This step consists of cross-compiling the \ac{ROS} client library for Python (\texttt{rclpy}) in order to be able to import it from JupyterLite. The benefit of importing \texttt{rclpy} is that nodes could be created directly from the browser as shown in Figure~\ref{fig:rclpy}. 
 

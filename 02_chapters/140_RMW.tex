@@ -55,7 +55,7 @@
 
         TODO: add diagram (maybe)
 
-        In addition to the \textsf{rmw} function, one main objective of this package is to convert the \ac{ROS} messages to \ac{YAML} strings. This is accomplished with the help of a dynamic message introspection (\textsf{dynmsg}) package developed by Open Robotics. These \ac{YAML} strings are send to the middleware implementation, and when a message is returned, it is then converted back from a \ac{YAML} string into a ROS message. 
+        In addition to the \textsf{rmw} function, one main objective of this package is to convert the \ac{ROS} messages to \ac{YAML} strings. This is accomplished with the help of a dynamic message introspection (\textsf{dynmsg}) package developed by Open Robotics. These \ac{YAML} strings are sent to the middleware implementation, and when a message is returned, it is then converted back from a \ac{YAML} string into a ROS message. 
 
     \section{wasm-cpp}
 
@@ -122,7 +122,7 @@
         \end{figure}
         
 
-        Subscribers and publishers are the simplest type of participants. And each of them only has one function; a publisher needs to be able to \textit{publish} a message, and a subscriber must be able to \textit{retrieve} the message from a specific topic. The messages which the publisher handles are yaml strings. These messages are then passed to \textsf{wasm-js} by using \texttt{emscripten::val} which transliterates JavaScript code into C++ (TODO: add ref). Figure~\ref{fig:publish} shows how these functions are implemented to create a \textit{bridge} between the two packages.
+        Subscribers and publishers are the simplest type of participants. And each of them only has a single function; a publisher needs to be able to \textit{publish} a message, and a subscriber must be able to \textit{retrieve} the message from a specific topic. The messages which the publisher handles are \ac{YAML} strings. These messages are then passed to \textsf{wasm-js} by using \texttt{emscripten::val} which transliterates JavaScript code into C++ (TODO: add ref). Figure~\ref{fig:publish} shows how these functions are implemented to create a \textit{bridge} between the two packages.
 
         \begin{figure}[htbp]
             \centering
@@ -155,7 +155,7 @@ Module["publishMessage"] = function publishMessage(message, topic_name)
             \label{fig:publish}
         \end{figure}
 
-    Conversely, the subscriber \textit{waits} for a response from \textsf{wasm-js} which will indicate that a new message has been published to the topic in question. The response message type is coerced into a yaml string to send back to \textsf{rmw-wasm-cpp}. This process is illustrated in Figure~\ref{fig:retrieve}.
+    Conversely, the subscriber \textit{waits} for a response from \textsf{wasm-js} which will indicate that a new message has been published to the topic in question. The response message type is coerced into a \ac{YAML} string to send back to \textsf{rmw-wasm-cpp}. This process is illustrated in Figure~\ref{fig:retrieve}.
 
     \begin{figure}[htbp]
         \centering
@@ -171,7 +171,7 @@ std::string yaml_message = js_response.as<std::string>();
 
     With the configuration described, subscribers and publishers do not necessarily need to be aware of the existence of other participants within the same topic name. That is to say, a publisher can send messages even when there are no subscribers, and a subscriber can listen to a topic even when there are no messages published. Additionally, this allows multiple publishers to publish to the same topic simultaneously with different \ac{ROS} message types since all messages are handled as strings.
 
-    Services are constructed from publishers and subscribers. A service server and a server client each have one publisher and one subscriber. Before a service client can call a service, it must verify that the service server is available to process a request. This is accomplished by making a query to \textsf{wasm-js} which keeps track of all available entities. If the service server is available, then the service client can \textit{publish} a request to the service request topic. Meanwhile, the service server is \textit{subscribed} to the service request topic to receive the request. Once the service server processes the request, the response tis \textit{published} to the service response topic. And lastly, the service client \textit{subscribed} to the response topic will retrieve the response. This process is summarized in Figure~\ref{fig:service}.
+    Services are constructed from publishers and subscribers. A service server and a server client each have one publisher and one subscriber. Before a service client can call a service, it must verify that the service server is available to process a request. This is accomplished by making a query to \textsf{wasm-js} which keeps track of all available entities. If the service server is available, then the service client can \textit{publish} a request to the service request topic. Meanwhile, the service server is \textit{subscribed} to the service request topic to receive the request. Once the service server processes the request, the response is \textit{published} to the service response topic. And lastly, the service client \textit{subscribed} to the response topic will retrieve the response. This process is summarized in Figure~\ref{fig:service}.
 
     \begin{figure}[htbp]
         \centering
@@ -254,7 +254,7 @@ std::string yaml_message = js_response.as<std::string>();
         \label{fig:service}
     \end{figure}
 
-    Analogously to services, action servers and clients are handled in the same manner with the addition that action servers will continuously publish feedback to the action response topic until the request being processed is completed.
+    Analogous to services, action servers and clients are handled in the same manner with the addition that action servers will continuously publish feedback to the action response topic until the request being processed is completed.
 
 
 
@@ -264,7 +264,7 @@ std::string yaml_message = js_response.as<std::string>();
 
     The last piece of the puzzle is \textsf{wasm-js}. This package is written in JavaScript and its role is to launch and track all the participating entities, and to store and distribute all \ac{ROS} messages accordingly.
 
-    Given that processes on a browser run on a single ``main thread'', \textsf{wasm-js} uses \textit{web workers} to launch the requested \ac{ROS} nodes. Web workers run in background threads and thus, they do not interfere with the user interface while performing tasks~\cite{workers}. \textsf{wasm-js} spawns a new web worker for each \ac{ROS} node. The \ac{ROS} nodes can pass information to and from the main thread by posting messages (\texttt{postMessage()}). Each of the elements can also be configured to perform a task when a message is received by declaring an \texttt{onmessage()} function. Additionally, the workers can communicate between one another by creating message channels between worker pairs~\cite{mgschannel}. These communication paths are displayed in Figure~\ref{fig:webworker}.
+    Given that processes on a browser run on a single ``main thread'', \textsf{wasm-js} uses \textit{web workers} to launch the requested \ac{ROS} nodes. Web workers run in background threads and thus, they do not inhibit the user interface while performing tasks~\cite{workers}. \textsf{wasm-js} spawns a new web worker for each \ac{ROS} node. The \ac{ROS} nodes can pass information to and from the main thread by posting messages (\texttt{postMessage()}). Each of the elements can also be configured to perform a task when a message is received by declaring an \texttt{onmessage()} function. Additionally, the workers can communicate between one another by creating message channels between worker pairs~\cite{mgschannel}. These communication paths are displayed in Figure~\ref{fig:webworker}.
 
     \begin{figure}[htbp]
         \centering
@@ -352,7 +352,7 @@ std::string yaml_message = js_response.as<std::string>();
         \item \textbf{\texttt{register}}. A message with this command will also contain the name, the role, and the unique ID of a new participant to be added to the registration map.  
         \item \textbf{\texttt{deregister}}. This command type will provide the \texttt{gid} of the participant to be removed from the registration list; and in the case where this participant is also the last member of a topic or service, the message stacks for the particular topic or service will also be eliminated.
         \item \textbf{\texttt{publish}}. With this command, the message that the main thread receives will contain the \ac{ROS} message as a string and the name of the topic to be able to store the \ac{ROS} message in the correct message stack.
-        \item \textbf{\texttt{retrieve}}. This command perform the opposite of publishing. The message data will contain the name of the topic where the most recent message should be retrieved to be able to select the message stack accordingly. And once the last \ac{ROS} message has been taken back and removed from the stack, the main thread will send this \ac{ROS} message back to the web worker which requested its retrieval.
+        \item \textbf{\texttt{retrieve}}. The topic name will be contained in the message data in order to retrieve the most recent message from the proper message stack. Once the message has been popped from the stack, the main thread will send the message back to all the subscribers.
         \item \textbf{\texttt{console}}. The message data sent with this command will include any errors, warnings, or simply output messages which would normally appear on a terminal. This helps make the information more accessible to the user.
     \end{itemize}
 

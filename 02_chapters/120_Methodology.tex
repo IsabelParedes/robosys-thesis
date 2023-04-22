@@ -4,7 +4,7 @@
 
 \section{Development Environment}
 
-    For the sake of simplicity and to isolate the development environment from global dependencies, a \textsf{conda} environment was created. This \textsf{conda} environment was used to build the \ac{ROS} packages required. The essential packages installed in the development environment are shown in Table~\ref{tab:envdeps}. For quick installation, an environment yaml file is provided at TODO
+    For the sake of simplicity and to isolate the development environment from global dependencies, a \textsf{conda} environment was created. This \textsf{conda} environment was used to build the \ac{ROS} packages required. The essential packages installed in the development environment are shown in Table~\ref{tab:envdeps}. For quick installation, an environment \ac{YAML} file is provided at TODO
 
     \begin{table}[htbp]
         \color{textColor}
@@ -59,7 +59,7 @@
         \item Using Emscripten for C/C++ applications
     \end{itemize}
 
-    Since most \ac{ROS} 2 packages are written in C/C++, the easiest solution was to use Emscripten. Emscripten is a compiler toolchain which takes C/C++ source code and outputs a wasm module, the JavaScript \textit{glue} code and optionally an \ac{HTML} document, as illustrated in Figure~\ref{fig:emscripten}. In terms of \ac{ROS} packages, for each executable, for example a \textsf{talker.cpp} containing a publisher node, Emscripten will output three files per executable: \textsf{talker.wasm}, \textsf{talker.js} and \textsf{talker.html}.
+    Since most \ac{ROS} 2 packages are written in C/C++, the easiest solution was to use Emscripten. Emscripten is a compiler toolchain which takes C/C++ source code and outputs a wasm module, the JavaScript \textit{glue} code and optionally a \ac{HTML} document, as illustrated in Figure~\ref{fig:emscripten}. In terms of \ac{ROS} packages, for each executable, for example a \textsf{talker.cpp} containing a publisher node, Emscripten will output three files per executable: \textsf{talker.wasm}, \textsf{talker.js} and \textsf{talker.html}.
 
     \begin{figure}[htbp]
         \centering
